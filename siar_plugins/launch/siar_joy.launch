@@ -1,0 +1,12 @@
+<launch> 
+
+  <node pkg="siar_plugins" type="siar_joy_node" name="siar_model"/>
+    <param name="scale_angular" value="1.5"/>
+    <param name="scale_linear" value="2.0"/>
+    <param name="axis_deadman" value="4"/>
+    <param name="axis_linear" value="1"/>
+    <param name="axis_angular" value="0"/>
+    <param name="axis_arm" value="4"/>
+    <param name="axiscentral_arm1" value="1"/>
+    <param name="axiscentral_arm2" value="2"/>
+</launch>
