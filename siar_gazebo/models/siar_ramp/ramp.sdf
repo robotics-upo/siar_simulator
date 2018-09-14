@@ -1,0 +1,61 @@
+<?xml version='1.0'?>
+ <sdf version='1.5'>
+  <model name="siar_ramp">
+    
+   <pose>-0.837461 0.048649 0.075 0 0 3.141529</pose> 
+   <static>true</static>
+
+    <link name='ramp'>     
+
+      <collision name='collision_1'>
+	<pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.67458 1.0 0.15</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual_1'>
+	<pose>0 0 0 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.67458 1.0 0.15</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='collision_2'>
+      <pose>3.98729 0 0 0 0.023809 0</pose>
+        <geometry>
+          <box>
+            <size>6.3 1.0 0.01</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual_2'>
+      <pose>3.98729 0 0 0 0.023809 0</pose>
+        <geometry>
+          <box>
+            <size>6.3 1.0 0.01</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="joint_steps">
+      <pose>-3.15 0 0 0 0 0</pose>
+      <child>second_step</child>
+      <parent>first_step</parent>
+    </joint>
+
+  </model>
+</sdf>

@@ -72,7 +72,7 @@ TurtlebotTeleop::TurtlebotTeleop():
   deadman_axis_(4),
   central_arm1_(1),
   central_arm2_(2),
-  l_scale_(0.75),
+  l_scale_(0.95), //it was 0.75
   a_scale_(-6.0)
 {
   ph_.param("axis_linear", linear_, linear_);

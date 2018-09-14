@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package format="2">
+<package>
   <name>siar_gazebo</name>
   <version>0.0.0</version>
   <description>The siar_gazebo package</description>
@@ -49,6 +49,7 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  
 
 
   <!-- The export tag contains other, unspecified, tags -->

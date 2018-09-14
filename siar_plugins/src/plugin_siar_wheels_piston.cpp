@@ -20,7 +20,7 @@
 #include <boost/algorithm/string/classification.hpp>
 
 #include <gazebo/gazebo_config.h>
-
+#include "siar_plugins/SiarStatus.h"
 
 
 namespace gazebo {
@@ -263,6 +263,7 @@ namespace gazebo {
     pos_vecUnitOrient_publisher_ = rosnode_->advertise<geometry_msgs::Vector3>("pos_vecUnitOrient_", 1);
     dis_box_centralaxis_publisher_= rosnode_->advertise<std_msgs::Float32>("dis_box_centralaxis_", 1);
     elec_pos_publisher_= rosnode_->advertise<std_msgs::Float32>("elec_pos", 1);
+    siar_status_publisher_= rosnode_->advertise<siar_plugins::SiarStatus>("SiarStatus",1);
 
     // start custom queue for diff drive
     this->callback_queue_thread_ = 
@@ -293,6 +294,12 @@ namespace gazebo {
         publishOdometry(seconds_since_last_update);
       }
 
+      //Publish the SiarStatus
+      
+      siar_plugins::SiarStatus msg;
+      msg.width = width_;
+      msg.electronics_x = (-1*elec_pos_cmd_);
+      siar_status_publisher_.publish(msg);
       
       //Calculate Value of distance between Wheels
       updateWidth();

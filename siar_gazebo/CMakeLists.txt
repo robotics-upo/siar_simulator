@@ -101,7 +101,6 @@ find_package(catkin REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES siar_gazebo
-#  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
 

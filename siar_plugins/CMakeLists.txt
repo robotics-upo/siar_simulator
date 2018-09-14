@@ -11,6 +11,9 @@ find_package(catkin REQUIRED COMPONENTS
   joy
   gazebo_ros
   roscpp
+  message_generation
+  std_msgs
+  nav_msgs  
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -20,6 +23,7 @@ find_package(gazebo REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -54,11 +58,11 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
+ add_message_files(
+   FILES
+   SiarStatus.msg
 #   Message2.msg
-# )
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -75,10 +79,11 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   nav_msgs
+   std_msgs  # Or other packages containing msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -112,7 +117,7 @@ link_directories(${GAZEBO_LIBRARY_DIRS})
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES siar_plugins
-#  CATKIN_DEPENDS gazebo_ros roscpp
+#  CATKIN_DEPENDS joy roscpp
 #  DEPENDS system_lib
 )
 

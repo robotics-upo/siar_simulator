@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="siar Words">
+    <static>true</static>
+
+    
+   <link name="link_1">
+      <pose> 0 -14.5 0.1 0 0 1.5707 </pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://meshes/siar_simulator.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://meshes/siar_simulator.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+   <link name="link_2">
+      <pose> 0 0 0.2 0 0 1.5707 </pose>
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://meshes/sewer_robot.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://meshes/sewer_robot.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+
+  </model>
+</sdf>

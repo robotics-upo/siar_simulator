@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="siar wheel">
+    
+   <link name="link">
+     <inertial>
+       <mass>1</mass>
+       <inertia> 
+        <ixx>0.00444</ixx>       
+        <ixy>0.0</ixy>         
+        <ixz>0.0</ixz>         
+        <iyy>0.00444</iyy>       
+        <iyz>0.0</iyz>         
+        <izz>0.007813</izz>       
+       </inertia>
+      </inertial>
+      <collision name="collision">
+        <surface>
+         <friction>
+          <ode>
+            <mu>0.9</mu>
+            <mu2>0.8</mu2>
+            <slip1>0.0</slip1>
+            <slip2>0.0</slip2>
+          </ode>
+         </friction>
+        </surface>
+        <geometry>
+          <cylinder>
+            <radius>.125</radius>
+            <length>.08</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://parts/wheels/mesh/wheel.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
