@@ -8,6 +8,6 @@ This simulator was tested in developed in Gazebo 7, ROS Kinetic and Ubuntu 16.04
   - Install the full version ROS Kinetic (http://wiki.ros.org/kinetic/Installation/Ubuntu)
   - Install Gazebo 7 to Ubuntu from gazebosim.com (http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install)
   - Install the joy package from ROS. (http://wiki.ros.org/joy)
-  - Install the package "gazebo2rviz" to do possible incorporate the tf. This step is necesary because the robot is in SDF and no in URDF to be understandable for RVIZ (http://andreasbihlmaier.github.io/2014/02/19/gazebo2rviz.html
+  - Install the package "gazebo2rviz" and "sdfpy" to do possible incorporate the tf. This step is necesary because the robot is in SDF and no in URDF to be understandable for RVIZ (http://andreasbihlmaier.github.io/2014/02/19/gazebo2rviz.html) and (https://github.com/robertdeg/sdfpy)
 
 Once it has been installed the programs you can to incorporate the workspace "siar_simulator" and after (catkin_make) it is possible to launch (roslaunch siar_gazebo siar_model.launch) the simulator. You should check the input that is configurated your joystick (modifiable in siar_model.launch)
