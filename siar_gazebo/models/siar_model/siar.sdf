@@ -3,7 +3,7 @@
   <model name="siar_model">
 <!--   <pose>0.4 0.356500 0.325083 0.0 0.0 3.130639</pose> -->
 <!--   <pose>1.713389 0.324341 0.324936 0.0 0.0 3.134521</pose> -->
-    <pose>-0.881503 0 0.15 0 0 0</pose>  
+    <pose>-0.881503 0 0.155 0 0 0</pose>  
    <static>false</static>
 
  				<!-- DEFINITION OF LINKS -->
@@ -2365,11 +2365,11 @@
         </visual>
       </link>
 
-   <joint type="revolute" name="move_camera_front_1">
+      <joint type="fixed" name="move_camera_front_1"> <!-- To give movement to the cameras, use type revolute, and the example below -->
       <pose>0.3235 0 .368 0 0 0</pose>
       <child>pivot_camera_front_1</child>
       <parent>handle_camera_front_4_1</parent>
-      <axis>
+      <!--axis>
         <limit>
           <lower>-1.0</lower>
           <upper>0.0</upper>
@@ -2381,102 +2381,36 @@
           <damping>0.0</damping>
           <friction>1</friction>
         </dynamics>
-      </axis>
+      </axis-->
     </joint>
-   <joint type="revolute" name="move_camera_front_2">
+   <joint type="fixed" name="move_camera_front_2">
       <pose>0.3295 0.0965 .3154 0 0 0.436332</pose>
       <child>pivot_camera_front_2</child>
       <parent>handle_camera_front_4_2</parent>
-      <axis>
-        <limit>
-          <lower>0.0</lower>
-          <upper>1.0</upper>
-        </limit>
-        <xyz>0 1 0</xyz>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-          <damping>0.0</damping>
-          <friction>1</friction>
-        </dynamics>
-      </axis>
     </joint>
-   <joint type="revolute" name="move_camera_front_3">
+   <joint type="fixed" name="move_camera_front_3">
       <pose>0.3295 -0.0965 .3154 0 0 -0.436332</pose>
       <child>pivot_camera_front_3</child>
       <parent>handle_camera_front_4_3</parent>
-      <axis>
-        <limit>
-          <lower>0.0</lower>
-          <upper>1.0</upper>
-        </limit>
-        <xyz>0 1 0</xyz>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-          <damping>0.0</damping>
-          <friction>1</friction>
-        </dynamics>
-      </axis>
     </joint>
-   <joint type="revolute" name="move_camera_back_1">
+   <joint type="fixed" name="move_camera_back_1">
       <pose>-0.3235 0 .368 0 0 0</pose>
       <child>pivot_camera_back_1</child>
       <parent>handle_camera_back_4_1</parent>
-      <axis>
-        <limit>
-          <lower>0.0</lower>
-          <upper>1.0</upper>
-        </limit>
-        <xyz>0 1 0</xyz>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-          <damping>0.0</damping>
-          <friction>1</friction>
-        </dynamics>
-      </axis>
     </joint>
-   <joint type="revolute" name="move_camera_back_2">
+   <joint type="fixed" name="move_camera_back_2">
       <pose>-0.3295 0.0965 .3154 0 0 -0.436332</pose>
       <child>pivot_camera_back_2</child>
       <parent>handle_camera_back_4_2</parent>
-      <axis>
-        <limit>
-          <lower>-1.0</lower>
-          <upper>0.0</upper>
-        </limit>
-        <xyz>0 1 0</xyz>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-          <damping>0.0</damping>
-          <friction>1</friction>
-        </dynamics>
-      </axis>
     </joint>
-   <joint type="revolute" name="move_camera_back_3">
+   <joint type="fixed" name="move_camera_back_3">
       <pose>-0.3295 -0.0965 .3154 0 0 0.436332</pose>
       <child>pivot_camera_back_3</child>
       <parent>handle_camera_back_4_3</parent>
-      <axis>
-        <limit>
-          <lower>-1.0</lower>
-          <upper>0.0</upper>
-        </limit>
-        <xyz>0 1 0</xyz>
-        <dynamics>
-          <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness>
-          <damping>0.0</damping>
-          <friction>1</friction>
-        </dynamics>
-      </axis>
     </joint>
 
 
 <!-- 5. Definition of couplings between Joint-Wheel -->
-
 
    <link name="coupling_right_1">
       <inertial>
@@ -4005,7 +3939,7 @@
 
 
     <link name="asusXtion_frontRight_link">
-      <pose>0.3542 0.1078 .3206 0 0 0.436332</pose>
+      <pose>0.3542 0.1078 .3206 0 .7853 0.436332</pose>
       <inertial>
        <mass>0.05</mass>
        <inertia>
@@ -4071,7 +4005,7 @@
 
 
     <link name="asusXtion_frontLeft_link">
-    <pose>0.3542 -0.1078 .3206 0 0 -0.436332</pose>
+    <pose>0.3542 -0.1078 .3206 0 .7853 -0.436332</pose>
       <inertial>
        <mass>0.05</mass>
        <inertia>
@@ -4257,7 +4191,7 @@
     </link>
     
     <link name="asusXtion_backRight_link">
-    <pose>-0.3542 0.1078 .3206 0 0 2.70526065</pose>
+    <pose>-0.3542 0.1078 .3206 0 .7853 2.70526065</pose>
       <inertial>
        <mass>0.05</mass>
        <inertia>
@@ -4324,7 +4258,7 @@
 
 
     <link name="asusXtion_backLeft_link">
-    <pose>-0.3542 -0.1078 .3206 0 0 -2.70526065</pose>
+    <pose>-0.3542 -0.1078 .3206 0 .7853 -2.70526065</pose>
       <inertial>
        <mass>0.05</mass>
        <inertia>

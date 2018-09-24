@@ -140,7 +140,7 @@
     <!--   DEFINITION OF SECTIONS   -->
 
 
-     <include>
+     <!--include>
       <uri>model://T130_straight_5m_dark_brick</uri>
       <name>T130_straight_5m_dark_brick_1</name>
       <pose>0 0 0 0 0 0</pose>
@@ -199,7 +199,7 @@
       <uri>model://siar_words</uri>
       <name>siar_words</name>
       <pose>-10 3.5 0.1 0 0 0</pose>
-    </include>
+    </include-->
 
 
   </world>
