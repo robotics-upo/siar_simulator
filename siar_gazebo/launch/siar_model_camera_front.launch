@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <arg name="world" default="empty"/> 
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+
+  <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
+
+  <!--Spawn the Nodes to transform frames depth and image-->
+  
+  <arg name="pi/2" value="1.5707963267948966" />
+  <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontMiddle_link camera_link_front_middle" />  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontRight_link camera_link_front_right" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontLeft_link camera_link_front_left" />
+
+  <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
+  
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find siar_gazebo)/worlds/siar_model.world"/>
+    <!--arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/-->
+  </include>
+
+  <!-- Spawn the models into Gazebo -->
+  
+  <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar-2.sdf -sdf -model siar" output="screen"/>
+
+   <!-- joy node -->
+  <node respawn="true" pkg="joy"
+        type="joy_node" name="joy_ros" >
+    <param name="dev" type="string" value="/dev/input/js1" />
+    <param name="deadzone" value="0.12" />
+  </node>
+
+ <!-- siar_Joy -->
+  <include file="$(find siar_plugins)/launch/siar_joy.launch"/>
+
+</launch>
+
