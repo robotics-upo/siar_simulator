@@ -22,7 +22,6 @@
 #include <gazebo/gazebo_config.h>
 #include "siar_plugins/SiarStatus.h"
 
-
 namespace gazebo {
 
   enum {
@@ -192,7 +191,20 @@ namespace gazebo {
     l_c_wheel_ = this->parent->GetLink("wheel_left_1");
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
     electronic_box_ = this->parent->GetLink("box_battery");
-//    piston_ = this->parent->GetLink("piston_1");
+    
+    tf_frame_name_.push_back("asusXtion_topMiddle_link");
+    tf_frame_name_.push_back("asusXtion_frontMiddle_link");
+    tf_frame_name_.push_back("asusXtion_frontRight_link");
+    tf_frame_name_.push_back("asusXtion_frontLeft_link");
+    tf_frame_name_.push_back("asusXtion_backMiddle_link");
+    tf_frame_name_.push_back("asusXtion_backRight_link");
+    tf_frame_name_.push_back("asusXtion_backLeft_link");
+    
+    for (const std::string& name : tf_frame_name_) { // access by const reference
+    
+      frame_camera_.push_back(this->parent->GetLink(name));
+    }
+    
     this -> piston_main_1_ = this->parent->GetJoint("move_piston_1_1");
     this -> piston_main_2_ = this->parent->GetJoint("move_piston_1_2");
     this -> hinge_arm_right_1_1_ = this->parent->GetJoint("hinge_arm_right_1_1");
@@ -264,6 +276,7 @@ namespace gazebo {
     dis_box_centralaxis_publisher_= rosnode_->advertise<std_msgs::Float32>("dis_box_centralaxis_", 1);
     elec_pos_publisher_= rosnode_->advertise<std_msgs::Float32>("elec_pos", 1);
     siar_status_publisher_= rosnode_->advertise<siar_plugins::SiarStatus>("SiarStatus",1);
+    tf_base_link_publisher_= rosnode_->advertise<geometry_msgs::Vector3>("tf_base_link",1);
 
     // start custom queue for diff drive
     this->callback_queue_thread_ = 
@@ -310,22 +323,18 @@ namespace gazebo {
       //Obtain Value of the distance between Center Robot and Electronic Box
       updateElecPos();
       
-/*       this->pid_piston_main_1 = common::PID(400, 95.0, 200.0);
-       this->pid_piston_main_2 = common::PID(400, 95.0, 200.0);
-       this-> parent ->GetJointController()->SetPositionPID(this->piston_main_1_->GetScopedName(), this->pid_piston_main_1);
-       this-> parent ->GetJointController()->SetPositionPID(this->piston_main_2_->GetScopedName(), this->pid_piston_main_2);
-       this-> parent ->GetJointController()->SetPositionTarget(this->piston_main_1_->GetScopedName(), elec_pos_cmd_);
-       this-> parent ->GetJointController()->SetPositionTarget(this->piston_main_2_->GetScopedName(), elec_pos_cmd_);
-*/       
-       this->pid_hinge_arm_right_left = common::PID(140, 20.0, 20.0);
-       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
-       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
-       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
-       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
-       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_1_->GetScopedName(), -1*elec_pos_cmd_);
-       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1*elec_pos_cmd_);
-       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(), elec_pos_cmd_);
-       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(), elec_pos_cmd_);              
+      tfBaseLink();
+      
+      
+      this->pid_hinge_arm_right_left = common::PID(140, 20.0, 20.0);
+      this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
+      this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
+      this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
+      this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_1_->GetScopedName(), -1*elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1*elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(), elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(), elec_pos_cmd_);              
        
  
         if ( (move_Piston_cmd_ > 0) && (deadman_pressed_cmd_) && (elec_pos_cmd_ > -1.19)){
@@ -400,20 +409,20 @@ namespace gazebo {
   }
 
   void GazeboRosWheelsPiston::updateElecPos(){
-     math::Vector3 rl, rr, rb, rm,u,pe;
+     math::Vector3 rl, rr,u,pe;
 // convert velocity to child_frame_id (aka base_footprint)
     math::Pose pose = this->parent->GetWorldPose();
     float yaw = pose.rot.GetYaw();
 
      rb.x = electronic_box_->GetWorldCoGPose().pos.x;
      rb.y = electronic_box_->GetWorldCoGPose().pos.y;
-     rb.z = 0;
+     rb.z = electronic_box_->GetWorldCoGPose().pos.z;
      rl.x = l_c_wheel_->GetWorldCoGPose().pos.x;
      rl.y = l_c_wheel_->GetWorldCoGPose().pos.y;
-     rl.z = 0;
+     rl.z = l_c_wheel_->GetWorldCoGPose().pos.z - 0.125;
      rr.x = r_c_wheel_->GetWorldCoGPose().pos.x;
      rr.y = r_c_wheel_->GetWorldCoGPose().pos.y;
-     rr.z = 0;
+     rr.z = r_c_wheel_->GetWorldCoGPose().pos.z - 0.125;  
      rm = (rl + rr) * 0.5;
      pe= rb - rm;
      u.x= cos (yaw);
@@ -461,18 +470,12 @@ namespace gazebo {
      dis_box_centralaxis_msg.data = (dis_box_centralaxis_);
      dis_box_centralaxis_publisher_.publish(dis_box_centralaxis_msg);
      
-     //Get the position  Piston
-//     geometry_msgs::Vector3 pos_piston_msg;     
-//     pos_piston_msg.x = pos_piston.x;
-//     pos_piston_msg.y = pos_piston.y;
-//     pos_piston_msg.z = pos_piston.z;
-//     pos_piston_publisher_.publish(pos_piston_msg);
   }
 
   void GazeboRosWheelsPiston::cmdVelCallback(
       const geometry_msgs::Twist::ConstPtr& cmd_msg) {
 
-    //boost::mutex::scoped_lock scoped_lock(lock);
+    boost::mutex::scoped_lock scoped_lock(lock);
     x_ = cmd_msg->linear.x;
     rot_ = cmd_msg->angular.z;
   }
@@ -512,6 +515,53 @@ namespace gazebo {
     }
   }
 
+  
+  void GazeboRosWheelsPiston::tfBaseLink(void)
+  {
+    static tf::TransformBroadcaster br;
+    
+//     math::Vector3 cam_[frame_camera_.size()];
+    math::Pose cam_[frame_camera_.size()];
+	
+    for (unsigned int i = 0; i < frame_camera_.size() ; i++)
+    {
+      
+      cam_[i] = frame_camera_[i] ->GetWorldCoGPose();
+    }
+	
+    tf::Transform t_[frame_camera_.size()];
+    //tf::Quaternion q_[frame_camera_.size()];
+    
+    for (int i = 0 ; i < tf_frame_name_.size() ; i++)
+    {   
+      t_[i].setOrigin( tf::Vector3(cam_[i].pos.x, cam_[i].pos.y, cam_[i].pos.z) );
+      t_[i].setRotation(tf::Quaternion( cam_[i].rot.x, cam_[i].rot.y, cam_[i].rot.z,cam_[i].rot.w) );
+      //q_[i].setRPY(0, 0, 0);
+      //t_[i].setRotation(q_[i]);
+      br.sendTransform(tf::StampedTransform(t_[i], ros::Time::now(), "world", tf_frame_name_[i]) ); 
+    }
+    
+      std::string frame_name_8 = "base_link",
+		  frame_name_9 = "box_electronics";
+    
+      tf::Transform t_8,t_9;
+      
+      t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
+      t_9.setOrigin( tf::Vector3(rb.x, rb.y, rb.z) );
+      
+      tf::Quaternion q_8, q_9;
+      
+      q_8.setRPY(0, 0, 0);
+      q_9.setRPY(0, 0, 0);
+      t_8.setRotation(q_8);
+      t_9.setRotation(q_9);
+      
+      br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
+      br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));
+      
+  }
+  
+  
   void GazeboRosWheelsPiston::publishOdometry(double step_time) {
     ros::Time current_time = ros::Time::now();
     std::string odom_frame = 

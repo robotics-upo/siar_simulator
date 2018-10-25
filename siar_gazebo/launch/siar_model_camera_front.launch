@@ -13,9 +13,9 @@
   
   <arg name="pi/2" value="1.5707963267948966" />
   <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontMiddle_link camera_link_front_middle" />  
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontRight_link camera_link_front_right" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontLeft_link camera_link_front_left" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_frontMiddle_link 	camera_link_front_middle" /> 
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" 	args="$(arg optical_rotate) asusXtion_frontRight_link 	camera_link_front_right "/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" 	args="$(arg optical_rotate) asusXtion_frontLeft_link 	camera_link_front_left "/>
 
   <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
   

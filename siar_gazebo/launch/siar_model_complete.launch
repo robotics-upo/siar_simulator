@@ -13,14 +13,17 @@
   
   <arg name="pi/2" value="1.5707963267948966" />
   <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontMiddle_link camera_link_front_middle" />  
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontRight_link camera_link_front_right" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" args="$(arg optical_rotate) siar__asusXtion_frontLeft_link camera_link_front_left" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2" args="$(arg optical_rotate) siar__asusXtion_backMiddle_link camera_link_back_middle" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" args="$(arg optical_rotate) siar__asusXtion_backRight_link camera_link_back_right" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" args="$(arg optical_rotate) siar__asusXtion_backLeft_link camera_link_back_left" />
-  <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" args="$(arg optical_rotate) siar__asusXtion_backTop_link camera_link_top_middle" />
-
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_frontMiddle_link 	camera_link_front_middle" />  
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" 	args="$(arg optical_rotate) asusXtion_frontRight_link 	camera_link_front_right "/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" 	args="$(arg optical_rotate) asusXtion_frontLeft_link 	camera_link_front_left "/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_backMiddle_link 	camera_link_back_middle "/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) asusXtion_backRight_link 	camera_link_back_right" />
+  <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) asusXtion_backLeft_link 	camera_link_back_left" 	/>
+  <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" />
+                                                                                                                                                
+  
+  <!--node pkg="tf2_ros" type="static_transform_publisher" name="base_link" args="0 0 0 0 0 0 siar_model base_link" /-->
+  
   <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
   
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
@@ -28,8 +31,8 @@
     <!--arg name="paused" value="$(arg paused)"/>
     <arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="gui" value="$(arg gui)"/>
-    <arg name="headless" value="$(arg headless)"/>
-    <arg name="debug" value="$(arg debug)"/-->
+    <arg name="headless" value="$(arg headless)"/-->
+    <arg name="debug" value="$(arg debug)"/>
   </include>
 
   <!-- Spawn the models into Gazebo -->
