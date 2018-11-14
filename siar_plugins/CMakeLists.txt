@@ -218,6 +218,9 @@ target_link_libraries(plugin_siar_wheels_piston ${Boost_LIBRARIES} ${GAZEBO_LIBR
 add_executable(siar_joy_node src/siar_joy_node.cpp)
 target_link_libraries(siar_joy_node ${catkin_LIBRARIES})
 
+add_executable(siar_joy_node_2 src/siar_joy_node_2.cpp)
+target_link_libraries(siar_joy_node_2 ${catkin_LIBRARIES})
+
 install(TARGETS
   plugin_siar_wheels_piston
   siar_joy_node

@@ -153,8 +153,8 @@ namespace gazebo {
       ros::NodeHandle* rosnode_;
       ros::Publisher odometry_publisher_, width_publisher_, pos_electronicBox_publisher_,pos_centerMidWheels_publisher_,pos_vecBoxWheel_publisher_,
 		     pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
-		     tf_base_link_publisher_;
-      ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_, deadman_pressed_subscriber_,vel_state_subscriber_;
+		     tf_base_link_publisher_,test_velocity_publisher_;
+      ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_;
       tf::TransformBroadcaster *transform_broadcaster_;
       nav_msgs::Odometry odom_;
       std::string tf_prefix_;
@@ -178,15 +178,13 @@ namespace gazebo {
       void elecPosCallback(const std_msgs::Float32::ConstPtr& move_Piston_msg);
       // Move Pisto Center stuff
       void armCentralPosCallback(const std_msgs::Bool::ConstPtr& arm_central_msg);
-      // Buttom to enable stuff
-      void deadmanPressedPosCallback(const std_msgs::Bool::ConstPtr& deadman_pressed_msg);
       
       void velStateCallback (const std_msgs::Float32::ConstPtr& vel_state_msg);
       
       double x_;
       double rot_;
-      double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_;
-      bool alive_, arm_central_cmd_, deadman_pressed_cmd_;
+      double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_;
+      bool alive_, arm_central_cmd_;
       math::Vector3 rm, rb; 
 
       // Update Rate

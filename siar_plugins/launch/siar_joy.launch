@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch> 
 
-  <node pkg="siar_plugins" type="siar_joy_node" name="siar_model"/>
+  <node pkg="siar_plugins" type="siar_joy_node" name="siar_model">
+    <remap from="/cmd_vel"  to="/siar_model/cmd_vel"/>
+    <remap from="/arm_bool" to="/siar_model/arm_bool"/>
+    <!--remap from="/siar_joy_plugin/deadman_pressed" to="/deadman_pressed"/>
+    <remap from="/siar_joy_plugin//move_Piston" to="/siar_model/move_Piston"/>
+    <remap from="/siar_joy_plugin/odomTopic" to="/siar_model/odomTopic"/>
+    <remap from="/siar_joy_plugin/vel_state" to="/siar_model/vel_state"/>
+    <remap from="/siar_joy_plugin/auto_botton" to="/siar_model/operation_mode"/>
+    <remap from="/siar_joy_plugin/mode_botton" to="/mode_botton"/-->
+  </node>  
     <param name="scale_angular" value="1.5"/>
     <param name="scale_linear" value="2.0"/>
     <param name="axis_deadman" value="4"/>
@@ -10,4 +19,5 @@
     <param name="axis_arm" value="4"/>
     <param name="axiscentral_arm1" value="1"/>
     <param name="axiscentral_arm2" value="2"/>
+    
 </launch>

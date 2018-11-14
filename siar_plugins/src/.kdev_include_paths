@@ -1,0 +1,8 @@
+/opt/ros/kinetic/include
+/usr/include/gazebo-7/gazebo
+/usr/include/sdformat-4.4/sdf
+/usr/include/libdap
+/home/saimon/siar_ws/src
+/home/saimon/siar_ws/src/siar_simulator/siar_plugins/include
+/home/saimon/siar_ws/src/siar_simulator/siar_plugins/msg
+/home/saimon/siar_ws/src/siar_packages/siar_driver/msg

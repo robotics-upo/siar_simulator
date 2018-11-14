@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch> 
+
+  <node pkg="siar_driver" type="siar_teleop_joy" name="siar_joy_plugin" output="screen">
+    <remap from="/cmd_vel" to="/user_cmd_vel"/>
+    <!--remap from="/width_pos" to="/siar_model/move_Piston"/-->
+  </node>  
+</launch>

@@ -20,7 +20,7 @@
 #include <boost/algorithm/string/classification.hpp>
 
 #include <gazebo/gazebo_config.h>
-#include "siar_plugins/SiarStatus.h"
+#include "siar_driver/SiarStatus.h"
 
 namespace gazebo {
 
@@ -248,7 +248,7 @@ namespace gazebo {
     vel_state_subscriber_ = rosnode_->subscribe(so);
 
     // SIAR: create elec pos subscriber
-          so = ros::SubscribeOptions::create<std_msgs::Float32>("move_Piston", 1,
+          so = ros::SubscribeOptions::create<std_msgs::Float32>("width_pos", 1,
           boost::bind(&GazeboRosWheelsPiston::elecPosCallback, this, _1),
           ros::VoidPtr(), &queue_);
     move_Piston_subscriber_= rosnode_->subscribe(so);
@@ -258,13 +258,7 @@ namespace gazebo {
           boost::bind(&GazeboRosWheelsPiston::armCentralPosCallback, this, _1),
           ros::VoidPtr(), &queue_);
     arm_central_subscriber_= rosnode_->subscribe(so);
-    
-    // SIAR: create deadman_pressed subscriber
-          so = ros::SubscribeOptions::create<std_msgs::Bool>("deadman_pressed", 1,
-          boost::bind(&GazeboRosWheelsPiston::deadmanPressedPosCallback, this, _1),
-          ros::VoidPtr(), &queue_);
-    deadman_pressed_subscriber_= rosnode_->subscribe(so);
-    
+       
 
     // INitialize publishers
     odometry_publisher_ = rosnode_->advertise<nav_msgs::Odometry>(odometry_topic_, 1);
@@ -275,8 +269,13 @@ namespace gazebo {
     pos_vecUnitOrient_publisher_ = rosnode_->advertise<geometry_msgs::Vector3>("pos_vecUnitOrient_", 1);
     dis_box_centralaxis_publisher_= rosnode_->advertise<std_msgs::Float32>("dis_box_centralaxis_", 1);
     elec_pos_publisher_= rosnode_->advertise<std_msgs::Float32>("elec_pos", 1);
-    siar_status_publisher_= rosnode_->advertise<siar_plugins::SiarStatus>("SiarStatus",1);
+    siar_status_publisher_= rosnode_->advertise<siar_driver::SiarStatus>("siar_status",1);
     tf_base_link_publisher_= rosnode_->advertise<geometry_msgs::Vector3>("tf_base_link",1);
+    
+    //Testing the velocity necessary in the simulator
+//    test_velocity_publisher_ =rosnode_ -> advertise<std_msgs::Float32>("test_velocity_",1);
+    
+    
 
     // start custom queue for diff drive
     this->callback_queue_thread_ = 
@@ -288,12 +287,14 @@ namespace gazebo {
           boost::bind(&GazeboRosWheelsPiston::UpdateChild, this));
 
     // Initial position electronic
-    move_Piston_cmd_=0;
+    move_Piston_cmd_=1;
+    move_Piston_aux_=1;
     elec_pos_cmd_ = 0;
     arm_central_cmd_=false;
     vel_state_cmd_=0;
   }
 
+  
   
   
   // Update the controller
@@ -309,7 +310,7 @@ namespace gazebo {
 
       //Publish the SiarStatus
       
-      siar_plugins::SiarStatus msg;
+      siar_driver::SiarStatus msg;
       msg.width = width_;
       msg.electronics_x = (-1*elec_pos_cmd_);
       siar_status_publisher_.publish(msg);
@@ -326,29 +327,38 @@ namespace gazebo {
       tfBaseLink();
       
       
-      this->pid_hinge_arm_right_left = common::PID(140, 20.0, 20.0);
+       this->pid_hinge_arm_right_left = common::PID(70, 5.0, 5.0);
+//       this->pid_hinge_arm_right_left = common::PID(20, 1, 1);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
-      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_1_->GetScopedName(), -1*elec_pos_cmd_);
-      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1*elec_pos_cmd_);
-      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(), elec_pos_cmd_);
-      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(), elec_pos_cmd_);              
-       
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_1_->GetScopedName(), -1.2* elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1.2* elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(),  1.2* elec_pos_cmd_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(),  1.2* elec_pos_cmd_);              
+      
+      // Here to limit the first option move_Piston_cmd_ = 1 like value, because it is given problem like initial value
+        if ( (move_Piston_cmd_ == 0)  || move_Piston_aux_ == 0)  
+	  {
+	  elec_pos_cmd_ = move_Piston_cmd_ ;
+	  move_Piston_aux_= 0;
+	  }
  
-        if ( (move_Piston_cmd_ > 0) && (deadman_pressed_cmd_) && (elec_pos_cmd_ > -1.19)){
+/*        if ( (move_Piston_cmd_ > 0) && (elec_pos_cmd_ > -1.19) || (move_Piston_cmd_ == 0) && (elec_pos_cmd_ < 1.19)){
             elec_pos_cmd_ = elec_pos_cmd_ - 0.005;
             usleep(10000);
         }
         if (elec_pos_cmd_ < -1.19)
             elec_pos_cmd_ = -1.19;
-        if ( (move_Piston_cmd_ < 0) && (deadman_pressed_cmd_) && (elec_pos_cmd_ < 1.19)){
+	
+        if ( (move_Piston_cmd_ < 0)  && (elec_pos_cmd_ < 1.19) || (move_Piston_cmd_ == 0) && (elec_pos_cmd_ > -1.19)){
             elec_pos_cmd_ = elec_pos_cmd_ + 0.005;
             usleep(10000);
         }
         if (elec_pos_cmd_ > 1.19)
-            elec_pos_cmd_ = 1.19;        
+            elec_pos_cmd_ = 1.19;   */  
+	
         std_msgs::Float32 elec_pos_msg;
         elec_pos_msg.data = (-1*elec_pos_cmd_);
         elec_pos_publisher_.publish(elec_pos_msg);
@@ -358,21 +368,14 @@ namespace gazebo {
       getWheelVelocities();
       //joints[LEFT]->SetVelocity(0, wheel_speed_[LEFT] / wheel_diameter_);
       //joints[RIGHT]->SetVelocity(0, wheel_speed_[RIGHT] / wheel_diameter_);
-      if ( (vel_state_cmd_ != 0) && (deadman_pressed_cmd_)){
+
         for (size_t side = 0; side < 2; ++side){
             for (size_t i = 0; i < joints_[side].size(); ++i){
             joints_[side][i]->SetVelocity(0, wheel_speed_[side] / (0.5 * wheel_diameter_));
+		    
             }
         }
-      }
-      else{
-        this -> axis_wheel_right_1_ -> SetVelocity (0, 0);
-        this -> axis_wheel_right_2_ -> SetVelocity (0, 0);
-        this -> axis_wheel_right_3_ -> SetVelocity (0, 0);
-        this -> axis_wheel_left_1_ -> SetVelocity (0, 0);
-        this -> axis_wheel_left_2_ -> SetVelocity (0, 0);
-        this -> axis_wheel_left_3_ -> SetVelocity (0, 0);
-      }
+     
           
 
       last_update_time_+= common::Time(update_period_);
@@ -391,13 +394,18 @@ namespace gazebo {
   void GazeboRosWheelsPiston::getWheelVelocities() {
     boost::mutex::scoped_lock scoped_lock(lock);
 
-    double vr = x_ * (-100);
-    double va = rot_ * (-100);
+    double vr = x_ * (-150);
+    double va = rot_ * (-800);
+    
 
     wheel_speed_[LEFT] = vr - va * width_ / 2.0;
     wheel_speed_[RIGHT] = vr + va * width_ / 2.0;
-//    wheel_speed_[LEFT] = vr - va * init_wheel_separation_ / 2.0;
-//    wheel_speed_[RIGHT] = vr + va * init_wheel_separation_ / 2.0;
+
+    
+    //Testing velocity in the Model
+//    std_msgs::Float32 test_vel_msg;  
+//    test_vel_msg.data = (wheel_speed_[LEFT]);
+//    test_velocity_publisher_.publish(test_vel_msg);
   }
 
   void GazeboRosWheelsPiston::updateWidth(){
@@ -428,7 +436,6 @@ namespace gazebo {
      u.x= cos (yaw);
      u.y= sin (yaw);
      u.z= 0;
-//     pos_piston = piston_->GetWorldCoGPose().pos;
 
 // HERE IS NECESARY TO CHECK HOW TO PRESENT THE FUNCTION DOT PRODUCT TO APPLY
      dis_box_centralaxis_ = (pe.x*u.x+pe.y*u.y+pe.z*u.z)*10;
@@ -478,6 +485,8 @@ namespace gazebo {
     boost::mutex::scoped_lock scoped_lock(lock);
     x_ = cmd_msg->linear.x;
     rot_ = cmd_msg->angular.z;
+    
+    
   }
 
   void GazeboRosWheelsPiston::elecPosCallback (
@@ -492,14 +501,7 @@ namespace gazebo {
     
     boost::mutex::scoped_lock scoped_lock(lock);
     arm_central_cmd_ = arm_central_msg->data;
-   }   
-   
-  void GazeboRosWheelsPiston::deadmanPressedPosCallback (
-      const std_msgs::Bool::ConstPtr& deadman_pressed_msg) {
-    
-    boost::mutex::scoped_lock scoped_lock(lock);
-    deadman_pressed_cmd_ = deadman_pressed_msg->data;
-   }      
+   }        
    
   void GazeboRosWheelsPiston::velStateCallback (
       const std_msgs::Float32::ConstPtr& vel_state_msg) {
