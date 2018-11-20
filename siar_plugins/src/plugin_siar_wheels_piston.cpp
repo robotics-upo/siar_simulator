@@ -327,7 +327,7 @@ namespace gazebo {
       tfBaseLink();
       
       
-       this->pid_hinge_arm_right_left = common::PID(70, 5.0, 5.0);
+       this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
 //       this->pid_hinge_arm_right_left = common::PID(20, 1, 1);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);

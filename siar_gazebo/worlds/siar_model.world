@@ -69,8 +69,21 @@
     <gravity>0 0 -9.8</gravity>
     
     <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    
     <atmosphere type='adiabatic'/>
-    <physics name='default_physics' default='0' type='ode'>
+    
+    <physics name='default_physics' default='0' type='bullet'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+      <bullet>
+        <solver>
+          <iters>120</iters>
+        </solver>
+      </bullet>
+    </physics>
+    
+<!--    <physics name='default_physics' default='0' type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
       <real_time_update_rate>1000</real_time_update_rate>
@@ -80,6 +93,7 @@
         </solver>
       </ode>
     </physics>
+    -->
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
       <background>0.7 0.7 0.7 1</background>
@@ -131,6 +145,7 @@
         <pose frame=''>0 0 10 0 -0 0</pose>
       </light>
     </state>
+    
     <gui fullscreen='0'>
       <camera name='user_camera'>
         <pose frame=''>5 -5 2 0 0.275643 2.35619</pose>
@@ -138,71 +153,6 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-
-    <!--   DEFINITION OF SECTIONS   -->
-
-
-     <!--include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_1</name>
-      <pose>0 0 0 0 0 0</pose>
-    </include>  
-    
-     <include>
-      <uri>model://T130_X_5m_dark_brick</uri>
-      <name>T130_X_5m_dark_brick</name>
-      <pose>5 0 0 0 0 0</pose>
-    </include>
-
-     <include>
-      <uri>model://T130_Y_5m_5m_dark_brick</uri>
-      <name>T130_Y_5m_5m_dark_brick</name>
-      <pose>10 0 0 0 0 0</pose>
-    </include>
-
-
-     <include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_2</name>
-      <pose>15 0 0 0 0 0</pose>
-    </include>
-
-     <include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_3</name>
-      <pose>20 0 0 0 0 0</pose>
-    </include>
-
-     <include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_4</name>
-      <pose>7.5 2.5 0 0 0 1.5708</pose>
-    </include>
-
-     <include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_5</name>
-      <pose>7.5 -2.5 0 0 0 -1.5708</pose>
-    </include>
-
-     <include>
-      <uri>model://T130_straight_5m_dark_brick</uri>
-      <name>T130_straight_5m_dark_brick_6</name>
-      <pose>15 -5 0 0 0 -1.5708</pose>
-    </include>
-  
-    <include>
-      <uri>model://siar_ramp</uri>
-      <name>siar_ramp</name>
-      <pose>-0.837461 0.048649 0.075 0 0 3.141529</pose>
-    </include>
-  
-     <include>
-      <uri>model://siar_words</uri>
-      <name>siar_words</name>
-      <pose>-10 3.5 0.1 0 0 0</pose>
-    </include-->
-
 
   </world>
 </sdf>

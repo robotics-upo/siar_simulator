@@ -2,7 +2,7 @@
 <launch>
     <arg name="world" default="empty"/> 
     <arg name="paused" default="false"/>
-    <arg name="use_sim_time" default="true"/>
+    <arg name="use_sim_time" default="false"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
@@ -20,34 +20,37 @@
   <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) asusXtion_backRight_link 	camera_link_back_right" />
   <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) asusXtion_backLeft_link 	camera_link_back_left" 	/>
   <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" />
-                                                                                                                                                
-  
-  <!--node pkg="tf2_ros" type="static_transform_publisher" name="base_link" args="0 0 0 0 0 0 siar_model base_link" /-->
-  
+                                                                                                                                                  
   <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
   
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="world_name" value="$(find siar_gazebo)/worlds/siar_model.world"/>
-    <!--arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="paused" value="$(arg paused)"/>
+    <!--arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="gui" value="$(arg gui)"/>
-    <arg name="headless" value="$(arg headless)"/-->
-    <arg name="debug" value="$(arg debug)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/-->
   </include>
 
   <!-- Spawn the models into Gazebo -->
   
+  
   <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar" output="screen"/>
 
-   <!-- joy node -->
-  <node respawn="true" pkg="joy"
-        type="joy_node" name="joy_ros" >
+  <!-- joy node -->
+  <node respawn="true" pkg="joy" type="joy_node" name="joy" >
     <param name="dev" type="string" value="/dev/input/js0" />
     <param name="deadzone" value="0.12" />
   </node>
 
- <!-- siar_Joy -->
-  <include file="$(find siar_plugins)/launch/siar_joy.launch"/>
+  <!-- siar_Joy -->
+  <include file="$(find siar_plugins)/launch/siar_teleop_joy.launch" />
+  
+  <!-- Siar Controller node -->
+  <include file="$(find siar_controller)/launch/siar_controller.launch" />
+  
+  <!-- Siar Costmap node -->
+  <!--include file="$(find siar_costmap)/launch/siar_costmap_simulator.launch" /-->
 
 </launch>
 

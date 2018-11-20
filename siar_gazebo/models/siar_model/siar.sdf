@@ -3,7 +3,7 @@
   <model name="siar_model">
 <!--   <pose>0.4 0.356500 0.325083 0.0 0.0 3.130639</pose> -->
 <!--   <pose>1.713389 0.324341 0.324936 0.0 0.0 3.134521</pose> -->
-    <pose>-0.881503 0 0.155 0 0 0</pose>  
+<!--    <pose>-0.881503 0 0.155 0 0 0</pose>  -->
    <static>false</static>
 
  				<!-- DEFINITION OF LINKS -->
@@ -3457,13 +3457,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -3505,13 +3505,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -3553,13 +3553,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -3601,13 +3601,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -3649,13 +3649,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -3697,13 +3697,13 @@
       <collision name="collision">
         <surface>
          <friction>
-          <ode>
+<!--          <ode>
             <mu>100</mu>
             <mu2>98</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
-          </ode>
+          </ode>-->
           <bullet>
             <friction>100</friction>
             <friction2>98</friction2>
@@ -4269,7 +4269,7 @@
       <child>asusXtion_frontMiddle_link</child>
       <parent>pivot_camera_front_1</parent>
       <pose> -0.018 0 -0.004 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4280,13 +4280,13 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint> 
     <joint name='fixed_camera_frontRight' type='fixed'>
       <child>asusXtion_frontRight_link</child>
       <parent>pivot_camera_front_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4297,13 +4297,13 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint>
     <joint name='fixed_camera_frontLeft' type='fixed'>
       <child>asusXtion_frontLeft_link</child>
       <parent>pivot_camera_front_3</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4314,7 +4314,7 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint>
 
     <link name="asusXtion_backMiddle_link">
@@ -4522,7 +4522,7 @@
       <child>asusXtion_backMiddle_link</child>
       <parent>pivot_camera_back_1</parent>
       <pose> -0.018 0 -0.004 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4533,13 +4533,13 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint> 
     <joint name='fixed_camera_backRight' type='fixed'>
       <child>asusXtion_backRight_link</child>
       <parent>pivot_camera_back_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4550,13 +4550,13 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint>
     <joint name='fixed_camera_backLeft' type='fixed'>
       <child>asusXtion_backLeft_link</child>
       <parent>pivot_camera_back_3</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4567,7 +4567,7 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint>    
     
 
@@ -4642,7 +4642,7 @@
       <child>asusXtion_topMiddle_link</child>
       <parent>box_battery</parent>
       <pose> 0 0 0 0 0 0</pose>
-      <physics>
+<!--      <physics>
         <ode>
           <limit>
             <cfm>0</cfm>
@@ -4653,7 +4653,7 @@
             <erp>0.2</erp>
           </suspension>
         </ode>
-      </physics>
+      </physics>-->
     </joint>
     
  
