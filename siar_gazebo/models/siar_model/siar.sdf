@@ -3442,9 +3442,9 @@
 
     <link name="wheel_right_1">
       <pose>.0 .305 .125 1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
       <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3458,15 +3458,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -3490,9 +3490,9 @@
 
     <link name="wheel_right_2">
       <pose>.292 .305 .125 1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
       <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3506,15 +3506,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -3538,9 +3538,9 @@
 
     <link name="wheel_right_3">
       <pose>-.292 .305 .125 1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
        <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3554,15 +3554,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -3586,9 +3586,9 @@
 
     <link name="wheel_left_1">
       <pose>.0 -.305 .125 -1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
       <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3602,15 +3602,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -3634,9 +3634,9 @@
 
     <link name="wheel_left_2">
       <pose>.292 -.305 .125 -1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
       <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3650,15 +3650,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -3682,9 +3682,9 @@
 
     <link name="wheel_left_3">
       <pose>-.292 -.305 .125 -1.5707 0 0</pose>
-      <kinematic>0</kinematic>
+<!--      <kinematic>0</kinematic>-->
       <inertial>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia> 
         <ixx>0.001377</ixx>       
         <ixy>0.0</ixy>         
@@ -3698,15 +3698,15 @@
         <surface>
          <friction>
 <!--          <ode>
-            <mu>100</mu>
-            <mu2>98</mu2>
+            <mu>200000</mu>
+            <mu2>200000</mu2>
 	    <fdir1>0 0 0</fdir1>
             <slip1>0.0</slip1>
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>100</friction>
-            <friction2>98</friction2>
+            <friction>50000</friction>
+            <friction2>50000</friction2>
 	    <fdir1>0 0 0</fdir1>
             <rolling_friction>0</rolling_friction>
           </bullet>
@@ -4103,10 +4103,10 @@
           </clip>
         </camera>
         <plugin name="asusXtion_frontMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <baseline>0.2</baseline>
-          <alwaysOn>true</alwaysOn>
-          <updateRate>0.0</updateRate>
-          <cameraName>asusXtion_frontMiddle</cameraName>	  
+          <cameraName>asusXtion_frontMiddle</cameraName>
+	  <alwaysOn>true</alwaysOn>
+	  <baseline>0.2</baseline>
+          <updateRate>0.0</updateRate> 
           <!--robotNamespace>/siar_model</robotNamespace-->
           <imageTopicName>rgb/image_raw</imageTopicName>
           <cameraInfoTopicName>/depth/camera_info</cameraInfoTopicName>
@@ -4116,7 +4116,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <frameName>camera_link_front_middle</frameName>	  
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
-          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
+         <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
           <distortion_k2>0.00000001</distortion_k2>
           <distortion_k3>0.00000001</distortion_k3>
@@ -4244,7 +4244,7 @@
           <cameraName>asusXtion_frontLeft</cameraName>
           <!--robotNamespace>/siar_model</robotNamespace-->
           <alwaysOn>true</alwaysOn>
-          <updateRate>30.0</updateRate>
+          <updateRate>0.0</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -4344,7 +4344,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="depth" name="camera">
+       <sensor type="depth" name="camera">
         <always_on>true</always_on>
         <update_rate>30.0</update_rate>
         <camera>
@@ -4360,30 +4360,34 @@
           </clip>
         </camera>
         <plugin name="asusXtion_backMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>asusXtion_backMiddle</cameraName>
-          <!--robotNamespace>/siar_model</robotNamespace-->
+	  <cameraName>asusXtion_backMiddle</cameraName>	  
           <alwaysOn>true</alwaysOn>
-          <updateRate>1.0</updateRate>
+	  <baseline>0.2</baseline>	
+          <updateRate>0.0</updateRate>	  
+	  
           <imageTopicName>rgb/image_raw</imageTopicName>
           <cameraInfoTopicName>/depth/camera_info</cameraInfoTopicName>
+	  <cameraInfoTopicName>/rgb/camera_info</cameraInfoTopicName>	  
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
-          <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_back_middle</frameName>
-          <baseline>0.2</baseline>
+	  <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+	  <pointCloudTopicName>depth/points</pointCloudTopicName>	           
+          <frameName>camera_link_back_middle</frameName>	   
+          <pointCloudCutoff>0.05</pointCloudCutoff>	  
+         <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
           <distortion_k2>0.00000001</distortion_k2>
           <distortion_k3>0.00000001</distortion_k3>
           <distortion_t1>0.00000001</distortion_t1>
           <distortion_t2>0.00000001</distortion_t2>0
-          <pointCloudCutoff>0.5</pointCloudCutoff>
-          <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
+          <CxPrime>0</CxPrime>
+          <Cx>0</Cx>
+          <Cy>0</Cy>
+          <focalLength>0</focalLength>
+          <hackBaseline>0</hackBaseline>
         </plugin>
-	    <visualize>true</visualize>
-      </sensor>
+      </sensor>      
     </link>
-    
+        
     <link name="asusXtion_backRight_link">
     <pose>-0.3542 0.1078 .3206 0 .7853 2.70526065</pose>
       <inertial>

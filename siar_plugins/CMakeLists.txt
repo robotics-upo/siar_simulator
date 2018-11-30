@@ -13,7 +13,9 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   message_generation
   std_msgs
-  nav_msgs  
+  nav_msgs
+  functions
+  siar_driver
 )
 
 include_directories(include ${catkin_INCLUDE_DIRS})
@@ -117,9 +119,9 @@ set (CMAKE_BUILD_TYPE Debug)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
+   INCLUDE_DIRS include
 #  LIBRARIES siar_plugins
-#  CATKIN_DEPENDS joy roscpp
+   CATKIN_DEPENDS joy roscpp functions siar_driver
 #  DEPENDS system_lib
 )
 

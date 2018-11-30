@@ -28,13 +28,17 @@ namespace gazebo {
     RIGHT,
     LEFT,
   };
-
-  GazeboRosWheelsPiston::GazeboRosWheelsPiston() {}
-
+  
+  GazeboRosWheelsPiston::GazeboRosWheelsPiston() {
+  }
+ 
   // Destructor
   GazeboRosWheelsPiston::~GazeboRosWheelsPiston() {
     delete rosnode_;
     delete transform_broadcaster_;
+    delete inter_va;
+    delete inter_vr;
+    
   }
 
   // Load the controller
@@ -150,7 +154,7 @@ namespace gazebo {
       this->publish_odometry_msg_ = _sdf->GetElement("publishOdometryMsg")->Get<bool>();
     }
 
-
+    
 
     // Initialize update rate stuff
     if (this->update_rate_ > 0.0) {
@@ -227,8 +231,23 @@ namespace gazebo {
     }
 
     rosnode_ = new ros::NodeHandle(this->robot_namespace_);
+    
+    
+    if (!rosnode_->getParam("cmd_vel_file", cmd_vel_file)) {
+      cmd_vel_file = "cmd_vel_file";
+    }
+    if (!rosnode_->getParam("vr_file", vr_file)) {
+      vr_file = "vr_file";
+    }
+    if (!rosnode_->getParam("va_file", va_file)) {
+      va_file = "va_file";
+   }
+    inter_vr = new functions::LinearInterpolator(cmd_vel_file, vr_file);
+    inter_va = new functions::LinearInterpolator(cmd_vel_file, va_file);
+    
+    
 
-    ROS_INFO("Starting GazeboRosWheelsPiston Plugin (ns = %s)!", this->robot_namespace_.c_str());
+    ROS_INFO("Starting GazeboRosWheelsPiston Plugin (ns = %s). Cmd_file= %s. iNTERPOL: %d!", this->robot_namespace_.c_str(), cmd_vel_file.c_str(), (int)inter_va->size());
 
     tf_prefix_ = tf::getPrefixParam(*rosnode_);
     transform_broadcaster_ = new tf::TransformBroadcaster();
@@ -272,10 +291,6 @@ namespace gazebo {
     siar_status_publisher_= rosnode_->advertise<siar_driver::SiarStatus>("siar_status",1);
     tf_base_link_publisher_= rosnode_->advertise<geometry_msgs::Vector3>("tf_base_link",1);
     
-    //Testing the velocity necessary in the simulator
-//    test_velocity_publisher_ =rosnode_ -> advertise<std_msgs::Float32>("test_velocity_",1);
-    
-    
 
     // start custom queue for diff drive
     this->callback_queue_thread_ = 
@@ -294,8 +309,6 @@ namespace gazebo {
     vel_state_cmd_=0;
   }
 
-  
-  
   
   // Update the controller
   void GazeboRosWheelsPiston::UpdateChild() {
@@ -325,10 +338,8 @@ namespace gazebo {
       updateElecPos();
       
       tfBaseLink();
-      
-      
-       this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
-//       this->pid_hinge_arm_right_left = common::PID(20, 1, 1);
+     
+      this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
@@ -345,29 +356,14 @@ namespace gazebo {
 	  move_Piston_aux_= 0;
 	  }
  
-/*        if ( (move_Piston_cmd_ > 0) && (elec_pos_cmd_ > -1.19) || (move_Piston_cmd_ == 0) && (elec_pos_cmd_ < 1.19)){
-            elec_pos_cmd_ = elec_pos_cmd_ - 0.005;
-            usleep(10000);
-        }
-        if (elec_pos_cmd_ < -1.19)
-            elec_pos_cmd_ = -1.19;
-	
-        if ( (move_Piston_cmd_ < 0)  && (elec_pos_cmd_ < 1.19) || (move_Piston_cmd_ == 0) && (elec_pos_cmd_ > -1.19)){
-            elec_pos_cmd_ = elec_pos_cmd_ + 0.005;
-            usleep(10000);
-        }
-        if (elec_pos_cmd_ > 1.19)
-            elec_pos_cmd_ = 1.19;   */  
-	
-        std_msgs::Float32 elec_pos_msg;
-        elec_pos_msg.data = (-1*elec_pos_cmd_);
-        elec_pos_publisher_.publish(elec_pos_msg);
+      //Publish the position of electronic_box_
+      std_msgs::Float32 elec_pos_msg;
+      elec_pos_msg.data = (-1*elec_pos_cmd_);
+      elec_pos_publisher_.publish(elec_pos_msg);
         
         
       // Update robot in case new velocities have been requested
       getWheelVelocities();
-      //joints[LEFT]->SetVelocity(0, wheel_speed_[LEFT] / wheel_diameter_);
-      //joints[RIGHT]->SetVelocity(0, wheel_speed_[RIGHT] / wheel_diameter_);
 
         for (size_t side = 0; side < 2; ++side){
             for (size_t i = 0; i < joints_[side].size(); ++i){
@@ -376,8 +372,6 @@ namespace gazebo {
             }
         }
      
-          
-
       last_update_time_+= common::Time(update_period_);
     }
   }
@@ -393,25 +387,23 @@ namespace gazebo {
 
   void GazeboRosWheelsPiston::getWheelVelocities() {
     boost::mutex::scoped_lock scoped_lock(lock);
-
-    double vr = x_ * (-150);
-    double va = rot_ * (-800);
+  
+    double coef_vr,coef_va;
+      
+    //Values interpolation to have same proportion of odomTopic and cmd_vel   
+    coef_vr = inter_vr->interpolate(fabs(x_));
+    coef_va = inter_va->interpolate(fabs(rot_));
     
-
-    wheel_speed_[LEFT] = vr - va * width_ / 2.0;
-    wheel_speed_[RIGHT] = vr + va * width_ / 2.0;
-
-    
-    //Testing velocity in the Model
-//    std_msgs::Float32 test_vel_msg;  
-//    test_vel_msg.data = (wheel_speed_[LEFT]);
-//    test_velocity_publisher_.publish(test_vel_msg);
+    double vr = x_ * (coef_vr);
+    double va = rot_ * (coef_va);
+   
+    wheel_speed_[LEFT] = 2*vr - va * width_ / (2.0*0.125);
+    wheel_speed_[RIGHT] = 2*vr + va * width_ / (2.0*0.125);
   }
 
   void GazeboRosWheelsPiston::updateWidth(){
       
      math::Vector3 dis = l_c_wheel_->GetWorldCoGPose().pos - r_c_wheel_->GetWorldCoGPose().pos;
-//     width_ = dis.GetLength() + 0.10001;
      width_ = sqrt(((l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x) * (l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x)) + ((l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y) * (l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y))) + 0.10001;
 
   }

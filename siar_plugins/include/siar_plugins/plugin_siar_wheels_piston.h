@@ -98,6 +98,9 @@
 #include <boost/thread.hpp>
 #include <boost/bind.hpp>
 
+//Interpolate process
+#include "functions/linear_interpolator.hpp"
+
 namespace gazebo {
 
   class Joint;
@@ -107,9 +110,12 @@ namespace gazebo {
 
     public:
       GazeboRosWheelsPiston();
+//       GazeboRosWheelsPiston(ros::NodeHandle& rosnode_p);
       ~GazeboRosWheelsPiston();
       void Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf);
       common::PID pid_piston_main_1, pid_piston_main_2, pid_hinge_arm_right_left;
+//       int argc; 
+//       char** argv;
 
     protected:
       virtual void UpdateChild();
@@ -151,6 +157,7 @@ namespace gazebo {
 
       // ROS STUFF
       ros::NodeHandle* rosnode_;
+//       ros::NodeHandle& rosnode_p;
       ros::Publisher odometry_publisher_, width_publisher_, pos_electronicBox_publisher_,pos_centerMidWheels_publisher_,pos_vecBoxWheel_publisher_,
 		     pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
 		     tf_base_link_publisher_,test_velocity_publisher_;
@@ -195,6 +202,10 @@ namespace gazebo {
       bool publish_odometry_tf_;
       bool publish_odometry_msg_;
       std::vector <std::string> tf_frame_name_;
+      
+      // Find coefficients to multiply vr and va then to have the same proportion en cmd_vel and odomTopic
+      functions::LinearInterpolator *interp_cmd_vel, *inter_vr, *inter_va;
+      std::string cmd_vel_file, vr_file, va_file;
 
   };
 

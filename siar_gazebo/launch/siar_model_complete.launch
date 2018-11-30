@@ -6,7 +6,11 @@
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
     <arg name="debug" default="false"/>
-
+      
+    <param name="cmd_vel_file" 	value="$(find siar_plugins)/data/cmd_vel_file"/>
+    <param name="vr_file" 	value="$(find siar_plugins)/data/vr_file"/>
+    <param name="va_file" 	value="$(find siar_plugins)/data/va_file"/>
+    
   <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
   <!--Spawn the Nodes to transform frames depth and image-->
@@ -28,14 +32,18 @@
     <arg name="paused" value="$(arg paused)"/>
     <!--arg name="use_sim_time" value="$(arg use_sim_time)"/>
     <arg name="gui" value="$(arg gui)"/>
-    <arg name="headless" value="$(arg headless)"/>
-    <arg name="debug" value="$(arg debug)"/-->
+    <arg name="headless" value="$(arg headless)"/-->
+    <arg name="debug" value="$(arg debug)"/>
   </include>
 
   <!-- Spawn the models into Gazebo -->
   
   
-  <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar" output="screen"/>
+  <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar" output="screen">
+  
+  
+  
+  </node>
 
   <!-- joy node -->
   <node respawn="true" pkg="joy" type="joy_node" name="joy" >
