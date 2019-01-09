@@ -516,7 +516,11 @@ namespace gazebo {
     
 //     math::Vector3 cam_[frame_camera_.size()];
     math::Pose cam_[frame_camera_.size()];
-	
+    math::Pose tf_electronic_box;
+    
+    std::string frame_name_8 = "base_link",
+		frame_name_9 = "box_electronics";
+    
     for (unsigned int i = 0; i < frame_camera_.size() ; i++)
     {
       
@@ -535,20 +539,18 @@ namespace gazebo {
       br.sendTransform(tf::StampedTransform(t_[i], ros::Time::now(), "world", tf_frame_name_[i]) ); 
     }
     
-      std::string frame_name_8 = "base_link",
-		  frame_name_9 = "box_electronics";
+      tf_electronic_box = electronic_box_->GetWorldCoGPose();
+     
     
       tf::Transform t_8,t_9;
       
       t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
-      t_9.setOrigin( tf::Vector3(rb.x, rb.y, rb.z) );
+      t_9.setOrigin( tf::Vector3(tf_electronic_box.pos.x, tf_electronic_box.pos.y, tf_electronic_box.pos.z) );
+            
+      tf::Quaternion q_8;
       
-      tf::Quaternion q_8, q_9;
-      
-      q_8.setRPY(0, 0, 0);
-      q_9.setRPY(0, 0, 0);
-      t_8.setRotation(q_8);
-      t_9.setRotation(q_9);
+      t_8.setRotation(tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));
+      t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
       
       br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
       br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));

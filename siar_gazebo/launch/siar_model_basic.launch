@@ -22,7 +22,7 @@
 
   <!-- Spawn the models into Gazebo -->
   
-  <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar-1.sdf -sdf -model siar" output="screen"/>
+  <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar" output="screen"/>
 
    <!-- joy node -->
   <node respawn="true" pkg="joy"

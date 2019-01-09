@@ -192,8 +192,8 @@ namespace gazebo {
       double rot_;
       double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_;
       bool alive_, arm_central_cmd_;
-      math::Vector3 rm, rb; 
-
+      math::Vector3 rm, rb;
+     
       // Update Rate
       double update_rate_;
       double update_period_;

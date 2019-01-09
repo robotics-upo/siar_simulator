@@ -149,10 +149,10 @@
   </node>
 
   <!-- siar_Joy -->
-  <include file="$(find siar_plugins)/launch/siar_teleop_joy.launch" />
+  <include file="$(find siar_plugins)/launch/siar_teleop_joy_simulation.launch" />
   
   <!-- Siar Controller node -->
-  <include file="$(find siar_controller)/launch/siar_controller.launch" />
+  <include file="$(find siar_controller)/launch/siar_controller_simulation.launch" />
   
   <!-- Siar Costmap node -->
   <!--include file="$(find siar_costmap)/launch/siar_costmap_simulator.launch" /-->
