@@ -1,10 +1,32 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
   <model name="siar T130_X_5m_dark_brick">
-    <static>true</static>
+   <static>true</static>
     
    <link name="link">
+<!--     <inertial>
+      <mass>150</mass>
+      <inertia> 
+        <ixx>12.53125</ixx>       
+        <ixy>0.0</ixy>         
+        <ixz>0.0</ixz>         
+        <iyy>12.53125</iyy>       
+        <iyz>0.0</iyz>         
+        <izz>25</izz>        
+       </inertia>
+      </inertial>-->
       <collision name="collision">
+<!--	<max_contacts>1000</max_contacts>
+	<surface>
+         <friction>
+          <bullet>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>0 0 1</fdir1>
+            <rolling_friction>1</rolling_friction>
+          </bullet>
+         </friction>
+        </surface>-->
         <geometry>
           <mesh>
             <uri>model://T130_X_5m_dark_brick/meshes/T130_X_5m_dark_brick.dae</uri>

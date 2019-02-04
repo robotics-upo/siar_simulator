@@ -232,6 +232,7 @@ namespace gazebo {
 
     rosnode_ = new ros::NodeHandle(this->robot_namespace_);
     
+    // Load parameter to calculate interpolation
     
     if (!rosnode_->getParam("cmd_vel_file", cmd_vel_file)) {
       cmd_vel_file = "cmd_vel_file";

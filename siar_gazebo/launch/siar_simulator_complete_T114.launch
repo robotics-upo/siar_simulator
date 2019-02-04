@@ -38,19 +38,19 @@
 
     <!-- Spawn the models into Gazebo -->
   
-<!--    <node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/>-->
+    <node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/>
   
-    <arg name="xS" default="0"/>
+    <arg name="xS" default="1.8"/>
     <arg name="yS" default="0"/>
-    <arg name="zS" default="0"/>
+    <arg name="zS" default="0.155"/>
     <arg name="rollS" default="0"/>
     <arg name="pitchS" default="0"/>
     <arg name="yawS" default="0"/>
     <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar 
   	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
-  
-<!--    <node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick0"/>
+    
+    <node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_straight_5m/model.sdf -sdf -model T114A_straight_5m"/>
   
     <arg name="x1" default="5"/>
     <arg name="y1" default="0"/>
@@ -58,17 +58,17 @@
     <arg name="roll1" default="0"/>
     <arg name="pitch1" default="0"/>
     <arg name="yaw1" default="0"/>
-    <node name="spawn_sec_S1" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick1
+    <node name="spawn_sec_S1" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_straight_5m/model.sdf -sdf -model T114A_straight_5m_2
 	  -x $(arg x1) -y $(arg y1) -z $(arg z1) 
 	  -R $(arg roll1) -P $(arg pitch1) -Y $(arg yaw1)"/>
-  
+    
     <arg name="xX" default="10"/>
     <arg name="yX" default="0"/>
     <arg name="zX" default="0"/>
     <arg name="rollX" default="0"/>
     <arg name="pitchX" default="0"/>
     <arg name="yawX" default="0"/>
-    <node name="spawn_sec_X" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_X_5m_dark_brick/model.sdf -sdf -model T130_X_5m_dark_brick
+    <node name="spawn_sec_X" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_X_5m/model.sdf -sdf -model T114A_X_5m
 	  -x $(arg xX) -y $(arg yX) -z $(arg zX) 
 	  -R $(arg rollX) -P $(arg pitchX) -Y $(arg yawX)"/>
   
@@ -77,70 +77,11 @@
     <arg name="zY" default="0"/>
     <arg name="rollY" default="0"/>
     <arg name="pitchY" default="0"/>
-    <arg name="yawY" default="0"/>
-    <node name="spawn_sec_Y" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_Y_5m_5m_dark_brick/model.sdf -sdf -model T130_Y_5m_dark_brick 
+    <arg name="yawY" default="1.5708"/>
+    <node name="spawn_sec_Y" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_Y_5m/model.sdf -sdf -model T114A_Y_5m
         -x $(arg xY) -y $(arg yY) -z $(arg zY) 
 	  -R $(arg rollY) -P $(arg pitchY) -Y $(arg yawY)"/>
-  
-    <arg name="x2" default="20"/>
-    <arg name="y2" default="0"/>
-    <arg name="z2" default="0"/>
-    <arg name="roll2" default="0"/>
-    <arg name="pitch2" default="0"/>
-    <arg name="yaw2" default="0"/>
-    <node name="spawn_sec_S2" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick2
-	  -x $(arg x2) -y $(arg y2) -z $(arg z2) 
-	  -R $(arg roll2) -P $(arg pitch2) -Y $(arg yaw2)"/>
-  
-    <arg name="x3" default="25"/>
-    <arg name="y3" default="0"/>
-    <arg name="z3" default="0"/>
-    <arg name="roll3" default="0"/>
-    <arg name="pitch3" default="0"/>
-    <arg name="yaw3" default="0"/>
-    <node name="spawn_sec_S3" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick3
-	  -x $(arg x3) -y $(arg y3) -z $(arg z3) 
-	  -R $(arg roll3) -P $(arg pitch3) -Y $(arg yaw3)"/>
-  
-    <arg name="x4" default="12.5"/>
-    <arg name="y4" default="2.5"/>
-    <arg name="z4" default="0"/>
-    <arg name="roll4" default="0"/>
-    <arg name="pitch4" default="0"/>
-    <arg name="yaw4" default="1.5708"/>
-    <node name="spawn_sec_S4" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick4
-	  -x $(arg x4) -y $(arg y4) -z $(arg z4) 
-	  -R $(arg roll4) -P $(arg pitch4) -Y $(arg yaw4)"/>
-  
-    <arg name="x5" default="12.5"/>
-    <arg name="y5" default="-7.5"/>
-    <arg name="z5" default="0"/>
-    <arg name="roll5" default="0"/>
-    <arg name="pitch5" default="0"/>
-    <arg name="yaw5" default="1.5708"/>
-    <node name="spawn_sec_S5" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick5
-	  -x $(arg x5) -y $(arg y5) -z $(arg z5) 
-	  -R $(arg roll5) -P $(arg pitch5) -Y $(arg yaw5)"/>
-
-    <arg name="x6" default="20"/>
-    <arg name="y6" default="-10"/>
-    <arg name="z6" default="0"/>
-    <arg name="roll6" default="0"/>
-    <arg name="pitch6" default="0"/>
-    <arg name="yaw6" default="1.5708"/>
-    <node name="spawn_sec_S6" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick6
-	  -x $(arg x6) -y $(arg y6) -z $(arg z6) 
-	  -R $(arg roll6) -P $(arg pitch6) -Y $(arg yaw6)"/>
-  
-    <arg name="x7" default="30"/>
-    <arg name="y7" default="0"/>
-    <arg name="z7" default="0"/>
-    <arg name="roll7" default="0"/>
-    <arg name="pitch7" default="0"/>
-    <arg name="yaw7" default="0"/>
-   <node name="spawn_sec_S7" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick7 
-	  -x $(arg x7) -y $(arg y7) -z $(arg z7) 
-	  -R $(arg roll7) -P $(arg pitch7) -Y $(arg yaw7)"/>  -->
+    
   
     <!-- joy node -->
     <node respawn="true" pkg="joy" type="joy_node" name="joy" >

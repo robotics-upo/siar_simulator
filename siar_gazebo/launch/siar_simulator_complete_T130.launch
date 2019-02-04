@@ -38,19 +38,20 @@
 
     <!-- Spawn the models into Gazebo -->
   
-<!--    <node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/>-->
+    <node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/>
   
-    <arg name="xS" default="0"/>
+    <arg name="xS" default="1.8"/>
     <arg name="yS" default="0"/>
-    <arg name="zS" default="0"/>
+    <arg name="zS" default="0.155"/>
     <arg name="rollS" default="0"/>
     <arg name="pitchS" default="0"/>
     <arg name="yawS" default="0"/>
     <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar 
   	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
+      
   
-<!--    <node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick0"/>
+   <node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick0"/>
   
     <arg name="x1" default="5"/>
     <arg name="y1" default="0"/>
@@ -140,7 +141,7 @@
     <arg name="yaw7" default="0"/>
    <node name="spawn_sec_S7" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_straight_5m_dark_brick/model.sdf -sdf -model T130_straight_5m_dark_brick7 
 	  -x $(arg x7) -y $(arg y7) -z $(arg z7) 
-	  -R $(arg roll7) -P $(arg pitch7) -Y $(arg yaw7)"/>  -->
+	  -R $(arg roll7) -P $(arg pitch7) -Y $(arg yaw7)"/>  
   
     <!-- joy node -->
     <node respawn="true" pkg="joy" type="joy_node" name="joy" >

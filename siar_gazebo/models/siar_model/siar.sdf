@@ -13,14 +13,14 @@
     <link name='chassis_1'>
       <pose>0 0.045 .105 0 0 0</pose>
       <inertial>
-       <mass>2.0</mass>
+       <mass>6.0</mass>
        <inertia>
-         <ixx>0.000133</ixx>       
+         <ixx>0.0004</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.105669</iyy>       
+         <iyy>0.317008</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.105669</izz>       
+         <izz>0.317008</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -47,14 +47,14 @@
     <link name='chassis_2'>
       <pose>0 -0.045 .105 0 0 0</pose>
       <inertial>
-       <mass>2.0</mass>
+       <mass>6.0</mass>
        <inertia>
-         <ixx>0.000133</ixx>       
+         <ixx>0.0004</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.105669</iyy>       
+         <iyy>0.317008</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.105669</izz>       
+         <izz>0.317008</izz>       
        </inertia>
       </inertial>
 
@@ -178,14 +178,14 @@
     <link name='arm_right_1_1'>
       <pose>.078 .12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>       
+         <izz>0.003663</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -212,14 +212,14 @@
     <link name='arm_right_1_2'>
       <pose>-.078 .12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>        
+         <izz>0.003663</izz>         
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -246,14 +246,14 @@
      <link name='arm_right_2_1'>
       <pose>.214 .12 .125 0 0 0</pose> 
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>         
+         <izz>0.003663</izz>           
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -280,14 +280,14 @@
      <link name='arm_right_2_2'>
       <pose>.37 .12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>           
+         <izz>0.003663</izz>           
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -314,14 +314,14 @@
      <link name='arm_right_3_1'>
       <pose>-.214 .12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>           
+         <izz>0.003663</izz>          
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -348,14 +348,14 @@
      <link name='arm_right_3_2'>
       <pose>-.37 .12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>          
+         <izz>0.003663</izz>           
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -382,14 +382,14 @@
     <link name='arm_left_1_1'>
        <pose>.078 -.12 .125 0 0 0</pose>
        <inertial>
-         <mass>0.5</mass>
-         <inertia>
-           <ixx>0.001221</ixx>       
-           <ixy>0.0</ixy>         
-           <ixz>0.0</ixz>         
-           <iyy>0.000033</iyy>       
-           <iyz>0.0</iyz>         
-           <izz>0.001221</izz>           
+       <mass>1.5</mass>
+       <inertia>
+         <ixx>0.003663</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.0001</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.003663</izz>          
          </inertia>
        </inertial>
        <collision name='collision'>
@@ -416,14 +416,14 @@
     <link name='arm_left_1_2'> 
       <pose>-.078 -.12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>    
+         <izz>0.003663</izz>    
        </inertia>
       </inertial>     
       <collision name='collision'>
@@ -450,14 +450,14 @@
     <link name='arm_left_2_1'> 
       <pose>.214 -.12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>      
+         <izz>0.003663</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -484,14 +484,14 @@
   <link name='arm_left_2_2'> 
       <pose>.37 -.12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>        
+         <izz>0.003663</izz>         
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -518,14 +518,14 @@
   <link name='arm_left_3_1'> 
       <pose>-.214 -.12 .125 0 0 0</pose>
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>        
+         <izz>0.003663</izz>         
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -552,14 +552,14 @@
   <link name='arm_left_3_2'>
       <pose>-.37 -.12 .125 0 0 0</pose> 
       <inertial>
-       <mass>0.5</mass>
+       <mass>1.5</mass>
        <inertia>
-         <ixx>0.001221</ixx>       
+         <ixx>0.003663</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000033</iyy>       
+         <iyy>0.0001</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.001221</izz>         
+         <izz>0.003663</izz>         
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -811,14 +811,14 @@
     <link name='chassis_5'>
       <pose>0 0.045 .145 0 0 0</pose>
       <inertial>
-       <mass>2.0</mass>
+       <mass>6.0</mass>
        <inertia>
-         <ixx>0.000133</ixx>       
+         <ixx>0.0004</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.105669</iyy>       
+         <iyy>0.317008</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.105669</izz>      
+         <izz>0.317008</izz>    
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -845,17 +845,16 @@
     <link name='chassis_6'>
       <pose>0 -0.045 .145 0 0 0</pose>
       <inertial>
-       <mass>2.0</mass>
+       <mass>6.0</mass>
        <inertia>
-         <ixx>0.000133</ixx>       
+         <ixx>0.0004</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.105669</iyy>       
+         <iyy>0.317008</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.105669</izz>       
+         <izz>0.317008</izz>     
        </inertia>
       </inertial>
-
       <collision name='collision'>
         <geometry>
           <box>
@@ -2603,7 +2602,7 @@
    <link name="coupling_right_1">
       <inertial>
        <pose>.0 .215 .09 0 0 0</pose>
-       <mass>1</mass>
+<!--       <mass>1</mass>
        <inertia>
          <ixx>0.000833</ixx>       
          <ixy>0.0</ixy>         
@@ -2611,6 +2610,16 @@
          <iyy>0.003542</iyy>       
          <iyz>0.0</iyz>         
          <izz>0.003008</izz>       
+       </inertia>
+      </inertial>-->
+       <mass>3</mass>
+       <inertia>
+         <ixx>0.002</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.004625</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.003425</izz>       
        </inertia>
       </inertial>
       <collision name='collision_1'>
@@ -2660,14 +2669,14 @@
    <link name="coupling_right_2">
       <inertial>
        <pose>.292 .215 .09 0 0 0</pose>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia>
-         <ixx>0.000833</ixx>       
+         <ixx>0.001667</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.003542</iyy>       
+         <iyy>0.003854</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.003008</izz>       
+         <izz>0.002854</izz>       
        </inertia>
       </inertial>
       <collision name='collision_1'>
@@ -2717,14 +2726,14 @@
    <link name="coupling_right_3">
       <inertial>
        <pose>-.292 .215 .09 0 0 0</pose>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia>
-         <ixx>0.000833</ixx>       
+         <ixx>0.001667</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.003542</iyy>       
+         <iyy>0.003854</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.003008</izz>        
+         <izz>0.002854</izz>       
        </inertia>
       </inertial>
       <collision name='collision_1'>
@@ -2774,14 +2783,14 @@
    <link name="coupling_left_1">
       <inertial>
        <pose>.0 -.215 .09 0 0 0</pose>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia>
-         <ixx>0.000833</ixx>       
+         <ixx>0.001667</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.003542</iyy>       
+         <iyy>0.003854</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.003008</izz>      
+         <izz>0.002854</izz>       
        </inertia>
       </inertial>
       <collision name='collision_1'>
@@ -2831,14 +2840,14 @@
    <link name="coupling_left_2">
       <inertial>
       <pose>.292 -.215 .09 0 0 0</pose>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia>
-         <ixx>0.000833</ixx>       
+         <ixx>0.001667</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.003542</iyy>       
+         <iyy>0.003854</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.003008</izz>       
+         <izz>0.002854</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -2888,14 +2897,14 @@
    <link name="coupling_left_3">
       <inertial>
       <pose>-.292 -.215 .09 0 0 0</pose>
-       <mass>1</mass>
+       <mass>2.5</mass>
        <inertia>
-         <ixx>0.000833</ixx>       
+         <ixx>0.001667</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.003542</iyy>       
+         <iyy>0.003854</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.003008</izz>       
+         <izz>0.002854</izz>       
        </inertia>
       </inertial>
       <collision name='collision_1'>
@@ -3455,6 +3464,7 @@
        </inertia>
       </inertial>
       <collision name="collision">
+	<max_contacts>1000</max_contacts>
         <surface>
          <friction>
 <!--          <ode>
@@ -3465,10 +3475,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>
@@ -3503,6 +3513,7 @@
        </inertia>
       </inertial>
       <collision name="collision">
+	<max_contacts>1000</max_contacts>
         <surface>
          <friction>
 <!--          <ode>
@@ -3513,10 +3524,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>
@@ -3551,6 +3562,7 @@
        </inertia>
       </inertial>
       <collision name="collision">
+	<max_contacts>1000</max_contacts>
         <surface>
          <friction>
 <!--          <ode>
@@ -3561,10 +3573,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>
@@ -3599,6 +3611,7 @@
        </inertia>
       </inertial>
       <collision name="collision">
+	<max_contacts>1000</max_contacts>
         <surface>
          <friction>
 <!--          <ode>
@@ -3609,10 +3622,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>
@@ -3647,6 +3660,7 @@
        </inertia>
       </inertial>
       <collision name="collision">
+	<max_contacts>1000</max_contacts>
         <surface>
          <friction>
 <!--          <ode>
@@ -3657,10 +3671,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>
@@ -3695,7 +3709,8 @@
        </inertia>
       </inertial>
       <collision name="collision">
-        <surface>
+        <max_contacts>1000</max_contacts>
+	<surface>
          <friction>
 <!--          <ode>
             <mu>200000</mu>
@@ -3705,10 +3720,10 @@
             <slip2>0.0</slip2>
           </ode>-->
           <bullet>
-            <friction>50000</friction>
-            <friction2>50000</friction2>
-	    <fdir1>0 0 0</fdir1>
-            <rolling_friction>0</rolling_friction>
+            <friction>1000000</friction>
+            <friction2>1000000</friction2>
+	    <fdir1>1 1 1</fdir1>
+            <rolling_friction>1</rolling_friction>
           </bullet>
          </friction>
         </surface>

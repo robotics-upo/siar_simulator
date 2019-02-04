@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="T114A_X_5m">
+    <static>true</static>
+    
+   <link name="link">
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://T114A_X_5m/meshes/T114A_X_5m.dae</uri>
+          </mesh>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://T114A_X_5m/meshes/T114A_X_5m.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
