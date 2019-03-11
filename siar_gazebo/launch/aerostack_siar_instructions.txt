@@ -1,0 +1,41 @@
+## Include in .bashrc
+# For siar and Aerostack simulation
+export GAZEBO_MODEL_PATH=/home/marco/siar_ws/src/siar_simulator/siar_gazebo/models
+export GAZEBO_PLUGIN_PATH=/home/marco/siar_ws/devel/lib
+
+## Install and compile Aerostack
+https://bitbucket.org/Vision4UAV/aerostack/wiki/Download%20the%20Aerostack
+
+## Access aerostack simulator launcher
+cd /home/marco/workspace/aerostack/src/aerostack/launchers/rotors_simulator_launchers
+
+## Launch simulator
+. $AEROSTACK_STACK/setup.sh
+./rotors_simulation_agents_siar.sh
+./rotors_simulation_drivers.sh (Press "L", Take-Off "T" and Controllers "O" and - Position "8" or Velocity "7"-)
+
+## Access and launch siar workspace
+cd ~/siar_ws
+. devel/setup.bash
+roslaunch siar_gazebo siar_simulator_aerostack.launch
+
+## Important notes
+## How to create a world ad include a new model
+# Add new models to /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo/models
+# Add new world /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo/worlds
+# Modify /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo/launch/env_mav_siar.launch to open new world.
+
+## How to create a new plugin
+# Include source files in /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo_plugins/src
+# Include header files in /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo_plugins/include
+# Modify CMakeLists.txt in /home/marco/workspace/aerostack/src/aerostack/stack/simulation_system/drone_simulator/rotors_simulator_gazebo/rotors_simulator/rotors_gazebo_plugins
+
+## To add new nodes to aerostack
+# Create a repository
+# Clone it to /home/marco/workspace/aerostack/src/aerostack/stack_devel
+# Follow this process to create the inherited class https://bitbucket.org/Vision4UAV/aerostack/wiki/Process%20lifecycle
+
+## Possible errors
+# parrot_ardsk not found during Aerostack compilation
+catkin_make --pkg parrot_arsdk
+catkin_make
