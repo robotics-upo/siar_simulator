@@ -195,8 +195,9 @@ namespace gazebo {
     l_c_wheel_ = this->parent->GetLink("wheel_left_1");
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
     electronic_box_ = this->parent->GetLink("box_battery");
+    velodyne_top_ = this->parent->GetLink("velodyne_top");
     
-    tf_frame_name_.push_back("asusXtion_topMiddle_link");
+//     tf_frame_name_.push_back("asusXtion_topMiddle_link");
     tf_frame_name_.push_back("asusXtion_frontMiddle_link");
     tf_frame_name_.push_back("asusXtion_frontRight_link");
     tf_frame_name_.push_back("asusXtion_frontLeft_link");
@@ -517,10 +518,11 @@ namespace gazebo {
     
 //     math::Vector3 cam_[frame_camera_.size()];
     math::Pose cam_[frame_camera_.size()];
-    math::Pose tf_electronic_box;
+    math::Pose tf_electronic_box, tf_velodyne_top;
     
     std::string frame_name_8 = "base_link",
-		frame_name_9 = "box_electronics";
+		frame_name_9 = "box_electronics",
+                frame_name_10 = "velodyne_top";
     
     for (unsigned int i = 0; i < frame_camera_.size() ; i++)
     {
@@ -541,21 +543,23 @@ namespace gazebo {
     }
     
       tf_electronic_box = electronic_box_->GetWorldCoGPose();
-     
+      tf_velodyne_top = velodyne_top_->GetWorldCoGPose();
     
-      tf::Transform t_8,t_9;
+      tf::Transform t_8,t_9, t_10;
       
       t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
       t_9.setOrigin( tf::Vector3(tf_electronic_box.pos.x, tf_electronic_box.pos.y, tf_electronic_box.pos.z) );
+      t_10.setOrigin( tf::Vector3(tf_velodyne_top.pos.x, tf_velodyne_top.pos.y, tf_velodyne_top.pos.z) );
             
       tf::Quaternion q_8;
       
       t_8.setRotation(tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));
       t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
+      t_10.setRotation (tf::Quaternion(tf_velodyne_top.rot.x, tf_velodyne_top.rot.y,tf_velodyne_top.rot.z,tf_velodyne_top.rot.w )); 
       
       br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
       br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));
-      
+      br.sendTransform(tf::StampedTransform(t_10, ros::Time::now(), "world", frame_name_10 ));
   }
   
   

@@ -23,7 +23,7 @@
     <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2"	args="$(arg optical_rotate) asusXtion_backMiddle_link 	camera_link_back_middle "/>
     <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) asusXtion_backRight_link 	camera_link_back_right" />
     <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) asusXtion_backLeft_link 	camera_link_back_left" 	/>
-    <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" />
+<!--     <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" /> -->
 
     <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
   
@@ -39,7 +39,7 @@
     <!-- Spawn the models into Gazebo -->
   
     <node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/>
-  
+   
     <arg name="xS" default="1.8"/>
     <arg name="yS" default="0"/>
     <arg name="zS" default="0.155"/>
@@ -51,7 +51,7 @@
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
     
     <node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T130_gut30_straight_5m/model.sdf -sdf -model T130_gut30_straight_5m"/>
-  
+   
     <arg name="x1" default="5"/>
     <arg name="y1" default="0"/>
     <arg name="z1" default="0"/>

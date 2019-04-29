@@ -9,6 +9,7 @@ project(siar_gazebo)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED)
 
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -116,9 +117,10 @@ include_directories(
 )
 
 ## Declare a C++ library
-# add_library(${PROJECT_NAME}
+#add_library( #${PROJECT_NAME}
 #   src/${PROJECT_NAME}/siar_gazebo.cpp
-# )
+
+ #)
 
 ## Add cmake target dependencies of the library
 ## as an example, code may need to be generated before libraries
@@ -141,9 +143,9 @@ include_directories(
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
+#target_link_libraries(#${PROJECT_NAME}_node
 #   ${catkin_LIBRARIES}
-# )
+#)
 
 #############
 ## Install ##
