@@ -46,7 +46,7 @@
     <arg name="rollS" default="0"/>
     <arg name="pitchS" default="0"/>
     <arg name="yawS" default="0"/>
-    <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar 
+    <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar_v.sdf -sdf -model siar_v 
   	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
     

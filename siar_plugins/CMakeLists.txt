@@ -217,15 +217,12 @@ include_directories(
 add_library(plugin_siar_wheels_piston src/plugin_siar_wheels_piston.cpp)
 target_link_libraries(plugin_siar_wheels_piston ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 
-add_executable(siar_joy_node src/siar_joy_node.cpp)
-target_link_libraries(siar_joy_node ${catkin_LIBRARIES})
-
-add_executable(siar_joy_node_2 src/siar_joy_node_2.cpp)
-target_link_libraries(siar_joy_node_2 ${catkin_LIBRARIES})
+add_library(plugin_siar_velodyne src/plugin_siar_velodyne.cpp)
+target_link_libraries(plugin_siar_velodyne ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 
 install(TARGETS
   plugin_siar_wheels_piston
-  siar_joy_node
+  plugin_siar_velodyne
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
