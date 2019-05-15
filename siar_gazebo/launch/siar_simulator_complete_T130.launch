@@ -156,7 +156,7 @@
     <include file="$(find siar_controller)/launch/siar_controller_simulation.launch" />
   
     <!-- Siar Costmap node -->
-    <!--include file="$(find siar_costmap)/launch/siar_costmap_simulator.launch" /-->
+    <include file="$(find siar_costmap)/launch/siar_costmap_simulation.launch" />
 
 </launch>
 
