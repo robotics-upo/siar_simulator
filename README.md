@@ -4,9 +4,18 @@ Simulator for SIAR ROBOT in a sewer environment.
 
 ### Description
 
-The simulator has two package, "siar_gazebo" and "siar_plugins". The first contain the necesary to use the SIAR model in four different versions (v.1: 7 cameras, v.2: 3 cameras, v.3: without camera, v.4: 6 cameras + velodyne) and also the sewer environment which is modifiable within launch, adding or removing sewer sections. The second contains the plugins that allow  move wheels,change widht, and navigate using only cameras (siar_plugin_wheel_piston.cpp) or cameras+velodyne (siar_plugin_velodyne) .
+The simulator has two package, "siar_gazebo" and "siar_plugins". The first contain the necesary to use the SIAR model in four different versions (v.1: 7 cameras, v.2: 3 cameras, v.3: without camera, v.4: 6 cameras + velodyne) and also the sewer environment which is modifiable within launch, adding or removing sewer sections. The second contains the plugins that allow  move wheels,change widht, and navigate using only cameras (siar_plugin_wheel_piston) or cameras+velodyne (siar_plugin_velodyne) .
 
-This package has dependency with "ros-kinetic-velodyne-laserscan"
+### Dependencies 
+
+This package has dependency with "ros-kinetic-velodyne-laserscan". Can be resolved using:
+
+```
+sudo apt-get install ros-kinetic-velodyne-laserscan
+```
+### Usage
+
+The simulator has tree way to be used.
 
 To "teleoperate" and to implement the "autonomous navigation" in the simulator, this package should be complement with SIAR_NAVEGATION package from rbotics-upo repository.
 
