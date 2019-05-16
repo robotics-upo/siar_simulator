@@ -6,23 +6,31 @@ Simulator for SIAR ROBOT in a sewer environment.
 
 The simulator has two package, "siar_gazebo" and "siar_plugins". The first contain the necesary to use the SIAR model in four different versions (v.1: 7 cameras, v.2: 3 cameras, v.3: without camera, v.4: 6 cameras + velodyne) and also the sewer environment which is modifiable within launch, adding or removing sewer sections. The second contains the plugins that allow  move wheels,change widht, and navigate using only cameras `plugin_siar_wheel_piston.cpp` or cameras+velodyne `plugin_siar_velodyne.cpp`.
 
+This simulator was tested in developed in Gazebo 7, ROS Kinetic and Ubuntu 16.04 LTS.
+
+
 ### Dependencies 
 
-This package has dependency with "ros-kinetic-velodyne-laserscan". Can be resolved using:
+This package has dependency with "ros-kinetic-velodyne-laserscan" and "ros-kinetic-joy". Can be resolved using:
 
 ```
 sudo apt-get install ros-kinetic-velodyne-laserscan
+sudo apt-get install ros-kinetic-joy
 ```
+The Plugin "siar_teleop_joy.cpp" using in the simulator can be find in the repository (https://github.com/robotics-upo/siar_packages.git)
+
 ### Usage
 
-The simulator has tree way to be used.
+The simulator has tree different mode to be used: 
+*Teleoperate
+*Semi autonomous
+*Autonomous
+
+#### Teleoperation mode
 
 To "teleoperate" and to implement the "autonomous navigation" in the simulator, this package should be complement with SIAR_NAVEGATION package from rbotics-upo repository.
 
-This simulator was tested in developed in Gazebo 7, ROS Kinetic and Ubuntu 16.04 LTS. For that reason, for a proper use it is recommended:
-  - Install the full version ROS Kinetic (http://wiki.ros.org/kinetic/Installation/Ubuntu)
-  - Install Gazebo 7 to Ubuntu from gazebosim.com (http://gazebosim.org/tutorials?tut=install_ubuntu&cat=install)
-  - Install the joy package from ROS. (http://wiki.ros.org/joy). The Plugin "siar_teleop_joy.cpp" using in the simulator can be find in the repository (https://github.com/robotics-upo/siar_packages.git)
+
 
 Once that you will have ready the workspace, to start with the teleoperation mode, you should press start button to have fun. 
 
