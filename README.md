@@ -49,9 +49,9 @@ roslaunch siar_gazebo siar simulator_(your_favorite_scenario).launch
 ```
 roslaunch siar_planner planner_action_server_simulation.launch
 ``` 
-To use differents planners change the parameter "planner type". The semi-autonomous mode correspond to `operation mode = 1`, you can change with botton "Y" of Xbox Joystick.
+To use differents planners change the parameter `planner_type`. The semi-autonomous mode correspond to `operation_mode = 1`, you can change with botton "Y" of Xbox Joystick or publishing the value 1 in the topic `/operation_mode` .
 
-3. To use "autonomous" mode, you should publish  in topic "operation mode" the value 100.
+3. To use "autonomous" mode, you should publish  in topic `/operation_mode` the value 100.
 
 4. Launch RVIZ and enjoy!! you just should give a goal inside the sewer environment.
 
