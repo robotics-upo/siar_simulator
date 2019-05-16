@@ -4,7 +4,9 @@ Simulator for SIAR ROBOT in a sewer environment.
 
 ### Description
 
-The simulator has two package, "siar_gazebo" and "siar_plugins". The first contain the necesary to use the SIAR model in four different versions (v.1: 7 cameras, v.2: 3 cameras, v.3: without camera, v.4: 6 cameras + velodyne) and also the sewer environment which is modifiable within launch, adding or removing sewer sections. The second contains the plugins that allow  move wheels,change widht, and navigate using only cameras `plugin_siar_wheel_piston.cpp` or cameras+velodyne `plugin_siar_velodyne.cpp`.
+This simulator represents the SIAR robotics platform which is made to navigate through the sewer environment. In the simulator, the model robot can change its width and move with differential configuration, obtain information from cameras and Velodyne Laser.    
+
+The simulator has two main package, `siar_gazebo` and `siar_plugins`. The first contain the necesary to use the SIAR model in four different versions (v.1: 7 cameras, v.2: 3 cameras, v.3: without camera, v.4: 6 cameras + velodyne) and also the sewer environment, modifiable from launch adding or removing sewer sections. The second contains the plugins that allow  move wheels,change widht, and navigate using only cameras `plugin_siar_wheel_piston.cpp` or cameras+velodyne `plugin_siar_velodyne.cpp`.
 
 This simulator was tested in developed in Gazebo 7, ROS Kinetic and Ubuntu 16.04 LTS.
 
@@ -17,29 +19,37 @@ This package has dependency with "ros-kinetic-velodyne-laserscan" and "ros-kinet
 sudo apt-get install ros-kinetic-velodyne-laserscan
 sudo apt-get install ros-kinetic-joy
 ```
-Also, to teleoperate the simulator is necesarry to incorporate the plugin `siar_teleop_joy.cpp`. This can be find in the repository [https://github.com/robotics-upo/siar_packages.git].
+
+To "teleoperate" the simulator is necesary to incorporate the plugin `siar_teleop_joy.cpp`. This can be find in `siar_driver` package from repository [https://github.com/robotics-upo/siar_packages.git].
+
+To use the "semi autonomous and autonomous navigation mode" in the simulator, is necessary to complement with `siar_navegation` package from repository [https://github.com/robotics-upo/siar_navigation.git].
 
 ### Usage
 
 The simulator has tree different mode to be used: 
 * Teleoperate
-* Semi autonomous
+* Semi-autonomous
 * Autonomous
 
 #### Teleoperation mode
 
-To "teleoperate" and to implement the "autonomous navigation" in the simulator, this package should be complement with SIAR_NAVEGATION package from rbotics-upo repository.
+With your workspace ready, to start with the teleoperation mode, you should press start button to have fun. 
 
-
-
-Once that you will have ready the workspace, to start with the teleoperation mode, you should press start button to have fun. 
+#### Semi-autonomous and Autonomous mode
 
 To use "semi autonomous" or "autonomous" mode is necessary to follow the next steps:
 
-1.- Execute "roslaunch siar_gazebo siar simulator_(choose your favorite version).launch". 
+1.- Execute: `
+```
+roslaunch siar_gazebo siar simulator_(choose your favorite version).launch
+``` 
 IMPORTANT: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.
     
-2.- Execute "roslaunch siar_planner planner_action_server_simulation.launch" (To use differents planners change the parameter "planner type"). Congratulations !!!, now you are ready to use siar_simulator in "semi autonomous" mode, just be sure that you are in "operation mode" = 1, you can change with botton "Y" of Xbox Joystick.
+2.- Execute: 
+```
+roslaunch siar_planner planner_action_server_simulation.launch
+``` 
+To use differents planners change the parameter "planner type". The semi-autonomous mode correspond to "operation mode" = 1, you can change with botton "Y" of Xbox Joystick.
 
 3.- To use "autonomous" mode, you should publish  in topic "operation mode" the value 100.
 
