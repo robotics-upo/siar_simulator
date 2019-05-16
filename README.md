@@ -16,8 +16,10 @@ This simulator was tested in developed in Gazebo 7, ROS Kinetic and Ubuntu 16.04
 Once that you will have ready the workspace, to start with the teleoperation mode, you should press start button to have fun. 
 
 To use "semi autonomous" or "autonomous" mode is necessary to follow the next steps:
+
 1.- From siar_gazebo package, launch siar simulator_(choose your favorite version). 
-    IMPORTANT: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.   
+    IMPORTANT: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.
+    
 2.- From siar_planner package,  launch planner_action_server_simulation. (To use differents planners change the parameter "planner type"). Congratulations !!!, now you are ready to use siar_simulator in "semi autonomous" mode, just be sure that you are in "operation mode" = 1, you can change with botton "Y" of Xbox Joystick.
 3.- To use "autonomous" mode, you should publish  in topic "operation mode" the value 100.
 4.- Launch RVIZ and enjoy!! you just should give a goal inside the sewer environment.
