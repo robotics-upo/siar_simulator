@@ -37,22 +37,22 @@ With your workspace ready, to start with the teleoperation mode, you should pres
 
 #### Semi-autonomous and Autonomous mode
 
-To use "semi autonomous" or "autonomous" mode is necessary to follow the next steps:
+To use "semi-autonomous" or "autonomous" mode is necessary to follow the next steps:
 
-1.- Execute: `
+1. Execute: 
 ```
-roslaunch siar_gazebo siar simulator_(choose your favorite version).launch
+roslaunch siar_gazebo siar simulator_(your_favorite_scenario).launch
 ``` 
-IMPORTANT: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.
+*IMPORTANT*: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.
     
-2.- Execute: 
+2. Execute: 
 ```
 roslaunch siar_planner planner_action_server_simulation.launch
 ``` 
-To use differents planners change the parameter "planner type". The semi-autonomous mode correspond to "operation mode" = 1, you can change with botton "Y" of Xbox Joystick.
+To use differents planners change the parameter "planner type". The semi-autonomous mode correspond to `operation mode = 1`, you can change with botton "Y" of Xbox Joystick.
 
-3.- To use "autonomous" mode, you should publish  in topic "operation mode" the value 100.
+3. To use "autonomous" mode, you should publish  in topic "operation mode" the value 100.
 
-4.- Launch RVIZ and enjoy!! you just should give a goal inside the sewer environment.
+4. Launch RVIZ and enjoy!! you just should give a goal inside the sewer environment.
 
 
