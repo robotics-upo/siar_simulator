@@ -22,9 +22,9 @@ The Plugin "siar_teleop_joy.cpp" using in the simulator can be find in the repos
 ### Usage
 
 The simulator has tree different mode to be used: 
-*Teleoperate
-*Semi autonomous
-*Autonomous
+* Teleoperate
+* Semi autonomous
+* Autonomous
 
 #### Teleoperation mode
 
