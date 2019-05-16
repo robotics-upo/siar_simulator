@@ -17,7 +17,7 @@ This package has dependency with "ros-kinetic-velodyne-laserscan" and "ros-kinet
 sudo apt-get install ros-kinetic-velodyne-laserscan
 sudo apt-get install ros-kinetic-joy
 ```
-The Plugin "siar_teleop_joy.cpp" using in the simulator can be find in the repository (https://github.com/robotics-upo/siar_packages.git)
+Also, to teleoperate the simulator is necesarry to incorporate the plugin `siar_teleop_joy.cpp`. This can be find in the repository [https://github.com/robotics-upo/siar_packages.git].
 
 ### Usage
 
