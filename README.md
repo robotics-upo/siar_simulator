@@ -26,7 +26,7 @@ To use the "semi autonomous and autonomous navigation mode" in the simulator, is
 
 ### Usage
 
-The simulator has tree different mode to be used: 
+The simulator has tree different modes to be used: 
 * Teleoperate
 * Semi-autonomous
 * Autonomous
@@ -41,7 +41,7 @@ To use "semi-autonomous" or "autonomous" mode is necessary to follow the next st
 
 1. Execute: 
 ```
-roslaunch siar_gazebo siar simulator_(your_favorite_scenario).launch
+roslaunch siar_gazebo siar simulator_(_favorite_scenario_).launch
 ``` 
 *IMPORTANT*: the launch in siar_simulator start in pause to avoid conflict in the spawn of the models Gazebo. This will generate a ROS_ERROR, because siar_costmap is waiting to recieve the map. To finish with ROS_ERROR just push play in the simulation.
     
