@@ -4147,7 +4147,7 @@
     </link>
 
 
-    <link name="asusXtion_frontRight_link">
+   <!-- <link name="asusXtion_frontRight_link">
       <pose>0.3542 0.1078 .3206 0 0.785398 0.436332</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4194,7 +4194,6 @@
           <alwaysOn>true</alwaysOn>
           <updateRate>0.0</updateRate>
           <cameraName>asusXtion_frontRight</cameraName>
-          <!--robotNamespace>/siar_model</robotNamespace-->
           <imageTopicName>rgb/image_raw</imageTopicName>
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>
@@ -4257,7 +4256,6 @@
         </camera>
         <plugin name="asusXtion_frontLeft_camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_frontLeft</cameraName>
-          <!--robotNamespace>/siar_model</robotNamespace-->
           <alwaysOn>true</alwaysOn>
           <updateRate>0.0</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -4277,7 +4275,7 @@
         </plugin>
 	    <visualize>true</visualize>
       </sensor>
-    </link>
+    </link>-->
 
     
     <joint name='fixed_camera_frontMiddle' type='fixed'>
@@ -4297,7 +4295,7 @@
         </ode>
       </physics>-->
     </joint> 
-    <joint name='fixed_camera_frontRight' type='fixed'>
+   <!-- <joint name='fixed_camera_frontRight' type='fixed'>
       <child>asusXtion_frontRight_link</child>
       <parent>pivot_camera_front_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
@@ -4313,11 +4311,11 @@
           </suspension>
         </ode>
       </physics>-->
-    </joint>
+   <!-- </joint>
     <joint name='fixed_camera_frontLeft' type='fixed'>
       <child>asusXtion_frontLeft_link</child>
       <parent>pivot_camera_front_3</parent>
-      <pose> -0.018 0 -0.005 0 0 0</pose>
+      <pose> -0.018 0 -0.005 0 0 0</pose>-->
 <!--      <physics>
         <ode>
           <limit>
@@ -4330,7 +4328,7 @@
           </suspension>
         </ode>
       </physics>-->
-    </joint>
+    <!--</joint>-->
 
     <link name="asusXtion_backMiddle_link">
     <pose>-0.3513 0.00 0.3720 0 0 3.14159265</pose>      
@@ -4403,7 +4401,7 @@
       </sensor>      
     </link>
         
-    <link name="asusXtion_backRight_link">
+   <!-- <link name="asusXtion_backRight_link">
     <pose>-0.3542 0.1078 .3206 0 .7853 2.70526065</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4447,7 +4445,6 @@
         </camera>
         <plugin name="asusXtion_backRight_camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_backRight</cameraName>
-          <!--robotNamespace>/siar_model</robotNamespace-->
           <alwaysOn>true</alwaysOn>
           <updateRate>30.0</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -4514,7 +4511,6 @@
         </camera>
         <plugin name="asusXtion_backLeft_camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_backLeft</cameraName>
-          <!--robotNamespace>/siar_model</robotNamespace-->
           <alwaysOn>true</alwaysOn>
           <updateRate>30.0</updateRate>
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -4534,7 +4530,7 @@
         </plugin>
 	    <visualize>true</visualize>
       </sensor>
-    </link>
+    </link>-->
   
  
     <joint name='fixed_camera_backMiddle' type='fixed'>
@@ -4554,7 +4550,7 @@
         </ode>
       </physics>-->
     </joint> 
-    <joint name='fixed_camera_backRight' type='fixed'>
+  <!--  <joint name='fixed_camera_backRight' type='fixed'>
       <child>asusXtion_backRight_link</child>
       <parent>pivot_camera_back_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
@@ -4570,7 +4566,7 @@
           </suspension>
         </ode>
       </physics>-->
-    </joint>
+   <!-- </joint>
     <joint name='fixed_camera_backLeft' type='fixed'>
       <child>asusXtion_backLeft_link</child>
       <parent>pivot_camera_back_3</parent>
@@ -4587,117 +4583,10 @@
           </suspension>
         </ode>
       </physics>-->
-    </joint>    
+<!--     </joint>    --> 
     
 
-   <!-- <link name="asusXtion_topMiddle_link">
-    <pose>0 0 0.3201 0 -1.57079632 1.570796</pose>
-      <inertial>
-       <mass>0.05</mass>
-       <inertia>
-         <ixx>0.000042</ixx>       
-         <ixy>0.0</ixy>         
-         <ixz>0.0</ixz>         
-         <iyy>0.000002</iyy>       
-         <iyz>0.0</iyz>         
-         <izz>0.000042</izz>       
-       </inertia>
-      </inertial>
-      <collision name="collision">
-        <geometry>
-          <box>
-            <size>0.030250 0.138000 0.015000</size>
-          </box>
-        </geometry>
-      </collision>
-      <visual name="visual">
-        <geometry>
-          <mesh>
-            <uri>model://siar_model/sensors/asus_Xtion_1/meshes/xtion_pro_camera.dae</uri>
-          </mesh>
-        </geometry>
-      </visual>
-      <sensor type="depth" name="camera">
-        <always_on>true</always_on>
-        <update_rate>30.0</update_rate>
-        <camera>
-          <horizontal_fov>1.0471975511965976</horizontal_fov>
-          <image>
-            <format>R8G8B8</format>
-            <width>640</width>
-            <height>480</height>
-          </image>
-          <clip>
-            <near>0.05</near>
-            <far>8.0</far>
-          </clip>
-        </camera>
-        <plugin name="asusXtion_topMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>asusXtion_topMiddle</cameraName>
-          <alwaysOn>true</alwaysOn>
-          <updateRate>1.0</updateRate>
-          <imageTopicName>rgb/image_raw</imageTopicName>
-          <cameraInfoTopicName>/depth/camera_info</cameraInfoTopicName>
-          <depthImageTopicName>depth/image_raw</depthImageTopicName>
-          <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
-          <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_top_middle</frameName>
-          <baseline>0.2</baseline>
-          <distortion_k1>0.00000001</distortion_k1>
-          <distortion_k2>0.00000001</distortion_k2>
-          <distortion_k3>0.00000001</distortion_k3>
-          <distortion_t1>0.00000001</distortion_t1>
-          <distortion_t2>0.00000001</distortion_t2>0
-          <pointCloudCutoff>0.5</pointCloudCutoff>
-          <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
-        </plugin>
-	    <visualize>true</visualize>
-      </sensor>
-    </link>
 
-    <joint name='fixed_camera_topMiddle' type='fixed'>
-      <child>asusXtion_topMiddle_link</child>
-      <parent>box_battery</parent>
-      <pose> 0 0 0 0 0 0</pose>
-    </joint>-->
-    
-    <!-- <link name="box_lidar">
-      <inertial>
-       <pose>.0 .0 .225 0 0 0</pose>
-       <mass>14</mass>
-       <inertia>
-         <ixx>0.064983</ixx>       
-         <ixy>0.0</ixy>         
-         <ixz>0.0</ixz>         
-         <iyy>0.101733</iyy>       
-         <iyz>0.0</iyz>         
-         <izz>0.120983</izz>       
-       </inertia>
-      </inertial>
-      <collision name='collision_1'>
-      <pose>.0 .0 .26 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>.26 .26 .07</size>
-          </box>
-        </geometry>
-      </collision>
-      <visual name='visual_1'>
-      <pose>.0 .0 .26 0 0 0</pose>
-        <geometry>
-          <box>
-            <size>.26 .26 .07</size>
-          </box>
-        </geometry>
-        <material>
-          <script>
-            <name>Gazebo/Orange</name>
-          </script>
-        </material>
-      </visual>
-      
-   </link>-->
     
     <link name="velodyne_base">
       <pose>0 0 0.3601 0 0 0</pose>
@@ -4760,30 +4649,30 @@
         </geometry>
       </visual>
 
-
+      <!-- Ouster Configuration-->
       <sensor type="ray" name="lase_scanr">
         <pose>0 0 -0.004645 0 0 0</pose>
         <visualize>false</visualize>
-        <update_rate>15</update_rate>
+        <update_rate>10</update_rate>
         <ray>
           <scan>
             <horizontal>
-              <samples>180</samples>
+              <samples>2048</samples>
               <resolution>1</resolution>
-              <min_angle>-2.9</min_angle>
-              <max_angle>2.9</max_angle>
+              <min_angle>-3.14159</min_angle>
+              <max_angle>3.14159</max_angle>
             </horizontal>
             <vertical>
               <samples>16</samples>
               <resolution>1</resolution>
-              <min_angle>0</min_angle>
-              <max_angle>0.3</max_angle>
+              <min_angle>-0.2897247</min_angle>
+              <max_angle>0.2897247</max_angle>
             </vertical>
           </scan>
           <range>
-            <min>0.1</min>
-            <max>70</max>
-            <resolution>0.02</resolution>
+            <min>0.8</min>
+            <max>120</max>
+            <resolution>0.012</resolution>
           </range>
           <noise>
             <type>gaussian</type>
@@ -4794,51 +4683,12 @@
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
           <topicName>/velodyne_points</topicName>
           <frameName>/velodyne_top</frameName>
-          <min_range>0.1</min_range>
-          <max_range>70.0</max_range>
+          <min_range>0.8</min_range>
+          <max_range>120.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>  
         </plugin>
       </sensor>
       
-      
-<!--      <sensor type="ray" name="lase_scanr">
-        <pose>0 0 -0.004645 0 0 0</pose>
-        <visualize>false</visualize>
-        <update_rate>30</update_rate>
-        <ray>
-          <scan>
-            <horizontal>
-              <samples>200</samples>
-              <resolution>1</resolution>
-              <min_angle>-1.57</min_angle>
-              <max_angle>1.57</max_angle>
-            </horizontal>
-            <vertical>
-              <samples>200</samples>
-              <resolution>1</resolution>
-              <min_angle>0.0</min_angle>
-              <max_angle>1.1</max_angle>
-            </vertical>
-          </scan>
-          <range>
-            <min>0.1</min>
-            <max>70</max>
-            <resolution>0.02</resolution>
-          </range>
-          <noise>
-            <type>gaussian</type>
-            <mean>0.0</mean>
-            <stddev>0.0</stddev>
-          </noise>
-        </ray>
-        <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <topicName>/velodyne_points</topicName>
-          <frameName>/velodyne_top</frameName>
-          <min_range>0.9</min_range>
-          <max_range>130.0</max_range>
-          <gaussianNoise>0.008</gaussianNoise>  
-        </plugin>
-      </sensor>-->
       
       
     </link>
@@ -4866,7 +4716,7 @@
     
 						<!-- PLUGINS  -->
 
-    <plugin name="plugin_velodyne" filename="libplugin_siar_velodyne.so">
+    <plugin name="plugin_siar_velodyne" filename="libplugin_siar_velodyne.so">
       <alwaysOn>true</alwaysOn>
       <updateRate>25.0</updateRate>
       <leftJoints>move_axis_wheel_left_1 move_axis_wheel_left_2  move_axis_wheel_left_3</leftJoints>

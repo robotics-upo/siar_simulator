@@ -199,11 +199,11 @@ namespace gazebo {
     
 //     tf_frame_name_.push_back("asusXtion_topMiddle_link");
     tf_frame_name_.push_back("asusXtion_frontMiddle_link");
-    tf_frame_name_.push_back("asusXtion_frontRight_link");
-    tf_frame_name_.push_back("asusXtion_frontLeft_link");
+//     tf_frame_name_.push_back("asusXtion_frontRight_link");
+//     tf_frame_name_.push_back("asusXtion_frontLeft_link");
     tf_frame_name_.push_back("asusXtion_backMiddle_link");
-    tf_frame_name_.push_back("asusXtion_backRight_link");
-    tf_frame_name_.push_back("asusXtion_backLeft_link");
+//     tf_frame_name_.push_back("asusXtion_backRight_link");
+//     tf_frame_name_.push_back("asusXtion_backLeft_link");
     
     for (const std::string& name : tf_frame_name_) { // access by const reference
     
