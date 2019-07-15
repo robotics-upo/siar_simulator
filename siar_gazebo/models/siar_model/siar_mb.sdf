@@ -4117,8 +4117,8 @@
         </camera>
         <plugin name="asusXtion_frontMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_frontMiddle</cameraName>
-	  <alwaysOn>true</alwaysOn>
-	  <baseline>0.2</baseline>
+	        <alwaysOn>true</alwaysOn>
+	        <baseline>0.2</baseline>
           <updateRate>0.0</updateRate> 
           <!--robotNamespace>/siar_model</robotNamespace-->
           <imageTopicName>rgb/image_raw</imageTopicName>
@@ -4172,7 +4172,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="depth" name="camera">
+      <!-- <sensor type="depth" name="camera">
         <always_on>true</always_on>
         <update_rate>30.0</update_rate>
         <camera>
@@ -4188,7 +4188,7 @@
           </clip>
         </camera>
         <plugin name="asusXtion_frontRight_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-	  <baseline>0.2</baseline>
+	        <baseline>0.2</baseline>
           <alwaysOn>true</alwaysOn>
           <updateRate>0.0</updateRate>
           <cameraName>asusXtion_frontRight</cameraName>
@@ -4205,8 +4205,8 @@
           <distortion_t2>0.0</distortion_t2>
           <pointCloudCutoff>0.5</pointCloudCutoff>
         </plugin>
-	    <visualize>true</visualize>
-      </sensor>
+	      <visualize>true</visualize>
+      </sensor> -->
     </link>
 
 
@@ -4237,7 +4237,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="depth" name="camera">
+      <!-- <sensor type="depth" name="camera">
         <always_on>true</always_on>
         <update_rate>30.0</update_rate>
         <camera>
@@ -4272,7 +4272,7 @@
           <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
         </plugin>
 	    <visualize>true</visualize>
-      </sensor>
+      </sensor> -->
     </link>
 
     
@@ -4371,17 +4371,16 @@
           </clip>
         </camera>
         <plugin name="asusXtion_backMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
-	  <cameraName>asusXtion_backMiddle</cameraName>	  
+	        <cameraName>asusXtion_backMiddle</cameraName>	  
           <alwaysOn>true</alwaysOn>
-	  <baseline>0.2</baseline>	
-          <updateRate>0.0</updateRate>	  
-	  
+	        <baseline>0.2</baseline>	
+          <updateRate>0.0</updateRate>	 
           <imageTopicName>rgb/image_raw</imageTopicName>
           <cameraInfoTopicName>/depth/camera_info</cameraInfoTopicName>
-	  <cameraInfoTopicName>/rgb/camera_info</cameraInfoTopicName>	  
+	        <cameraInfoTopicName>/rgb/camera_info</cameraInfoTopicName>	  
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
-	  <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-	  <pointCloudTopicName>depth/points</pointCloudTopicName>	           
+	        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
+	        <pointCloudTopicName>depth/points</pointCloudTopicName>	           
           <frameName>camera_link_back_middle</frameName>	   
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
@@ -4426,7 +4425,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="depth" name="camera">
+      <!-- <sensor type="depth" name="camera">
         <always_on>true</always_on>
         <update_rate>30.0</update_rate>
         <camera>
@@ -4461,7 +4460,7 @@
           <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
         </plugin>
 	    <visualize>true</visualize>
-      </sensor>
+      </sensor> -->
     </link>
 
 
@@ -4492,7 +4491,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="depth" name="camera">
+      <!-- <sensor type="depth" name="camera">
         <always_on>true</always_on>
         <update_rate>30.0</update_rate>
         <camera>
@@ -4527,7 +4526,7 @@
           <pointCloudCutoffMax>5.0</pointCloudCutoffMax>
         </plugin>
 	    <visualize>true</visualize>
-      </sensor>
+      </sensor> -->
     </link>
   
  
