@@ -17,13 +17,13 @@
   
     <arg name="pi/2" value="1.5707963267948966" />
     <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
-    <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_frontMiddle_link 	camera_link_front_middle" />  
-    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" 	args="$(arg optical_rotate) asusXtion_frontRight_link 	camera_link_front_right "/>
-    <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" 	args="$(arg optical_rotate) asusXtion_frontLeft_link 	camera_link_front_left "/> -->
-    <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2"	args="$(arg optical_rotate) asusXtion_backMiddle_link 	camera_link_back_middle "/>
-    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) asusXtion_backRight_link 	camera_link_back_right" />
-    <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) asusXtion_backLeft_link 	camera_link_back_left" 	/>
-    <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" /> -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" 	args="$(arg optical_rotate) front_link 	front_depth_optical_frame" />  
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" 	args="$(arg optical_rotate) front_right_link 	front_right_depth_optical_frame "/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" 	args="$(arg optical_rotate) front_left_link front_left_depth_optical_frame "/> -->
+    <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2"	args="$(arg optical_rotate) back_link 	back_depth_optical_frame "/>
+    <!-- <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) back_right_link  back_right_depth_optical_frame" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) back_left_link 	back_left_depth_optical_frame" 	/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) top_link  top_depth_optical_frame" /> -->
 
     <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
   

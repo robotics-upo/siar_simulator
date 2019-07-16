@@ -194,16 +194,16 @@ namespace gazebo {
     // Get the SIAR relevant links & joint
     l_c_wheel_ = this->parent->GetLink("wheel_left_1");
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
-    electronic_box_ = this->parent->GetLink("box_battery");
-    velodyne_top_ = this->parent->GetLink("velodyne_top");
+    electronics_center = this->parent->GetLink("box_battery");
+    os1_sensor_ = this->parent->GetLink("os1_sensor_link");
     
-//     tf_frame_name_.push_back("asusXtion_topMiddle_link");
-    tf_frame_name_.push_back("asusXtion_frontMiddle_link");
-//     tf_frame_name_.push_back("asusXtion_frontRight_link");
-//     tf_frame_name_.push_back("asusXtion_frontLeft_link");
-    tf_frame_name_.push_back("asusXtion_backMiddle_link");
-//     tf_frame_name_.push_back("asusXtion_backRight_link");
-//     tf_frame_name_.push_back("asusXtion_backLeft_link");
+    //     tf_frame_name_.push_back("asusXtion_topMiddle_link");
+    tf_frame_name_.push_back("front_link");
+    //     tf_frame_name_.push_back("asusXtion_frontRight_link");
+    //     tf_frame_name_.push_back("asusXtion_frontLeft_link");
+    tf_frame_name_.push_back("back_link");
+    //     tf_frame_name_.push_back("asusXtion_backRight_link");
+    //     tf_frame_name_.push_back("asusXtion_backLeft_link");
     
     for (const std::string& name : tf_frame_name_) { // access by const reference
     
@@ -358,7 +358,7 @@ namespace gazebo {
 	  move_Piston_aux_= 0;
 	  }
  
-      //Publish the position of electronic_box_
+      //Publish the position of electronics_center
       std_msgs::Float32 elec_pos_msg;
       elec_pos_msg.data = (-1*elec_pos_cmd_);
       elec_pos_publisher_.publish(elec_pos_msg);
@@ -416,9 +416,9 @@ namespace gazebo {
     math::Pose pose = this->parent->GetWorldPose();
     float yaw = pose.rot.GetYaw();
 
-     rb.x = electronic_box_->GetWorldCoGPose().pos.x;
-     rb.y = electronic_box_->GetWorldCoGPose().pos.y;
-     rb.z = electronic_box_->GetWorldCoGPose().pos.z;
+     rb.x = electronics_center->GetWorldCoGPose().pos.x;
+     rb.y = electronics_center->GetWorldCoGPose().pos.y;
+     rb.z = electronics_center->GetWorldCoGPose().pos.z;
      rl.x = l_c_wheel_->GetWorldCoGPose().pos.x;
      rl.y = l_c_wheel_->GetWorldCoGPose().pos.y;
      rl.z = l_c_wheel_->GetWorldCoGPose().pos.z - 0.125;
@@ -436,8 +436,8 @@ namespace gazebo {
      
      //Get the position of Electronic Box
      geometry_msgs::Vector3 pos_electronicBox_msg;
-     pos_electronicBox_msg.x = electronic_box_->GetWorldCoGPose().pos.x;
-     pos_electronicBox_msg.y = electronic_box_->GetWorldCoGPose().pos.y;
+     pos_electronicBox_msg.x = electronics_center->GetWorldCoGPose().pos.x;
+     pos_electronicBox_msg.y = electronics_center->GetWorldCoGPose().pos.y;
      pos_electronicBox_msg.z = 0;
      pos_electronicBox_publisher_.publish(pos_electronicBox_msg);
      
@@ -516,13 +516,13 @@ namespace gazebo {
   {
     static tf::TransformBroadcaster br;
     
-//     math::Vector3 cam_[frame_camera_.size()];
+    //     math::Vector3 cam_[frame_camera_.size()];
     math::Pose cam_[frame_camera_.size()];
-    math::Pose tf_electronic_box, tf_velodyne_top;
+    math::Pose tf_electronic_box, tf_os1_sensor;
     
     std::string frame_name_8 = "base_link",
-		frame_name_9 = "box_electronics",
-                frame_name_10 = "velodyne_top";
+	            	frame_name_9 = "box_electronics",
+                frame_name_10 = "os1_sensor";
     
     for (unsigned int i = 0; i < frame_camera_.size() ; i++)
     {
@@ -542,20 +542,20 @@ namespace gazebo {
       br.sendTransform(tf::StampedTransform(t_[i], ros::Time::now(), "world", tf_frame_name_[i]) ); 
     }
     
-      tf_electronic_box = electronic_box_->GetWorldCoGPose();
-      tf_velodyne_top = velodyne_top_->GetWorldCoGPose();
+      tf_electronic_box = electronics_center->GetWorldCoGPose();
+      tf_os1_sensor = os1_sensor_->GetWorldCoGPose();
     
       tf::Transform t_8,t_9, t_10;
       
       t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
       t_9.setOrigin( tf::Vector3(tf_electronic_box.pos.x, tf_electronic_box.pos.y, tf_electronic_box.pos.z) );
-      t_10.setOrigin( tf::Vector3(tf_velodyne_top.pos.x, tf_velodyne_top.pos.y, tf_velodyne_top.pos.z) );
+      t_10.setOrigin( tf::Vector3(tf_os1_sensor.pos.x, tf_os1_sensor.pos.y, tf_os1_sensor.pos.z) );
             
       tf::Quaternion q_8;
       
       t_8.setRotation(tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));
       t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
-      t_10.setRotation (tf::Quaternion(tf_velodyne_top.rot.x, tf_velodyne_top.rot.y,tf_velodyne_top.rot.z,tf_velodyne_top.rot.w )); 
+      t_10.setRotation (tf::Quaternion(tf_os1_sensor.rot.x, tf_os1_sensor.rot.y,tf_os1_sensor.rot.z,tf_os1_sensor.rot.w )); 
       
       br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
       br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));

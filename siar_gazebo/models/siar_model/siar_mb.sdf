@@ -4073,7 +4073,7 @@
       
 <!-- 10.   Definition of Sensors and Actuators -->
    
-    <link name="asusXtion_frontMiddle_link">
+    <link name="front_link">
     <pose>0.3513 0.00 0.3720 0 0 0</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4115,7 +4115,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_frontMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="front_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_frontMiddle</cameraName>
 	        <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>
@@ -4127,7 +4127,7 @@
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <frameName>camera_link_front_middle</frameName>	  
+          <frameName>front_depth_optical_frame</frameName>	  
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
@@ -4145,7 +4145,7 @@
     </link>
 
 
-   <link name="asusXtion_frontRight_link">
+   <link name="front_right_link">
       <pose>0.3542 0.1078 .3206 0 0.785398 0.436332</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4187,7 +4187,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_frontRight_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="front_right_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
 	        <baseline>0.2</baseline>
           <alwaysOn>true</alwaysOn>
           <updateRate>0.0</updateRate>
@@ -4197,7 +4197,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_front_right</frameName>
+          <frameName>front_right_depth_optical_frame</frameName>
           <distortion_k1>0.0</distortion_k1>
           <distortion_k2>0.0</distortion_k2>
           <distortion_k3>0.0</distortion_k3>
@@ -4210,7 +4210,7 @@
     </link>
 
 
-    <link name="asusXtion_frontLeft_link">
+    <link name="front_left_link">
     <pose>0.3542 -0.1078 .3206 0 .785398 -0.436332</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4252,7 +4252,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_frontLeft_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="front_left_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_frontLeft</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>0.0</updateRate>
@@ -4261,7 +4261,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_front_left</frameName>
+          <frameName>front_left_depth_optical_frame</frameName>
           <baseline>0.1</baseline>
           <distortion_k1>0.0</distortion_k1>
           <distortion_k2>0.0</distortion_k2>
@@ -4276,8 +4276,8 @@
     </link>
 
     
-   <joint name='fixed_camera_frontMiddle' type='fixed'>
-      <child>asusXtion_frontMiddle_link</child>
+   <joint name='fixed_camera_front' type='fixed'>
+      <child>front_link</child>
       <parent>pivot_camera_front_1</parent>
       <pose> -0.018 0 -0.004 0 0 0</pose>
      <physics>
@@ -4293,8 +4293,8 @@
         </ode>
       </physics>
    </joint> 
-   <joint name='fixed_camera_frontRight' type='fixed'>
-      <child>asusXtion_frontRight_link</child>
+   <joint name='fixed_camera_front_right' type='fixed'>
+      <child>front_right_link</child>
       <parent>pivot_camera_front_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
       <physics>
@@ -4310,8 +4310,8 @@
         </ode>
       </physics>
    </joint>
-   <joint name='fixed_camera_frontLeft' type='fixed'>
-      <child>asusXtion_frontLeft_link</child>
+   <joint name='fixed_camera_front_left' type='fixed'>
+      <child>front_left_link</child>
       <parent>pivot_camera_front_3</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
       <physics>
@@ -4328,7 +4328,7 @@
       </physics>
    </joint>
 
-    <link name="asusXtion_backMiddle_link">
+    <link name="back_link">
     <pose>-0.3513 0.00 0.3720 0 0 3.14159265</pose>      
       <inertial>
        <mass>0.05</mass>
@@ -4370,7 +4370,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_backMiddle_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="back_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
 	        <cameraName>asusXtion_backMiddle</cameraName>	  
           <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>	
@@ -4381,7 +4381,7 @@
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
 	        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
 	        <pointCloudTopicName>depth/points</pointCloudTopicName>	           
-          <frameName>camera_link_back_middle</frameName>	   
+          <frameName>back_depth_optical_frame</frameName>	   
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
@@ -4398,7 +4398,7 @@
       </sensor>      
     </link>
         
-   <link name="asusXtion_backRight_link">
+   <link name="back_right_link">
     <pose>-0.3542 0.1078 .3206 0 .7853 2.70526065</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4440,7 +4440,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_backRight_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="back_right_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_backRight</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>30.0</updateRate>
@@ -4449,7 +4449,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_back_right</frameName>
+          <frameName>back_right_depth_optical_frame</frameName>
           <baseline>0.1</baseline>
           <distortion_k1>0.0</distortion_k1>
           <distortion_k2>0.0</distortion_k2>
@@ -4464,7 +4464,7 @@
     </link>
 
 
-    <link name="asusXtion_backLeft_link">
+    <link name="back_left_link">
     <pose>-0.3542 -0.1078 .3206 0 .7853 -2.70526065</pose>
       <inertial>
        <mass>0.05</mass>
@@ -4506,7 +4506,7 @@
             <far>8.0</far>
           </clip>
         </camera>
-        <plugin name="asusXtion_backLeft_camera_controller" filename="libgazebo_ros_openni_kinect.so">
+        <plugin name="back_left_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
           <cameraName>asusXtion_backLeft</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>30.0</updateRate>
@@ -4515,7 +4515,7 @@
           <pointCloudTopicName>depth/points</pointCloudTopicName>
           <cameraInfoTopicName>rgb/camera_info</cameraInfoTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
-          <frameName>camera_link_back_left</frameName>
+          <frameName>back_left_depth_optical_frame</frameName>
           <baseline>0.1</baseline>
           <distortion_k1>0.0</distortion_k1>
           <distortion_k2>0.0</distortion_k2>
@@ -4616,7 +4616,7 @@
       </visual>
     </link>
     
-    <link name="velodyne_top">
+    <link name="os1_sensor_link">
       <pose>0 0 0.4262 0 0 0</pose>
       <inertial>
         <mass>0.1</mass>
@@ -4678,8 +4678,8 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <topicName>/velodyne_points</topicName>
-          <frameName>/velodyne_top</frameName>
+          <topicName>/os1_sensor_points</topicName>
+          <frameName>/os1_lidar</frameName>
           <min_range>0.8</min_range>
           <max_range>120.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>  
@@ -4690,7 +4690,7 @@
     <joint type="fixed" name="joint">
       <pose>0 0 -0.036785 0 0 0</pose>
       <parent>velodyne_base</parent>
-      <child>velodyne_top</child>
+      <child>os1_sensor_link</child>
       <axis>
         <xyz>0 0 1</xyz>
         <limit>
