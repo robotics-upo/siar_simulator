@@ -4116,7 +4116,7 @@
           </clip>
         </camera>
         <plugin name="front_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
-          <cameraName>asusXtion_frontMiddle</cameraName>
+          <cameraName>front</cameraName>
 	        <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>
           <updateRate>0.0</updateRate> 
@@ -4371,7 +4371,7 @@
           </clip>
         </camera>
         <plugin name="back_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
-	        <cameraName>asusXtion_backMiddle</cameraName>	  
+	        <cameraName>back</cameraName>	  
           <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>	
           <updateRate>0.0</updateRate>	 
@@ -4531,7 +4531,7 @@
   
  
     <joint name='fixed_camera_backMiddle' type='fixed'>
-      <child>asusXtion_backMiddle_link</child>
+      <child>back_link</child>
       <parent>pivot_camera_back_1</parent>
       <pose> -0.018 0 -0.004 0 0 0</pose>
      <physics>
@@ -4548,7 +4548,7 @@
       </physics>
     </joint> 
    <joint name='fixed_camera_backRight' type='fixed'>
-      <child>asusXtion_backRight_link</child>
+      <child>back_right_link</child>
       <parent>pivot_camera_back_2</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
       <physics>
@@ -4565,7 +4565,7 @@
       </physics>
     </joint>
     <joint name='fixed_camera_backLeft' type='fixed'>
-      <child>asusXtion_backLeft_link</child>
+      <child>back_left_link</child>
       <parent>pivot_camera_back_3</parent>
       <pose> -0.018 0 -0.005 0 0 0</pose>
      <physics>
@@ -4678,8 +4678,8 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <topicName>/os1_sensor_points</topicName>
-          <frameName>/os1_lidar</frameName>
+          <topicName>/os1_cloud_node/points</topicName>
+          <frameName>/os1_sensor</frameName>
           <min_range>0.8</min_range>
           <max_range>120.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>  
