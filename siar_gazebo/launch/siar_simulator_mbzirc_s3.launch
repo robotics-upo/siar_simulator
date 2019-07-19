@@ -43,12 +43,12 @@
 
     <!-- Spawn the models into Gazebo -->
     <!-- Spawn SIAR -->
-    <arg name="xS" default="10"/>
-    <arg name="yS" default="-10"/>
+    <arg name="xS" default="7"/>
+    <arg name="yS" default="-7"/>
     <arg name="zS" default="0"/>
     <arg name="rollS" default="0"/>
     <arg name="pitchS" default="0"/>
-    <arg name="yawS" default="2.5"/>
+    <arg name="yawS" default="2.4"/>
     <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar_mb.sdf -sdf -model siar_mb 
   	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
