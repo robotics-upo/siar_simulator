@@ -520,7 +520,7 @@ namespace gazebo {
     // math::Pose cam_[frame_camera_.size()];
     math::Pose tf_electronic_box, tf_os1_sensor;
     
-    std::string frame_name_8 = "base_link";
+    std::string frame_name_8 = "odom";
 	            	// frame_name_9 = "electronics_center";
                 // frame_name_10 = "os1_sensor";
     
@@ -566,24 +566,21 @@ namespace gazebo {
   
   void GazeboRosWheelsPiston::publishOdometry(double step_time) {
     ros::Time current_time = ros::Time::now();
-    std::string odom_frame = 
-      tf::resolve(tf_prefix_, odometry_frame_);
-    std::string base_footprint_frame = 
-      tf::resolve(tf_prefix_, robot_base_frame_);
+    std::string odom_frame = tf::resolve(tf_prefix_, odometry_frame_);
+    std::string base_footprint_frame = tf::resolve(tf_prefix_, robot_base_frame_);
 
     // getting data for base_footprint to odom transform
     math::Pose pose = this->parent->GetWorldPose();
 
     tf::Quaternion qt(pose.rot.x, pose.rot.y, pose.rot.z, pose.rot.w);
     tf::Vector3 vt(pose.pos.x, pose.pos.y, pose.pos.z);
-
     tf::Transform base_footprint_to_odom(qt, vt);
 
     if (this->publish_odometry_tf_){
-      transform_broadcaster_->sendTransform(
-            tf::StampedTransform(base_footprint_to_odom, current_time,
-                                 odom_frame, base_footprint_frame));
+      transform_broadcaster_->sendTransform(tf::StampedTransform(base_footprint_to_odom, current_time,
+                                                                  odom_frame, base_footprint_frame));
     }
+
 
     // publish odom topic
     odom_.pose.pose.position.x = pose.pos.x;

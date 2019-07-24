@@ -164,6 +164,7 @@ namespace gazebo {
       ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_;
       tf::TransformBroadcaster *transform_broadcaster_;
       nav_msgs::Odometry odom_;
+      geometry_msgs::TransformStamped odom_trans;
       std::string tf_prefix_;
 
       boost::mutex lock;

@@ -4719,12 +4719,12 @@
       <torque>20</torque>
       <interface:position name="position_iface_2"/>
       <!--robotNamespace>siar_model</robotNamespace-->
-      <robotBaseFrame>piston_1</robotBaseFrame>
+      <robotBaseFrame>base_link</robotBaseFrame>
       <commandTopic>cmd_vel</commandTopic>  
-      <publishOdometryTf>0</publishOdometryTf>
+      <publishOdometryTf>1</publishOdometryTf>
       <publishOdometryMsg>1</publishOdometryMsg>
-      <odometryFrame>chassis_3</odometryFrame>
-      <odometryTopic>odomTopic</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryTopic>odom</odometryTopic>
     </plugin>
     
 
