@@ -222,6 +222,7 @@ namespace gazebo {
     this -> axis_wheel_left_1_ = this->parent->GetJoint("move_axis_wheel_left_1");
     this -> axis_wheel_left_2_ = this->parent->GetJoint("move_axis_wheel_left_2");
     this -> axis_wheel_left_3_ = this->parent->GetJoint("move_axis_wheel_left_3");
+    this -> axis_arm_1_ = this->parent->GetJoint("move_arm_1");
     
     // Make sure the ROS node for Gazebo has already been initialized
     if (!ros::isInitialized())
@@ -274,11 +275,17 @@ namespace gazebo {
           ros::VoidPtr(), &queue_);
     move_Piston_subscriber_= rosnode_->subscribe(so);
     
-    // SIAR: create arm_bool subscriber
+    // SIAR: create arm_bool subscriber (This change the width)
           so = ros::SubscribeOptions::create<std_msgs::Bool>("arm_bool", 1,
           boost::bind(&GazeboRosWheelsPiston::armCentralPosCallback, this, _1),
           ros::VoidPtr(), &queue_);
     arm_central_subscriber_= rosnode_->subscribe(so);
+
+    // SIAR: create arm_mode to move the robotics Arm
+          so = ros::SubscribeOptions::create<std_msgs::Bool>("arm_mode", 1,
+          boost::bind(&GazeboRosWheelsPiston::moveArmPosCallback, this, _1),
+          ros::VoidPtr(), &queue_);
+    move_arm_subscriber_= rosnode_->subscribe(so);
        
 
     // INitialize publishers
@@ -342,6 +349,7 @@ namespace gazebo {
       tfBaseLink();
      
       this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
+      this->pid_hinge_arm = common::PID(1, 0.1, 0.1);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_2_->GetScopedName(), this->pid_hinge_arm_right_left);
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_left_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
@@ -349,14 +357,15 @@ namespace gazebo {
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_1_->GetScopedName(), -1.2* elec_pos_cmd_);
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1.2* elec_pos_cmd_);
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(),  1.2* elec_pos_cmd_);
-      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(),  1.2* elec_pos_cmd_);              
+      this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(),  1.2* elec_pos_cmd_); 
+                    
+
       
       // Here to limit the first option move_Piston_cmd_ = 1 like value, because it is given problem like initial value
-        if ( (move_Piston_cmd_ == 0)  || move_Piston_aux_ == 0)  
-	  {
-	  elec_pos_cmd_ = move_Piston_cmd_ ;
-	  move_Piston_aux_= 0;
-	  }
+      if ( (move_Piston_cmd_ == 0)  || move_Piston_aux_ == 0)  {
+	      elec_pos_cmd_ = move_Piston_cmd_ ;
+	      move_Piston_aux_= 0;
+	    }
  
       //Publish the position of electronics_center
       std_msgs::Float32 elec_pos_msg;
@@ -365,7 +374,16 @@ namespace gazebo {
         
         
       // Update robot in case new velocities have been requested
-      getWheelVelocities();
+      if (move_arm_cmd_ == 0){
+        getWheelVelocities();
+        arm_pos_cmd_ = 1;
+      }
+      else{
+        arm_pos_cmd_ = 10;
+        this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
+        this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  1.2* arm_pos_cmd_);
+      }
+      
 
         for (size_t side = 0; side < 2; ++side){
             for (size_t i = 0; i < joints_[side].size(); ++i){
@@ -510,6 +528,12 @@ namespace gazebo {
       queue_.callAvailable(ros::WallDuration(timeout));
     }
   }
+  void GazeboRosWheelsPiston::moveArmPosCallback(
+      const std_msgs::Bool::ConstPtr& move_arm_msg) {
+    
+    boost::mutex::scoped_lock scoped_lock(lock);
+    move_arm_cmd_ = move_arm_msg->data;
+   }   
 
   
   void GazeboRosWheelsPiston::tfBaseLink(void)
