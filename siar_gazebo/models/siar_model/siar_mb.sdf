@@ -4108,7 +4108,7 @@
     </link>
 
     <joint type="revolute" name="move_arm_1">
-      <pose>0 0 0.01 0 0 0</pose>
+      <pose>0 0 -0.02 0 0 0</pose>
       <child>arm_siar_base</child>
       <parent>box_battery</parent>
       <axis>
@@ -4122,8 +4122,92 @@
       </axis>
     </joint>
 
-    <!-- <link name='arm_siar_first'>
-      <pose>0.025 0 0.39 0 0 0</pose>
+    <link name='cylinder_arm_siar_base_1'>
+      <pose>0.04 0.023 0.3305 1.5707 0 0</pose>
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <radius>.01</radius>
+            <length>.006</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <cylinder>
+            <radius>.01</radius>
+            <length>.006</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <link name='cylinder_arm_siar_base_2'>
+      <pose>0.04 -0.023 0.3305 1.5707 0 0</pose> 
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <cylinder>
+            <radius>.01</radius>
+            <length>.006</length>
+          </cylinder>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <cylinder>
+            <radius>.01</radius>
+            <length>.006</length>
+          </cylinder>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+
+    <joint type="fixed" name="cylinder_arm_fixed_1">
+      <pose>0 .02 0 0 0 0</pose>
+      <child>cylinder_arm_siar_base_1</child>
+      <parent>arm_siar_base</parent>
+    </joint>
+    <joint type="fixed" name="cylinder_arm_fixed_2">
+      <pose>0 -.02 0 0 0 0</pose>
+      <child>cylinder_arm_siar_base_2</child>
+      <parent>arm_siar_base</parent>
+    </joint>
+
+    <link name='arm_siar_long_1_1'>
+      <pose>0.135 0.029 0.3305 0 0 0</pose>
       <inertial>
        <mass>0.01</mass>
        <inertia>
@@ -4138,14 +4222,108 @@
       <collision name='collision'>
         <geometry>
           <box>
-            <size>.03 .06 .05</size>
+            <size>.21 .006 .03</size>
           </box>
         </geometry>
       </collision>
       <visual name='visual'>
         <geometry>
           <box>
-            <size>.05 .04 .05</size>
+            <size>.21 .006 .03</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+    </link> 
+
+    <link name='arm_siar_long_1_2'>
+      <pose>0.135 -0.029 0.3305 0 0 0</pose>
+      <inertial>
+       <mass>0.01</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.21 .006 .03</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.21 .006 .03</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+    </link> 
+
+    <joint type="revolute" name="move_arm_2_1">
+      <pose>-0.105 0 0 0 0 0</pose>
+      <child>arm_siar_long_1_1</child>
+      <parent>arm_siar_base</parent>
+      <axis>
+        <limit>
+          <lower>-1.2</lower>
+          <upper>0</upper>
+        </limit>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+    <joint type="revolute" name="move_arm_2_2">
+      <pose>-0.105 0 0 0 0 0</pose>
+      <child>arm_siar_long_1_2</child>
+      <parent>arm_siar_base</parent>
+      <axis>
+        <limit>
+          <lower>-1.2</lower>
+          <upper>0</upper>
+        </limit>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+
+    <link name='arm_siar_base_2'>
+      <pose>0.22 0 0.3305 0 0 0</pose> <!-- <pose>0.025 0 0.39 0 0 0</pose> -->
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.05 .04 .04</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.05 .04 .04</size>
           </box>
         </geometry>
         <material>
@@ -4154,9 +4332,157 @@
           </script>
         </material>
       </visual>
-    </link> -->
+    </link>
 
-      
+    <joint type="fixed" name="move_arm_fixed_1">
+      <pose>0 .02 0 0 0 0</pose>
+      <child>arm_siar_base_2</child>
+      <parent>arm_siar_long_1_1</parent>
+    </joint>
+    <joint type="fixed" name="move_arm_fixed_2">
+      <pose>0 -.02 0 0 0 0</pose>
+      <child>arm_siar_base_2</child>
+      <parent>arm_siar_long_1_2</parent>
+    </joint>
+
+     <link name='arm_siar_long_2_1'>
+      <pose>0.16 0.023 0.3305 0 0 0</pose>
+      <inertial>
+       <mass>0.01</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.16 .006 .03</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.16 .006 .03</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+    </link> 
+
+    <link name='arm_siar_long_2_2'>
+      <pose>0.16 -0.023 0.3305 0 0 0</pose>
+      <inertial>
+       <mass>0.01</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.16 .006 .03</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.16 .006 .03</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/DarkGrey</name>
+          </script>
+        </material>
+      </visual>
+    </link> 
+
+    <joint type="revolute" name="move_arm_3_1">
+      <pose>0.08 0 0 0 0 0</pose>
+      <child>arm_siar_long_2_1</child>
+      <parent>arm_siar_long_1_1</parent>
+      <axis>
+        <limit>
+          <lower>0</lower>
+          <upper>1.2</upper>
+        </limit>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+    <joint type="revolute" name="move_arm_3_2">
+      <pose>0.08 0 0 0 0 0</pose>
+      <child>arm_siar_long_2_2</child>
+      <parent>arm_siar_long_1_2</parent>
+      <axis>
+        <limit>
+          <lower>0</lower>
+          <upper>1.2</upper>
+        </limit>
+        <xyz>0 1 0</xyz>
+      </axis>
+    </joint>
+
+   <link name='arm_siar_base_3'>
+      <pose>0.10 0 0.3305 0 0 0</pose> <!-- <pose>0.025 0 0.39 0 0 0</pose> -->
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.04 .04 .03</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.04 .04 .03</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/RedGlow</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint type="fixed" name="move_arm_fixed_3">
+      <pose>0 0 0 0 0 0</pose>
+      <child>arm_siar_base_3</child>
+      <parent>arm_siar_long_2_1</parent>
+    </joint>
+    <joint type="fixed" name="move_arm_fixed_4">
+      <pose>0 0 0 0 0 0</pose>
+      <child>arm_siar_base_3</child>
+      <parent>arm_siar_long_2_2</parent>
+    </joint>
+
 <!-- 11.   Definition of Sensors and Actuators -->
    
     <link name="front_link">
@@ -4709,7 +5035,7 @@
       <pose> 0 0 0 0 0 0</pose>
     </joint>
 
-    
+        
     <link name="velodyne_base">
       <pose>-0.15 0 0.5801 0 0 0</pose>
       <inertial>
