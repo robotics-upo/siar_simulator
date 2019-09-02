@@ -4070,8 +4070,94 @@
       <parent>handle_camera_front_2</parent>
     </joint> 
       
+
+<!-- 10. Definition Arm -->
+
+    <link name='arm_siar_base'>
+      <pose>0.04 0 0.3305 0 0 0</pose> <!-- <pose>0.025 0 0.39 0 0 0</pose> -->
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.05 .04 .05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.05 .04 .05</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+
+    <joint type="revolute" name="move_arm_1">
+      <pose>0 0 0.01 0 0 0</pose>
+      <child>arm_siar_base</child>
+      <parent>box_battery</parent>
+      <axis>
+        <xyz>0 0 1</xyz>
+        <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0.2</damping>
+          <friction>0.9</friction>
+        </dynamics>
+      </axis>
+    </joint>
+
+    <!-- <link name='arm_siar_first'>
+      <pose>0.025 0 0.39 0 0 0</pose>
+      <inertial>
+       <mass>0.01</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.03 .06 .05</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.05 .04 .05</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Black</name>
+          </script>
+        </material>
+      </visual>
+    </link> -->
+
       
-<!-- 10.   Definition of Sensors and Actuators -->
+<!-- 11.   Definition of Sensors and Actuators -->
    
     <link name="front_link">
     <pose>0.3513 0.00 0.3720 0 0 0</pose>
@@ -4582,11 +4668,50 @@
       </physics>
   </joint>    
     
+  
+  <link name='siar_base_extinguisher'>
+      <pose>-0.15 0 0.4305 0 0 0</pose> <!-- <pose>0.025 0 0.39 0 0 0</pose> -->
+      <inertial>
+       <mass>0.02</mass>
+       <inertia>
+         <ixx>0.000007</ixx>       
+         <ixy>0.0</ixy>         
+         <ixz>0.0</ixz>         
+         <iyy>0.000008</iyy>       
+         <iyz>0.0</iyz>         
+         <izz>0.000007</izz>       
+       </inertia>
+      </inertial>
+      <collision name='collision'>
+        <geometry>
+          <box>
+            <size>.26 .19 .25</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <box>
+            <size>.26 .19 .25</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <name>Gazebo/Grey</name>
+          </script>
+        </material>
+      </visual>
+    </link>
 
+    <joint name='fixed_base_extinguisher' type='fixed'>
+      <child>siar_base_extinguisher</child>
+      <parent>box_battery</parent>
+      <pose> 0 0 0 0 0 0</pose>
+    </joint>
 
     
     <link name="velodyne_base">
-      <pose>0 0 0.3601 0 0 0</pose>
+      <pose>-0.15 0 0.5801 0 0 0</pose>
       <inertial>
         <mass>1.2</mass>
         <inertia>
@@ -4615,9 +4740,11 @@
         </geometry>
       </visual>
     </link>
+
+
     
     <link name="os1_sensor_link">
-      <pose>0 0 0.4262 0 0 0</pose>
+      <pose>-0.15 0 0.6462 0 0 0</pose>
       <inertial>
         <mass>0.1</mass>
         <inertia>
@@ -4647,6 +4774,9 @@
       </visual>
 
       <!-- Ouster Configuration-->
+
+    
+
       <sensor type="ray" name="lase_scanr">
         <pose>0 0 -0.004645 0 0 0</pose>
         <visualize>false</visualize>
@@ -4654,7 +4784,7 @@
         <ray>
           <scan>
             <horizontal>
-              <samples>2048</samples>
+              <samples>512</samples>
               <resolution>1</resolution>
               <min_angle>-3.14159</min_angle>
               <max_angle>3.14159</max_angle>

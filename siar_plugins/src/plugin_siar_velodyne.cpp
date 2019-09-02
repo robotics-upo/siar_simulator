@@ -558,7 +558,7 @@ namespace gazebo {
     // t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
     // t_10.setRotation (tf::Quaternion(tf_os1_sensor.rot.x, tf_os1_sensor.rot.y,tf_os1_sensor.rot.z,tf_os1_sensor.rot.w )); 
       
-    br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
+    // br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
     // br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));
     // br.sendTransform(tf::StampedTransform(t_10, ros::Time::now(), frame_name_9, frame_name_10 ));
   }
