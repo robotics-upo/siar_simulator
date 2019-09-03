@@ -4130,14 +4130,14 @@
     <link name='cylinder_arm_siar_base_1'>
       <pose>0.04 0.023 0.3305 1.5707 0 0</pose>
       <inertial>
-       <mass>0.02</mass>
+       <mass>0.06</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000002</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000004</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000002</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4166,14 +4166,14 @@
     <link name='cylinder_arm_siar_base_2'>
       <pose>0.04 -0.023 0.3305 1.5707 0 0</pose> 
       <inertial>
-       <mass>0.02</mass>
+       <mass>0.06</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000002</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000004</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000002</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4214,14 +4214,14 @@
     <link name='arm_siar_long_1_1'>
       <pose>0.135 0.029 0.3305 0 0 0</pose>
       <inertial>
-       <mass>0.01</mass>
+       <mass>0.1</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000008</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000375</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000368</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4248,14 +4248,14 @@
     <link name='arm_siar_long_1_2'>
       <pose>0.135 -0.029 0.3305 0 0 0</pose>
       <inertial>
-       <mass>0.01</mass>
+       <mass>0.1</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000008</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000375</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000368</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4280,7 +4280,7 @@
     </link> 
 
     <joint type="revolute" name="move_arm_2_1">
-      <pose>-0.105 0 0 0 0 0</pose>
+      <pose>-0.095 -0.003 0 0 0 0</pose>
       <child>arm_siar_long_1_1</child>
       <parent>arm_siar_base</parent>
       <axis>
@@ -4290,15 +4290,15 @@
         </limit>
         <xyz>0 1 0</xyz>
         <dynamics>
-          <!-- <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness> -->
-          <!-- <damping>0.9</damping> -->
-          <friction>0.2</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0.0</damping>
+          <friction>1.0</friction>
         </dynamics>
       </axis>
     </joint>
     <joint type="revolute" name="move_arm_2_2">
-      <pose>-0.105 0 0 0 0 0</pose>
+      <pose>-0.095 0.003 0 0 0 0</pose>
       <child>arm_siar_long_1_2</child>
       <parent>arm_siar_base</parent>
       <axis>
@@ -4308,10 +4308,10 @@
         </limit>
         <xyz>0 1 0</xyz>
         <dynamics>
-          <!-- <spring_reference>0</spring_reference>
-          <spring_stiffness>0</spring_stiffness> -->
-          <!-- <damping>0.9</damping> -->
-          <friction>0.2</friction>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0.0</damping>
+          <friction>1.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -4322,10 +4322,10 @@
       <inertial>
        <mass>0.02</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000005</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000007</iyy>       
          <iyz>0.0</iyz>         
          <izz>0.000007</izz>       
        </inertia>
@@ -4365,14 +4365,14 @@
      <link name='arm_siar_long_2_1'>
       <pose>0.16 0.023 0.3305 0 0 0</pose>
       <inertial>
-       <mass>0.01</mass>
+       <mass>0.1</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000008</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000214</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000221</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4399,14 +4399,14 @@
     <link name='arm_siar_long_2_2'>
       <pose>0.16 -0.023 0.3305 0 0 0</pose>
       <inertial>
-       <mass>0.01</mass>
+       <mass>0.1</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000008</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000214</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000221</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4440,12 +4440,12 @@
           <upper>1.8</upper>
         </limit>
         <xyz>0 1 0</xyz>
-        <!-- <dynamics>
+        <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
           <damping>0.0</damping>
-          <friction>0.5</friction>
-        </dynamics> -->
+          <friction>1.0</friction>
+        </dynamics>
       </axis>
     </joint>
     <joint type="revolute" name="move_arm_3_2">
@@ -4458,12 +4458,12 @@
           <upper>1.8</upper>
         </limit>
         <xyz>0 1 0</xyz>
-        <!-- <dynamics>
+        <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
           <damping>0.0</damping>
-          <friction>0.5</friction>
-        </dynamics> -->
+          <friction>1.0</friction>
+        </dynamics>
       </axis>
     </joint>
 
@@ -4472,12 +4472,12 @@
       <inertial>
        <mass>0.02</mass>
        <inertia>
-         <ixx>0.000007</ixx>       
+         <ixx>0.000002</ixx>       
          <ixy>0.0</ixy>         
          <ixz>0.0</ixz>         
-         <iyy>0.000008</iyy>       
+         <iyy>0.000002</iyy>       
          <iyz>0.0</iyz>         
-         <izz>0.000007</izz>       
+         <izz>0.000003</izz>       
        </inertia>
       </inertial>
       <collision name='collision'>
@@ -4502,12 +4502,12 @@
     </link>
 
     <joint type="fixed" name="move_arm_fixed_3">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 0.02 0 0 0 0</pose>
       <child>arm_siar_base_3</child>
       <parent>arm_siar_long_2_1</parent>
     </joint>
     <joint type="fixed" name="move_arm_fixed_4">
-      <pose>0 0 0 0 0 0</pose>
+      <pose>0 -0.02 0 0 0 0</pose>
       <child>arm_siar_base_3</child>
       <parent>arm_siar_long_2_2</parent>
     </joint>

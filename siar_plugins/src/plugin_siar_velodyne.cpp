@@ -205,7 +205,6 @@ namespace gazebo {
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
     electronics_center = this->parent->GetLink("box_battery");
     // os1_sensor_ = this->parent->GetLink("os1_sensor_link");
-    
     // tf_frame_name_.push_back("asusXtion_topMiddle_link");
     // tf_frame_name_.push_back("front_link");
     // tf_frame_name_.push_back("asusXtion_frontRight_link");
@@ -214,8 +213,7 @@ namespace gazebo {
     // tf_frame_name_.push_back("asusXtion_backRight_link");
     // tf_frame_name_.push_back("asusXtion_backLeft_link");
     
-    // for (const std::string& name : tf_frame_name_) { // access by const reference
-    
+    // for (const std::string& name : tf_frame_name_) {           // access by const reference
     //   frame_camera_.push_back(this->parent->GetLink(name));
     // }
     
@@ -234,8 +232,8 @@ namespace gazebo {
     this -> axis_arm_1_ = this->parent->GetJoint("move_arm_1");
     // this -> axis_arm_2_1_ = this->parent->GetJoint("move_arm_2_1");
     // this -> axis_arm_2_2_ = this->parent->GetJoint("move_arm_2_2");
-    // this -> axis_arm_3_1_ = this->parent->GetJoint("move_arm_3_1");
-    // this -> axis_arm_3_2_ = this->parent->GetJoint("move_arm_3_2");
+    this -> axis_arm_3_1_ = this->parent->GetJoint("move_arm_3_1");
+    this -> axis_arm_3_2_ = this->parent->GetJoint("move_arm_3_2");
 
     
     // Make sure the ROS node for Gazebo has already been initialized
@@ -343,7 +341,7 @@ namespace gazebo {
     arm_central_cmd_=false;
     vel_state_cmd_=0;
     move_pan_arm_aux_ = 0;
-    // move_tilt_arm_aux_ = 0;
+    move_tilt_arm_aux_ = 0;
   }
 
   
@@ -377,7 +375,7 @@ namespace gazebo {
       tfBaseLink();
      
       this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
-      this->pid_hinge_arm = common::PID(0.1, 0.01, 0.01);
+      this->pid_hinge_arm = common::PID(0.2, 0.01, 0.01);
       // this->pid_hinge_arm_2 = common::PID(0.8, 0.0, 0.04);
       //To control the width of SIAR
       this-> parent ->GetJointController()->SetPositionPID(this->hinge_arm_right_1_1_->GetScopedName(), this->pid_hinge_arm_right_left);
@@ -390,10 +388,10 @@ namespace gazebo {
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(),  1.2* elec_pos_cmd_); 
 
       //To set the elevation angle 
-      // this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_2_1_->GetScopedName(), this->pid_hinge_arm_2);
-      // this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_2_1_->GetScopedName(),  -0.5);
-      // this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_2_2_->GetScopedName(), this->pid_hinge_arm_2);
-      // this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_2_2_->GetScopedName(),  -0.5);
+      this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_2_1_->GetScopedName(), this->pid_hinge_arm_2);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_2_1_->GetScopedName(),  -0.5);
+      this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_2_2_->GetScopedName(), this->pid_hinge_arm_2);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_2_2_->GetScopedName(),  -0.5);
 
      
 
@@ -409,11 +407,16 @@ namespace gazebo {
       std_msgs::Float32 elec_pos_msg;
       elec_pos_msg.data = (-1*elec_pos_cmd_);
       elec_pos_publisher_.publish(elec_pos_msg);
+
+      //  ROS_INFO("The value of move_tilt_arm_aux_ is: %f  and move_tilt_arm_cmd_ is: %f",move_tilt_arm_aux_,move_tilt_arm_cmd_);
+
     
         
       // Update robot in case new velocities have been requested or to control arm 
       if (move_arm_cmd_ == 0){
         getWheelVelocities();
+        move_pan_arm_cmd_ = 0;
+        move_tilt_arm_cmd_ = 0;
         // arm_pos_cmd_ = 1;
       }
       else{
@@ -424,23 +427,23 @@ namespace gazebo {
           this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_aux_);
           // ROS_INFO("The value of move_pan_arm_aux_ is: %f",move_pan_arm_aux_);
         }
-        // if (move_pan_arm_aux_ > 1.55){
-        //   move_pan_arm_aux_ = 1.549;}
-        // if (move_pan_arm_aux_ < -1.55){
-        //   move_pan_arm_aux_ = -1.549;}  
+        if (move_pan_arm_aux_ >= 1.55){
+          move_pan_arm_aux_ = 1.549;}
+        if (move_pan_arm_aux_ <= -1.55){
+          move_pan_arm_aux_ = -1.549;}  
 
-        // if (move_tilt_arm_aux_ < 1.8 && move_tilt_arm_aux_ > -1.8){
-        //   move_tilt_arm_aux_ = move_tilt_arm_aux_ + 0.01 * move_tilt_arm_cmd_;
-        //   this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
-        //   this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
-        //   this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
-        //   this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
-        //   ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
-        // }
-        // if (move_tilt_arm_aux_ > 1.8){
-        //   move_tilt_arm_aux_ = 1.79;}
-        // if (move_tilt_arm_aux_ < -1.8){
-        //   move_tilt_arm_aux_ = -1.79;}  
+        if (move_tilt_arm_aux_ < 1.8 && move_tilt_arm_aux_ > -1.8){
+          move_tilt_arm_aux_ = move_tilt_arm_aux_ + 0.01 * move_tilt_arm_cmd_;
+          this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
+          this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
+          this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
+          this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
+          // ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
+        }
+        if (move_tilt_arm_aux_ >= 1.8){
+          move_tilt_arm_aux_ = 1.79;}
+        if (move_tilt_arm_aux_ <= -1.8){
+          move_tilt_arm_aux_ = -1.79;}  
       }
 
       
@@ -558,8 +561,6 @@ namespace gazebo {
     boost::mutex::scoped_lock scoped_lock(lock);
     x_ = cmd_msg->linear.x;
     rot_ = cmd_msg->angular.z;
-    
-    
   }
 
   void GazeboRosWheelsPiston::elecPosCallback (
