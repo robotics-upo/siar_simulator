@@ -230,8 +230,8 @@ namespace gazebo {
     this -> axis_wheel_left_2_ = this->parent->GetJoint("move_axis_wheel_left_2");
     this -> axis_wheel_left_3_ = this->parent->GetJoint("move_axis_wheel_left_3");
     this -> axis_arm_1_ = this->parent->GetJoint("move_arm_1");
-    // this -> axis_arm_2_1_ = this->parent->GetJoint("move_arm_2_1");
-    // this -> axis_arm_2_2_ = this->parent->GetJoint("move_arm_2_2");
+    this -> axis_arm_2_1_ = this->parent->GetJoint("move_arm_2_1");
+    this -> axis_arm_2_2_ = this->parent->GetJoint("move_arm_2_2");
     this -> axis_arm_3_1_ = this->parent->GetJoint("move_arm_3_1");
     this -> axis_arm_3_2_ = this->parent->GetJoint("move_arm_3_2");
 

@@ -4431,7 +4431,7 @@
     </link> 
 
     <joint type="revolute" name="move_arm_3_1">
-      <pose>0.06 0 0 0 0 0</pose>
+      <pose>0.06 0.003 0 0 0 0</pose>
       <child>arm_siar_long_2_1</child>
       <parent>arm_siar_long_1_1</parent>
       <axis>
@@ -4449,7 +4449,7 @@
       </axis>
     </joint>
     <joint type="revolute" name="move_arm_3_2">
-      <pose>0.06 0 0 0 0 0</pose>
+      <pose>0.06 -0.003 0 0 0 0</pose>
       <child>arm_siar_long_2_2</child>
       <parent>arm_siar_long_1_2</parent>
       <axis>
