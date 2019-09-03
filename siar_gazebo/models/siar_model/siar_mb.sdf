@@ -4111,13 +4111,18 @@
       <pose>0 0 -0.02 0 0 0</pose>
       <child>arm_siar_base</child>
       <parent>box_battery</parent>
+      
       <axis>
+        <limit>
+          <lower>-1.5707</lower>
+          <upper>1.5707</upper>
+        </limit>
         <xyz>0 0 1</xyz>
         <dynamics>
           <spring_reference>0</spring_reference>
           <spring_stiffness>0</spring_stiffness>
-          <damping>0.2</damping>
-          <friction>0.9</friction>
+          <damping>0.0</damping>
+          <friction>1.0</friction>
         </dynamics>
       </axis>
     </joint>
@@ -4196,12 +4201,12 @@
 
 
     <joint type="fixed" name="cylinder_arm_fixed_1">
-      <pose>0 .02 0 0 0 0</pose>
+      <pose>0 0 0.003 0 0 0</pose>
       <child>cylinder_arm_siar_base_1</child>
       <parent>arm_siar_base</parent>
     </joint>
     <joint type="fixed" name="cylinder_arm_fixed_2">
-      <pose>0 -.02 0 0 0 0</pose>
+      <pose>0 0 -0.003 0 0 0</pose>
       <child>cylinder_arm_siar_base_2</child>
       <parent>arm_siar_base</parent>
     </joint>
@@ -4280,10 +4285,16 @@
       <parent>arm_siar_base</parent>
       <axis>
         <limit>
-          <lower>-1.2</lower>
+          <lower>-0.53</lower>
           <upper>0</upper>
         </limit>
         <xyz>0 1 0</xyz>
+        <dynamics>
+          <!-- <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness> -->
+          <!-- <damping>0.9</damping> -->
+          <friction>0.2</friction>
+        </dynamics>
       </axis>
     </joint>
     <joint type="revolute" name="move_arm_2_2">
@@ -4292,10 +4303,16 @@
       <parent>arm_siar_base</parent>
       <axis>
         <limit>
-          <lower>-1.2</lower>
+          <lower>-0.53</lower>
           <upper>0</upper>
         </limit>
         <xyz>0 1 0</xyz>
+        <dynamics>
+          <!-- <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness> -->
+          <!-- <damping>0.9</damping> -->
+          <friction>0.2</friction>
+        </dynamics>
       </axis>
     </joint>
 
@@ -4414,27 +4431,39 @@
     </link> 
 
     <joint type="revolute" name="move_arm_3_1">
-      <pose>0.08 0 0 0 0 0</pose>
+      <pose>0.06 0 0 0 0 0</pose>
       <child>arm_siar_long_2_1</child>
       <parent>arm_siar_long_1_1</parent>
       <axis>
         <limit>
           <lower>0</lower>
-          <upper>1.2</upper>
+          <upper>1.8</upper>
         </limit>
         <xyz>0 1 0</xyz>
+        <!-- <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0.0</damping>
+          <friction>0.5</friction>
+        </dynamics> -->
       </axis>
     </joint>
     <joint type="revolute" name="move_arm_3_2">
-      <pose>0.08 0 0 0 0 0</pose>
+      <pose>0.06 0 0 0 0 0</pose>
       <child>arm_siar_long_2_2</child>
       <parent>arm_siar_long_1_2</parent>
       <axis>
         <limit>
           <lower>0</lower>
-          <upper>1.2</upper>
+          <upper>1.8</upper>
         </limit>
         <xyz>0 1 0</xyz>
+        <!-- <dynamics>
+          <spring_reference>0</spring_reference>
+          <spring_stiffness>0</spring_stiffness>
+          <damping>0.0</damping>
+          <friction>0.5</friction>
+        </dynamics> -->
       </axis>
     </joint>
 
