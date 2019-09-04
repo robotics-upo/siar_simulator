@@ -148,8 +148,9 @@ namespace gazebo {
 
       // SIAR links
       std::vector <physics::LinkPtr> frame_camera_;
-      physics::LinkPtr l_c_wheel_, r_c_wheel_,electronic_box_,electronics_center, os1_sensor_, piston_, frame_camera_1_,frame_camera_2_,frame_camera_3_,frame_camera_4_,frame_camera_5_,
-		      frame_camera_6_,frame_camera_7_;
+      physics::LinkPtr l_c_wheel_, r_c_wheel_,electronic_box_,electronics_center, os1_sensor_, piston_, 
+                        frame_camera_1_,frame_camera_2_,frame_camera_3_,frame_camera_4_,frame_camera_5_,
+		                    frame_camera_6_,frame_camera_7_;
       //std::vector<physics::LinkPtr> frame_camera_; 
       physics::JointPtr piston_main_1_, piston_main_2_,hinge_arm_right_1_1_,hinge_arm_right_1_2_, hinge_arm_left_1_1_, hinge_arm_left_1_2_, 
 			axis_wheel_right_1_,axis_wheel_right_2_,axis_wheel_right_3_,axis_wheel_left_1_,axis_wheel_left_2_,axis_wheel_left_3_,
@@ -160,8 +161,8 @@ namespace gazebo {
       ros::NodeHandle* rosnode_;
 //       ros::NodeHandle& rosnode_p;
       ros::Publisher odometry_publisher_, width_publisher_, pos_electronicBox_publisher_,pos_centerMidWheels_publisher_,pos_vecBoxWheel_publisher_,
-		     pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
-		     tf_base_link_publisher_,test_velocity_publisher_;
+		                  pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
+		                  tf_base_link_publisher_,test_velocity_publisher_;
       ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_, 
                       move_arm_subscriber_, move_pan_arm_subscriber_, move_tilt_arm_subscriber_;
       tf::TransformBroadcaster *transform_broadcaster_;
@@ -201,7 +202,7 @@ namespace gazebo {
       double rot_;
       double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_,
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
-              move_pan_arm_aux_,move_tilt_arm_aux_;
+              move_pan_arm_aux_,move_tilt_arm_aux_, move_elevation_arm_aux_;
       bool alive_, arm_central_cmd_,move_arm_cmd_;
       math::Vector3 rm, rb;
      
