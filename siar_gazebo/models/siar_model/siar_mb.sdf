@@ -4513,7 +4513,7 @@
       <parent>arm_siar_long_2_2</parent>
     </joint> 
 
-    <link name='camera_arm'>
+    <link name='thermal_camera_arm'>
       <pose>0.10 0 0.425554 0 0 0</pose> 
       <inertial>
        <mass>0.1</mass>
@@ -4547,12 +4547,37 @@
           </script>
         </material>
       </visual>
+      <sensor type="camera" name="thermal_camera_sensor">
+        <pose>0 0 0 0 -1.5707 0</pose>
+        <update_rate>30</update_rate>
+        <camera>
+          <!-- <horizontal_fov>${90.0*M_PI/180.0}</horizontal_fov> -->
+          <image>
+            <format>R8G8B8</format>
+            <width>186</width>
+            <height>100</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>300</far>
+          </clip>
+        </camera>
+        <plugin name="thermal_camera_controller" filename="libgazebo_ros_thermal_camera.so">
+          <alwaysOn>true</alwaysOn>
+          <updateRate>10</updateRate>
+          <cameraName> </cameraName> 
+          <imageTopicName>/thermal_camera/image_raw</imageTopicName>
+          <cameraInfoTopicName>/thermal_camera/camera_info</cameraInfoTopicName>
+          <frameName>thermal_optical_frame</frameName>
+        </plugin>
+      </sensor>
+
     </link>
 
 
-    <joint type="fixed" name="camera_arm_fixed">
+    <joint type="fixed" name="thermal_camera_arm_fixed">
       <pose>0 0 0.003 0 0 0</pose>
-      <child>camera_arm</child>
+      <child>thermal_camera_arm</child>
       <parent>arm_siar_base_3</parent>
     </joint>
 
@@ -5261,6 +5286,9 @@
         </light>
       </link>
     </plugin>
+
+
+
     
 
     
