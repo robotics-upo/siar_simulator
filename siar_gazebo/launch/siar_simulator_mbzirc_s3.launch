@@ -78,10 +78,17 @@
     <!-- siar_Joy -->
     <include file="$(find siar_plugins)/launch/siar_teleop_joy_simulation.launch" />
   
-    <!-- Siar Controller node -->
-    <!-- <include file="$(find siar_controller)/launch/siar_controller_simulation.launch" /> -->
-  
-    <!-- Siar Costmap node -->
-    <!-- <include file="$(find siar_costmap)/launch/siar_costmap_simulation.launch" /> -->
+
+    <!-- load the controllers -->
+    <!-- <rosparam file="$(find siar_gazebo)/cfg/siar_control.yaml" command="load"/>
+    <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
+    output="screen" ns="/siar_robot" args="joint_state_controller
+              joint1_position_controller"/> -->
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" 
+    respawn="false" output="screen">
+      <remap from="/joint_states" to="/rrbot/joint_states" />
+    </node> -->
 
 </launch>

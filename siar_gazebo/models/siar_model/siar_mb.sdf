@@ -4565,7 +4565,7 @@
         <plugin name="thermal_camera_controller" filename="libgazebo_ros_thermal_camera.so">
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
-          <cameraName> </cameraName> 
+          <cameraName>/thermal_camera</cameraName>
           <imageTopicName>/thermal_camera/image_raw</imageTopicName>
           <cameraInfoTopicName>/thermal_camera/camera_info</cameraInfoTopicName>
           <frameName>thermal_optical_frame</frameName>
@@ -5287,9 +5287,22 @@
       </link>
     </plugin>
 
+    <!-- <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <robotNamespace>/siar_robot</robotNamespace>
+      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+      <legacyModeNS>true</legacyModeNS>
+      <transmission name="tran1">
+        <type>SimpleTransmission</type>
+        <joint name="move_arm_1">
+          <hardwareInterface>EffortJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="motor1">
+          <hardwareInterface>EffortJointInterface</hardwareInterface>
+          <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+      </transmission>
+    </plugin> -->
 
-
-    
 
     
   </model>
