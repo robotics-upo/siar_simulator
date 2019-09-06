@@ -11,7 +11,6 @@
     <param name="vr_file" 	value="$(find siar_plugins)/data/vr_file"/>
     <param name="va_file" 	value="$(find siar_plugins)/data/va_file"/>
 
-    <rosparam command="load" file="$(find siar_gazebo)/cfg/twist_mux.yaml" ns="twist_mux"/>
 
 
     <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
@@ -83,6 +82,7 @@
 
 
     <!-- MUX for cmd_vel -->
+    <rosparam command="load" file="$(find siar_gazebo)/cfg/twist_mux.yaml" ns="twist_mux"/>
     <node pkg="twist_mux" type="twist_mux" name="twist_mux">
         <remap from="/cmd_vel_out" to="/cmd_vel"/>
     </node>
