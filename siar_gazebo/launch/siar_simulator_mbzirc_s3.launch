@@ -11,6 +11,9 @@
     <param name="vr_file" 	value="$(find siar_plugins)/data/vr_file"/>
     <param name="va_file" 	value="$(find siar_plugins)/data/va_file"/>
 
+    <rosparam command="load" file="$(find siar_gazebo)/cfg/twist_mux.yaml" ns="twist_mux"/>
+
+
     <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
     <!--Spawn the Nodes to transform frames depth and image-->
@@ -77,6 +80,12 @@
 
     <!-- siar_Joy -->
     <include file="$(find siar_plugins)/launch/siar_teleop_joy_simulation.launch" />
+
+
+    <!-- MUX for cmd_vel -->
+    <node pkg="twist_mux" type="twist_mux" name="twist_mux">
+        <remap from="/cmd_vel_out" to="/cmd_vel"/>
+    </node>
   
 
     <!-- load the controllers -->
