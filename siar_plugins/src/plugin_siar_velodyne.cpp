@@ -204,18 +204,9 @@ namespace gazebo {
     l_c_wheel_ = this->parent->GetLink("wheel_left_1");
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
     electronics_center = this->parent->GetLink("box_battery");
-    // os1_sensor_ = this->parent->GetLink("os1_sensor_link");
-    // tf_frame_name_.push_back("asusXtion_topMiddle_link");
-    // tf_frame_name_.push_back("front_link");
-    // tf_frame_name_.push_back("asusXtion_frontRight_link");
-    // tf_frame_name_.push_back("asusXtion_frontLeft_link");
-    // tf_frame_name_.push_back("back_link");
-    // tf_frame_name_.push_back("asusXtion_backRight_link");
-    // tf_frame_name_.push_back("asusXtion_backLeft_link");
-    
-    // for (const std::string& name : tf_frame_name_) {           // access by const reference
-    //   frame_camera_.push_back(this->parent->GetLink(name));
-    // }
+    thermal_camera_ = this->parent->GetLink("thermal_camera_arm");
+    arm_siar_base_ = this->parent->GetLink("arm_siar_base");
+
     
     this -> piston_main_1_ = this->parent->GetJoint("move_piston_1_1");
     this -> piston_main_2_ = this->parent->GetJoint("move_piston_1_2");
@@ -623,51 +614,18 @@ namespace gazebo {
   {
     static tf::TransformBroadcaster br;
     
-    //     math::Vector3 cam_[frame_camera_.size()];
-    // math::Pose cam_[frame_camera_.size()];
-    math::Pose tf_electronic_box, tf_os1_sensor;
-    
+    math::Pose tf_thermal_camera;
     std::string frame_name_8 = "odom";
-	            	// frame_name_9 = "electronics_center";
-                // frame_name_10 = "os1_sensor";
+
+ 
+    tf_thermal_camera = thermal_camera_->GetRelativePose();
     
-    // for (unsigned int i = 0; i < frame_camera_.size() ; i++)
-    // {
-      
-    //   cam_[i] = frame_camera_[i] ->GetWorldCoGPose();
-    // }
-	
-    // tf::Transform t_[frame_camera_.size()];
-    // //tf::Quaternion q_[frame_camera_.size()];
-    
-    // for (int i = 0 ; i < tf_frame_name_.size() ; i++)
-    // {   
-    //   t_[i].setOrigin( tf::Vector3(cam_[i].pos.x, cam_[i].pos.y, cam_[i].pos.z) );
-    //   t_[i].setRotation(tf::Quaternion( cam_[i].rot.x, cam_[i].rot.y, cam_[i].rot.z,cam_[i].rot.w) );
-    //   //q_[i].setRPY(0, 0, 0);
-    //   //t_[i].setRotation(q_[i]);
-    //   br.sendTransform(tf::StampedTransform(t_[i], ros::Time::now(), frame_name_9, tf_frame_name_[i]) ); 
-    // }
-    
-    tf_electronic_box = electronics_center->GetWorldCoGPose();
-    // tf_os1_sensor = os1_sensor_->GetWorldCoGPose();
-    
-    tf::Transform t_8;
-    // tf::Transform t_8,t_9, t_10;
-      
-    t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
-    // t_9.setOrigin( tf::Vector3(tf_electronic_box.pos.x, tf_electronic_box.pos.y, tf_electronic_box.pos.z) );
-    // t_10.setOrigin( tf::Vector3(tf_os1_sensor.pos.x, tf_os1_sensor.pos.y, tf_os1_sensor.pos.z) );
-            
-    tf::Quaternion q_8;
-      
-    t_8.setRotation(tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));
-    // t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
-    // t_10.setRotation (tf::Quaternion(tf_os1_sensor.rot.x, tf_os1_sensor.rot.y,tf_os1_sensor.rot.z,tf_os1_sensor.rot.w )); 
-      
-    // br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
-    // br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));
-    // br.sendTransform(tf::StampedTransform(t_10, ros::Time::now(), frame_name_9, frame_name_10 ));
+
+    tf::Transform t_t;
+    t_t.setOrigin( tf::Vector3(tf_thermal_camera.pos.x, tf_thermal_camera.pos.y, tf_thermal_camera.pos.z) );
+    t_t.setRotation(tf::Quaternion(tf_thermal_camera.rot.x,tf_thermal_camera.rot.y,tf_thermal_camera.rot.z,tf_thermal_camera.rot.z));
+
+    br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "thermal_camera"));
   }
   
   

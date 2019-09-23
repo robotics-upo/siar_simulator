@@ -150,7 +150,7 @@ namespace gazebo {
       std::vector <physics::LinkPtr> frame_camera_;
       physics::LinkPtr l_c_wheel_, r_c_wheel_,electronic_box_,electronics_center, os1_sensor_, piston_, 
                         frame_camera_1_,frame_camera_2_,frame_camera_3_,frame_camera_4_,frame_camera_5_,
-		                    frame_camera_6_,frame_camera_7_;
+		                    frame_camera_6_,frame_camera_7_, thermal_camera_,arm_siar_base_;
       //std::vector<physics::LinkPtr> frame_camera_; 
       physics::JointPtr piston_main_1_, piston_main_2_,hinge_arm_right_1_1_,hinge_arm_right_1_2_, hinge_arm_left_1_1_, hinge_arm_left_1_2_, 
 			axis_wheel_right_1_,axis_wheel_right_2_,axis_wheel_right_3_,axis_wheel_left_1_,axis_wheel_left_2_,axis_wheel_left_3_,
