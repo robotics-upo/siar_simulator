@@ -11,7 +11,7 @@
     <param name="vr_file" 	value="$(find siar_plugins)/data/vr_file"/>
     <param name="va_file" 	value="$(find siar_plugins)/data/va_file"/>
 
-
+    <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find siar_gazebo)/models/tower_1/model.urdf'"/>
 
     <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
@@ -67,6 +67,7 @@
     <node name="spawn_tower" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/tower_1/model.sdf -sdf -model tower
   	-x $(arg xT) -y $(arg yT) -z $(arg zT) 
 	  -R $(arg rollT) -P $(arg pitchT) -Y $(arg yawT)" output="screen" />
+
 
 
     <!-- joy node -->
