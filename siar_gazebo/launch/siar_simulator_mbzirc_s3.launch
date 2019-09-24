@@ -38,9 +38,9 @@
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
       <arg name="world_name" value="$(find siar_gazebo)/worlds/siar_$(arg world).world"/>
       <arg name="paused" value="$(arg paused)"/>
-      <!--arg name="use_sim_time" value="$(arg use_sim_time)"/>
+      <arg name="use_sim_time" value="$(arg use_sim_time)"/>
       <arg name="gui" value="$(arg gui)"/>
-      <arg name="headless" value="$(arg headless)"/-->
+      <arg name="headless" value="$(arg headless)"/>
       <arg name="debug" value="$(arg debug)"/>
     </include>
 
@@ -56,8 +56,6 @@
   	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
 	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
 
-    <!-- Load joint controller configurations from YAML file to parameter server -->
-    <rosparam file="$(find siar_gazebo)/cfg/siar_control.yaml" command="load"/>
 
     <!-- Spawn TOWER -->
     <arg name="xT" default="0"/>
@@ -87,17 +85,5 @@
         <remap from="/cmd_vel_out" to="/cmd_vel"/>
     </node>
   
-
-    <!-- load the controllers -->
-    <!-- <rosparam file="$(find siar_gazebo)/cfg/siar_control.yaml" command="load"/>
-    <node pkg="controller_manager" type="spawner" name="controller_spawner" respawn="false"
-    output="screen" ns="/siar_robot" args="joint_state_controller
-              joint1_position_controller"/> -->
-
-    <!-- convert joint states to TF transforms for rviz, etc -->
-    <!-- <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" 
-    respawn="false" output="screen">
-      <remap from="/joint_states" to="/rrbot/joint_states" />
-    </node> -->
 
 </launch>
