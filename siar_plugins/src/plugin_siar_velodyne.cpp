@@ -325,15 +325,16 @@ namespace gazebo {
       event::Events::ConnectWorldUpdateBegin(
           boost::bind(&GazeboRosWheelsPiston::UpdateChild, this));
 
-    // Initial position electronic
+    // Initial position 
     move_Piston_cmd_=1;
     move_Piston_aux_=1;
     elec_pos_cmd_ = 0;
     arm_central_cmd_=false;
     vel_state_cmd_=0;
     move_pan_arm_aux_ = 0;
-    move_tilt_arm_aux_ = 0;
+    move_tilt_arm_aux_ = 1.7;
     move_elevation_arm_aux_ = 0;
+    auxiliar = 0;
   }
 
   
@@ -395,8 +396,10 @@ namespace gazebo {
       if (move_arm_cmd_ == 0){
         getWheelVelocities();
         move_pan_arm_cmd_ = 0.0;
-        move_tilt_arm_cmd_ = 0.0;
+        move_tilt_arm_cmd_ = 1.7;
         // arm_pos_cmd_ = 1;
+        ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
+
       }
       else{
         // arm_pos_cmd_ = 0.1;
@@ -416,14 +419,22 @@ namespace gazebo {
 
         if (move_tilt_arm_aux_ < 1.8 && move_tilt_arm_aux_ > -1.8){
           // move_tilt_arm_aux_ = move_tilt_arm_aux_ + 0.01 * move_tilt_arm_cmd_;
-          move_tilt_arm_aux_ = move_tilt_arm_cmd_;
+          if (auxiliar == 0) {
+            move_tilt_arm_aux_ = 1.7;
+          }
+          if ((move_tilt_arm_cmd_ != 0.0) || (auxiliar ==  1)) {
+            move_tilt_arm_aux_ = move_tilt_arm_cmd_;
+            auxiliar = 1;
+          }
+          
           this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
           this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
           this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
           this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
-          // ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
-          // ROS_INFO("The value of axis_arm_3_1_ is: %f",axis_arm_3_1_);
-          // ROS_INFO("The value of axis_arm_3_2_ is: %f",axis_arm_3_2_);
+          ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
+          ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
+          ROS_INFO("The value of axis_arm_3_1_ is: %f",axis_arm_3_1_);
+          ROS_INFO("The value of axis_arm_3_2_ is: %f",axis_arm_3_2_);
         }
         if (move_tilt_arm_aux_ >= 1.8){
           move_tilt_arm_aux_ = 1.79;}

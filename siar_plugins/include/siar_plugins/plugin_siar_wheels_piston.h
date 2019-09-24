@@ -203,7 +203,7 @@ namespace gazebo {
       double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_,
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
               move_pan_arm_aux_,move_tilt_arm_aux_, move_elevation_arm_aux_;
-      bool alive_, arm_central_cmd_,move_arm_cmd_;
+      bool alive_, arm_central_cmd_,move_arm_cmd_, auxiliar;
       math::Vector3 rm, rb;
      
       // Update Rate
