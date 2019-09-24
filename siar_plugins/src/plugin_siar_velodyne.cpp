@@ -431,10 +431,10 @@ namespace gazebo {
           this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
           this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
           this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
-          ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
-          ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
-          ROS_INFO("The value of axis_arm_3_1_ is: %f",axis_arm_3_1_);
-          ROS_INFO("The value of axis_arm_3_2_ is: %f",axis_arm_3_2_);
+          // ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
+          // ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
+          // ROS_INFO("The value of axis_arm_3_1_ is: %f",axis_arm_3_1_);
+          // ROS_INFO("The value of axis_arm_3_2_ is: %f",axis_arm_3_2_);
         }
         if (move_tilt_arm_aux_ >= 1.8){
           move_tilt_arm_aux_ = 1.79;}
