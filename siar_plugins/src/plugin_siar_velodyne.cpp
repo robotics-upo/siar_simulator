@@ -398,7 +398,7 @@ namespace gazebo {
         move_pan_arm_cmd_ = 0.0;
         move_tilt_arm_cmd_ = 1.7;
         // arm_pos_cmd_ = 1;
-        ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
+        // ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
 
       }
       else{
@@ -443,7 +443,6 @@ namespace gazebo {
       }
 
       
-    
         for (size_t side = 0; side < 2; ++side){
             for (size_t i = 0; i < joints_[side].size(); ++i){
               joints_[side][i]->SetVelocity(0, wheel_speed_[side] / (0.5 * wheel_diameter_));
