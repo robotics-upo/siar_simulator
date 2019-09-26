@@ -8,12 +8,6 @@ project(siar_gazebo)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-<<<<<<< HEAD
-=======
-#     controller_manager
-#     joint_state_controller
-#     robot_state_publisher
->>>>>>> 676bbdafff4d152667119c5b13c106f66c06ec4d
 )
 
 ## System dependencies are found with CMake's conventions
