@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!--<arg name="world" default="empty"/> 
+    <arg name="paused" default="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>-->
+    
+    <param name="cmd_vel_file" 	value="$(find siar_plugins)/data/cmd_vel_file"/>
+    <param name="vr_file" 	value="$(find siar_plugins)/data/vr_file"/>
+    <param name="va_file" 	value="$(find siar_plugins)/data/va_file"/>
+
+    <!--<env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>-->
+
+    <!--Spawn the Nodes to transform frames depth and image-->
+  
+    <arg name="pi/2" value="1.5707963267948966" />
+    <arg name="optical_rotate" value="0 0 0 -$(arg pi/2) 0 -$(arg pi/2)" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="front_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_frontMiddle_link 	camera_link_front_middle" />  
+    <node pkg="tf2_ros" type="static_transform_publisher" name="front_right_base_link2" 	args="$(arg optical_rotate) asusXtion_frontRight_link 	camera_link_front_right "/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="front_left_base_link2" 	args="$(arg optical_rotate) asusXtion_frontLeft_link 	camera_link_front_left "/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="back_middle_base_link2"	args="$(arg optical_rotate) asusXtion_backMiddle_link 	camera_link_back_middle "/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="back_right_base_link2" 	args="$(arg optical_rotate) asusXtion_backRight_link 	camera_link_back_right" />
+    <node pkg="tf2_ros" type="static_transform_publisher" name="back_left_base_link2" 	args="$(arg optical_rotate) asusXtion_backLeft_link 	camera_link_back_left" 	/>
+    <node pkg="tf2_ros" type="static_transform_publisher" name="top_middle_base_link2" 	args="$(arg optical_rotate) asusXtion_topMiddle_link 	camera_link_top_middle" />
+
+    <!-- Spawn a empty world with parameter set (siar_model.world) for an appropriate performance-->
+  
+    <!--<include file="$(find gazebo_ros)/launch/empty_world.launch">
+      <arg name="world_name" value="$(find siar_gazebo)/worlds/siar_model.world"/>
+      <arg name="paused" value="$(arg paused)"/>-->
+      <!--arg name="use_sim_time" value="$(arg use_sim_time)"/>
+      <arg name="gui" value="$(arg gui)"/>
+      <arg name="headless" value="$(arg headless)"/-->
+      <!--<arg name="debug" value="$(arg debug)"/>
+    </include>-->
+
+    <!-- Spawn the models into Gazebo -->
+  
+    <!--<node name="spawn_rampa" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_ramp/ramp.sdf -sdf -model ramp"/> -->
+  
+    <arg name="xS" default="20"/>
+    <arg name="yS" default="-25"/>
+    <arg name="zS" default="0.502"/>
+    <arg name="rollS" default="0"/>
+    <arg name="pitchS" default="0"/>
+    <arg name="yawS" default="0"/>
+    <node name="spawn_siar" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/siar_model/siar.sdf -sdf -model siar 
+  	-x $(arg xS) -y $(arg yS) -z $(arg zS) 
+	  -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
+    
+    <!--<node name="spawn_sec_S0" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_straight_5m/model.sdf -sdf -model T114A_straight_5m"/>
+  
+    <arg name="x1" default="5"/>
+    <arg name="y1" default="0"/>
+    <arg name="z1" default="0"/>
+    <arg name="roll1" default="0"/>
+    <arg name="pitch1" default="0"/>
+    <arg name="yaw1" default="0"/>
+    <node name="spawn_sec_S1" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_straight_5m/model.sdf -sdf -model T114A_straight_5m_2
+	  -x $(arg x1) -y $(arg y1) -z $(arg z1) 
+	  -R $(arg roll1) -P $(arg pitch1) -Y $(arg yaw1)"/>
+    
+    <arg name="xX" default="10"/>
+    <arg name="yX" default="0"/>
+    <arg name="zX" default="0"/>
+    <arg name="rollX" default="0"/>
+    <arg name="pitchX" default="0"/>
+    <arg name="yawX" default="0"/>
+    <node name="spawn_sec_X" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_X_5m/model.sdf -sdf -model T114A_X_5m
+	  -x $(arg xX) -y $(arg yX) -z $(arg zX) 
+	  -R $(arg rollX) -P $(arg pitchX) -Y $(arg yawX)"/>
+  
+    <arg name="xY" default="15"/>
+    <arg name="yY" default="0"/>
+    <arg name="zY" default="0"/>
+    <arg name="rollY" default="0"/>
+    <arg name="pitchY" default="0"/>
+    <arg name="yawY" default="1.5708"/>
+    <node name="spawn_sec_Y" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/T114A_Y_5m/model.sdf -sdf -model T114A_Y_5m
+        -x $(arg xY) -y $(arg yY) -z $(arg zY) 
+	  -R $(arg rollY) -P $(arg pitchY) -Y $(arg yawY)"/>-->
+    
+  
+    <!-- joy node -->
+    <node respawn="true" pkg="joy" type="joy_node" name="joy" >
+      <param name="dev" type="string" value="/dev/input/js0" />
+      <param name="deadzone" value="0.12" />
+    </node>
+
+    <!-- siar_Joy -->
+    <include file="$(find siar_plugins)/launch/siar_teleop_joy_simulation.launch" />
+  
+    <!-- Siar Controller node -->
+    <include file="$(find siar_controller)/launch/siar_controller_simulation.launch" />
+  
+    <!-- Siar Costmap node -->
+    <!--include file="$(find siar_costmap)/launch/siar_costmap_simulator.launch" /-->
+
+</launch>
+

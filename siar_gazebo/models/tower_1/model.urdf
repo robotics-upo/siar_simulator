@@ -13,8 +13,8 @@
       <visual name="visual">
         <origin rpy="0 0 0" xyz="21.6 22.5 0"/>
         <geometry>
-            <mesh filename="package://siar_gazebo/models/tower_1/mesh/tower_not_3.dae"/>
-            <!-- <box size="4 4 10"/> -->
+            <!-- <mesh filename="package://siar_gazebo/models/tower_1/mesh/tower_not_3.dae"/> -->
+            <box size="4 4 10"/>  
         </geometry>
       </visual>
     </link>

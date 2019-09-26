@@ -620,7 +620,7 @@ namespace gazebo {
     t_t.setOrigin( tf::Vector3(tf_thermal_camera.pos.x, tf_thermal_camera.pos.y, tf_thermal_camera.pos.z) );
     t_t.setRotation(tf::Quaternion(tf_thermal_camera.rot.x,tf_thermal_camera.rot.y,tf_thermal_camera.rot.z,tf_thermal_camera.rot.z));
 
-    br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "thermal_camera"));
+    br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "tf_thermal"));
   }
   
   
