@@ -150,7 +150,8 @@ namespace gazebo {
       std::vector <physics::LinkPtr> frame_camera_;
       physics::LinkPtr l_c_wheel_, r_c_wheel_,electronic_box_,electronics_center, os1_sensor_, piston_, 
                         frame_camera_1_,frame_camera_2_,frame_camera_3_,frame_camera_4_,frame_camera_5_,
-		                    frame_camera_6_,frame_camera_7_, thermal_camera_,arm_siar_base_;
+		                    frame_camera_6_,frame_camera_7_, thermal_camera_,arm_siar_base_, arm_link_1_1_, arm_link_1_2_,
+                        arm_link_2_1_, arm_link_2_2_, arm_link_3_, frame_thermal_;
       //std::vector<physics::LinkPtr> frame_camera_; 
       physics::JointPtr piston_main_1_, piston_main_2_,hinge_arm_right_1_1_,hinge_arm_right_1_2_, hinge_arm_left_1_1_, hinge_arm_left_1_2_, 
 			axis_wheel_right_1_,axis_wheel_right_2_,axis_wheel_right_3_,axis_wheel_left_1_,axis_wheel_left_2_,axis_wheel_left_3_,
@@ -204,7 +205,7 @@ namespace gazebo {
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
               move_pan_arm_aux_,move_tilt_arm_aux_, move_elevation_arm_aux_;
       bool alive_, arm_central_cmd_,move_arm_cmd_, auxiliar;
-      math::Vector3 rm, rb;
+      math::Vector3 rm, rb,frame_thermal; 
      
       // Update Rate
       double update_rate_;

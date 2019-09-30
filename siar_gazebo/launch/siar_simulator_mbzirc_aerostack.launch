@@ -13,7 +13,7 @@
 
     
 
-     <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>--> 
+<!--     <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>--> -->
 
     <!--Spawn the Nodes to transform frames depth and image-->
   
@@ -49,7 +49,7 @@
     <!-- Spawn SIAR -->
     <arg name="xS" default="20"/>
     <arg name="yS" default="-25"/>
-    <arg name="zS" default="0.1"/>
+    <arg name="zS" default="0.2"/>
     <arg name="rollS" default="0"/>
     <arg name="pitchS" default="0"/>
     <arg name="yawS" default="2.4"/>

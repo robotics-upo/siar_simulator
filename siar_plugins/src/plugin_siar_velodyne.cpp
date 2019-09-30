@@ -204,8 +204,13 @@ namespace gazebo {
     l_c_wheel_ = this->parent->GetLink("wheel_left_1");
     r_c_wheel_ = this->parent->GetLink("wheel_right_1");
     electronics_center = this->parent->GetLink("box_battery");
-    thermal_camera_ = this->parent->GetLink("thermal_camera_arm");
     arm_siar_base_ = this->parent->GetLink("arm_siar_base");
+    arm_link_1_1_ = this->parent->GetLink("arm_siar_long_1_1");
+    arm_link_1_2_ = this->parent->GetLink("arm_siar_long_1_2"); //****
+    arm_link_2_1_ = this->parent->GetLink("arm_siar_long_2_1");
+    arm_link_2_2_ = this->parent->GetLink("arm_siar_long_2_2");
+    arm_link_3_ = this->parent->GetLink("arm_siar_base_3");
+    thermal_camera_ = this->parent->GetLink("thermal_camera_arm");
 
     
     this -> piston_main_1_ = this->parent->GetJoint("move_piston_1_1");
@@ -609,18 +614,35 @@ namespace gazebo {
   {
     static tf::TransformBroadcaster br;
     
-    math::Pose tf_thermal_camera;
+    math::Pose tf_thermal_camera, tf_arm_link_1_,tf_arm_link_2_, tf_arm_link_3_;
     std::string frame_name_8 = "odom";
 
- 
+    tf_arm_link_1_ = arm_link_1_1_ ->GetRelativePose();
+    tf_arm_link_2_ = arm_link_2_1_ ->GetRelativePose();  
+    tf_arm_link_3_ = arm_link_3_ ->GetRelativePose(); 
     tf_thermal_camera = thermal_camera_->GetRelativePose();
-    
 
+    tf::Transform t_0;
+    t_0.setOrigin( tf::Vector3(0, 0, 0) );
+    t_0.setRotation(tf::Quaternion(0,tf_arm_link_1_.rot.y,tf_arm_link_1_.rot.z,1));
+    tf::Transform t_1;
+    t_1.setOrigin( tf::Vector3(0.21, 0, 0) );
+    t_1.setRotation(tf::Quaternion(0,0,0,1));
+    tf::Transform t_2;
+    t_2.setOrigin( tf::Vector3(  tf_arm_link_3_.pos.x - (0.16 + 0.06457), 0, tf_arm_link_3_.pos.z-(0.32412)) );    //sen(20)*0.16 = 0.054723
+    t_2.setRotation(tf::Quaternion(0,(tf_arm_link_2_.rot.y-tf_arm_link_1_.rot.y) ,0,1));
+    tf::Transform t_3;
+    t_3.setOrigin( tf::Vector3(tf_arm_link_3_.pos.x, tf_arm_link_3_.pos.y, tf_arm_link_3_.pos.z) );
+    t_3.setRotation(tf::Quaternion(0,0,0,1));
     tf::Transform t_t;
     t_t.setOrigin( tf::Vector3(tf_thermal_camera.pos.x, tf_thermal_camera.pos.y, tf_thermal_camera.pos.z) );
     t_t.setRotation(tf::Quaternion(tf_thermal_camera.rot.x,tf_thermal_camera.rot.y,tf_thermal_camera.rot.z,tf_thermal_camera.rot.z));
 
-    br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "tf_thermal"));
+    br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar_arm", "tf_arm_link_1"));
+    br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "tf_arm_link_1", "tf_arm_link_2"));
+    br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_3"));
+    // br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_3"));
+    // br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "tf_thermal"));
   }
   
   
