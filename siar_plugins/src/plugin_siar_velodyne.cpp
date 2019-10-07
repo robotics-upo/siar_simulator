@@ -47,7 +47,6 @@ namespace gazebo {
     this->parent = _parent;
     this->world = _parent->GetWorld();
 
-    this->robot_namespace_ = "";
     if (!_sdf->HasElement("robotNamespace")) {
       ROS_INFO("GazeboRosWheelsPiston Plugin missing <robotNamespace>, defaults to \"%s\"", 
           this->robot_namespace_.c_str());
@@ -210,8 +209,6 @@ namespace gazebo {
     arm_link_2_1_ = this->parent->GetLink("arm_siar_long_2_1");
     arm_link_2_2_ = this->parent->GetLink("arm_siar_long_2_2");
     arm_link_3_ = this->parent->GetLink("arm_siar_base_3");
-    thermal_camera_ = this->parent->GetLink("thermal_camera_arm");
-
     
     this -> piston_main_1_ = this->parent->GetJoint("move_piston_1_1");
     this -> piston_main_2_ = this->parent->GetJoint("move_piston_1_2");
@@ -244,14 +241,14 @@ namespace gazebo {
     
     // Load parameter to calculate interpolation
     
-    if (!rosnode_->getParam("cmd_vel_file", cmd_vel_file)) {
-      cmd_vel_file = "cmd_vel_file";
+    if (!rosnode_->getParam("/cmd_vel_file", cmd_vel_file)) {
+      cmd_vel_file = "/cmd_vel_file";
     }
-    if (!rosnode_->getParam("vr_file", vr_file)) {
-      vr_file = "vr_file";
+    if (!rosnode_->getParam("/vr_file", vr_file)) {
+      vr_file = "/vr_file";
     }
-    if (!rosnode_->getParam("va_file", va_file)) {
-      va_file = "va_file";
+    if (!rosnode_->getParam("/va_file", va_file)) {
+      va_file = "/va_file";
    }
     inter_vr = new functions::LinearInterpolator(cmd_vel_file, vr_file);
     inter_va = new functions::LinearInterpolator(cmd_vel_file, va_file);
@@ -339,7 +336,7 @@ namespace gazebo {
     move_pan_arm_aux_ = 0;
     move_tilt_arm_aux_ = 1.7;
     move_elevation_arm_aux_ = 0;
-    auxiliar = 0;
+    auxiliar_tilt = 0;
   }
 
   
@@ -398,48 +395,34 @@ namespace gazebo {
 
         
       // Update robot in case new velocities have been requested or to control arm 
+      this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_aux_);
+      this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
+      this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
       if (move_arm_cmd_ == 0){
-        getWheelVelocities();
         move_pan_arm_cmd_ = 0.0;
         move_tilt_arm_cmd_ = 1.7;
-        // arm_pos_cmd_ = 1;
-        // ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
-
       }
       else{
-        // arm_pos_cmd_ = 0.1;
-        if (move_pan_arm_aux_ < 1.5707 && move_pan_arm_aux_ > -1.5707){
-          move_pan_arm_aux_ = move_pan_arm_cmd_;
-          // move_pan_arm_aux_ = move_pan_arm_aux_ + 0.01 * move_pan_arm_cmd_;
-          this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
-          this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_aux_);
-        // ROS_INFO("The value of move_pan_arm_aux_ is: %f",move_pan_arm_aux_);
-        // ROS_INFO("The value of axis_arm_1_ is: %f",axis_arm_1_);
-
+        // Turnning in pan
+        if ((move_pan_arm_aux_ < 1.5707 && move_pan_arm_aux_ > -1.5707) && (move_pan_arm_cmd_ != 0.0)){
+          move_pan_arm_aux_ = move_pan_arm_cmd_*1.549;
         }
         if (move_pan_arm_aux_ >= 1.55){
           move_pan_arm_aux_ = 1.549;}
         if (move_pan_arm_aux_ <= -1.55){
           move_pan_arm_aux_ = -1.549;}  
-
+        // Turnning in tilt
         if (move_tilt_arm_aux_ < 1.8 && move_tilt_arm_aux_ > -1.8){
-          // move_tilt_arm_aux_ = move_tilt_arm_aux_ + 0.01 * move_tilt_arm_cmd_;
-          if (auxiliar == 0) {
+          if (auxiliar_tilt == 0) {
             move_tilt_arm_aux_ = 1.7;
           }
-          if ((move_tilt_arm_cmd_ != 0.0) || (auxiliar ==  1)) {
-            move_tilt_arm_aux_ = move_tilt_arm_cmd_;
-            auxiliar = 1;
+          if (move_tilt_arm_cmd_ != 0.0) {
+            move_tilt_arm_aux_ = move_tilt_arm_cmd_ * 1.7;
+            auxiliar_tilt = 1;
           }
-          
-          this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
-          this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
-          this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
-          this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
-          // ROS_INFO("The value of move_tilt_arm_cmd_ is: %f",move_tilt_arm_cmd_);
-          // ROS_INFO("The value of move_tilt_arm_aux_ is: %f",move_tilt_arm_aux_);
-          // ROS_INFO("The value of axis_arm_3_1_ is: %f",axis_arm_3_1_);
-          // ROS_INFO("The value of axis_arm_3_2_ is: %f",axis_arm_3_2_);
         }
         if (move_tilt_arm_aux_ >= 1.8){
           move_tilt_arm_aux_ = 1.79;}
@@ -447,7 +430,8 @@ namespace gazebo {
           move_tilt_arm_aux_ = -1.79;}  
       }
 
-      
+        getWheelVelocities();    
+
         for (size_t side = 0; side < 2; ++side){
             for (size_t i = 0; i < joints_[side].size(); ++i){
               joints_[side][i]->SetVelocity(0, wheel_speed_[side] / (0.5 * wheel_diameter_));
@@ -520,31 +504,27 @@ namespace gazebo {
      pos_electronicBox_msg.y = electronics_center->GetWorldCoGPose().pos.y;
      pos_electronicBox_msg.z = 0;
      pos_electronicBox_publisher_.publish(pos_electronicBox_msg);
-     
-      
+           
      //Get the Vector Central  Between Middle Wheels
      geometry_msgs::Vector3 pos_centerMidWheels_msg;
      pos_centerMidWheels_msg.x = rm.x;
      pos_centerMidWheels_msg.y = rm.y;
      pos_centerMidWheels_msg.z = rm.z;
      pos_centerMidWheels_publisher_.publish(pos_centerMidWheels_msg);
-      
-      
+            
      //Get Vector Diference XY between center Electronic Box and Centor Central Middle Wheels
      geometry_msgs::Vector3 pos_vecBoxWheel_msg;
      pos_vecBoxWheel_msg.x = pe.x;
      pos_vecBoxWheel_msg.y = pe.y;
      pos_vecBoxWheel_msg.z = pe.z;
      pos_vecBoxWheel_publisher_.publish(pos_vecBoxWheel_msg);
-     
-     
+          
      //Get unit Vector parrallel with orientation of Robot
      geometry_msgs::Vector3 pos_vecUnitOrient_msg;
      pos_vecUnitOrient_msg.x = u.x;
      pos_vecUnitOrient_msg.y = u.y;
      pos_vecUnitOrient_msg.z = u.z;
      pos_vecUnitOrient_publisher_.publish(pos_vecUnitOrient_msg);
-
      
      //Get Dot Product between Vector unit orientation and Vector Diference XY
      std_msgs::Float32 dis_box_centralaxis_msg;  
@@ -614,14 +594,16 @@ namespace gazebo {
   {
     static tf::TransformBroadcaster br;
     
-    math::Pose tf_thermal_camera, tf_arm_link_1_,tf_arm_link_2_, tf_arm_link_3_;
-    std::string frame_name_8 = "odom";
+    math::Pose  tf_arm_link_1_,tf_arm_link_2_, tf_arm_link_3_,tf_base_link_;
 
+    tf_base_link_ = electronics_center ->GetWorldCoGPose();
     tf_arm_link_1_ = arm_link_1_1_ ->GetRelativePose();
     tf_arm_link_2_ = arm_link_2_1_ ->GetRelativePose();  
     tf_arm_link_3_ = arm_link_3_ ->GetRelativePose(); 
-    tf_thermal_camera = thermal_camera_->GetRelativePose();
 
+    tf::Transform t_bl;
+    t_bl.setOrigin( tf::Vector3(tf_base_link_.pos.x, tf_base_link_.pos.y, 0) );
+    t_bl.setRotation(tf::Quaternion(0,0,0,1));  
     tf::Transform t_0;
     t_0.setOrigin( tf::Vector3(0, 0, 0) );
     t_0.setRotation(tf::Quaternion(0,tf_arm_link_1_.rot.y,tf_arm_link_1_.rot.z,1));
@@ -629,22 +611,18 @@ namespace gazebo {
     t_1.setOrigin( tf::Vector3(0.21, 0, 0) );
     t_1.setRotation(tf::Quaternion(0,0,0,1));
     tf::Transform t_2;
-    t_2.setOrigin( tf::Vector3(  tf_arm_link_3_.pos.x - (0.16 + 0.06457), 0, tf_arm_link_3_.pos.z-(0.32412)) );    //sen(20)*0.16 = 0.054723
-    t_2.setRotation(tf::Quaternion(0,(tf_arm_link_2_.rot.y-tf_arm_link_1_.rot.y) ,0,1));
+    t_2.setOrigin( tf::Vector3(  0, 0, 0 ));    //sen(20)*0.16 = 0.054723  
+    t_2.setRotation(tf::Quaternion(0,(tf_arm_link_2_.rot.y*1.1-tf_arm_link_1_.rot.y) ,0,1));
     tf::Transform t_3;
-    t_3.setOrigin( tf::Vector3(tf_arm_link_3_.pos.x, tf_arm_link_3_.pos.y, tf_arm_link_3_.pos.z) );
+    t_3.setOrigin( tf::Vector3(-0.16,0,0) );
     t_3.setRotation(tf::Quaternion(0,0,0,1));
-    tf::Transform t_t;
-    t_t.setOrigin( tf::Vector3(tf_thermal_camera.pos.x, tf_thermal_camera.pos.y, tf_thermal_camera.pos.z) );
-    t_t.setRotation(tf::Quaternion(tf_thermal_camera.rot.x,tf_thermal_camera.rot.y,tf_thermal_camera.rot.z,tf_thermal_camera.rot.z));
 
+    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(), "world", "base_link"));
     br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar_arm", "tf_arm_link_1"));
     br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "tf_arm_link_1", "tf_arm_link_2"));
-    br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_3"));
-    // br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_3"));
-    // br.sendTransform(tf::StampedTransform(t_t, ros::Time::now(), "siar_arm", "tf_thermal"));
+    br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_aux"));
+    br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "tf_arm_link_aux", "tf_arm_link_3"));
   }
-  
   
   void GazeboRosWheelsPiston::publishOdometry(double step_time) {
     ros::Time current_time = ros::Time::now();
@@ -662,7 +640,6 @@ namespace gazebo {
       transform_broadcaster_->sendTransform(tf::StampedTransform(base_footprint_to_odom, current_time,
                                                                   odom_frame, base_footprint_frame));
     }
-
 
     // publish odom topic
     odom_.pose.pose.position.x = pose.pos.x;

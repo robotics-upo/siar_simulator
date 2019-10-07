@@ -4563,11 +4563,12 @@
           </clip>
         </camera>
         <plugin name="thermal_camera_controller" filename="libgazebo_ros_thermal_camera.so">
+          <robotNamespace>siar</robotNamespace>
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
-          <cameraName>/thermal_camera</cameraName>
-          <imageTopicName>/thermal_camera/image_raw</imageTopicName>
-          <cameraInfoTopicName>/thermal_camera/camera_info</cameraInfoTopicName>
+          <cameraName>thermal_camera</cameraName>
+          <imageTopicName>thermal_camera/image_raw</imageTopicName>
+          <cameraInfoTopicName>thermal_camera/camera_info</cameraInfoTopicName>
           <frameName>thermal_optical_frame</frameName>
         </plugin>
       </sensor>
@@ -4626,11 +4627,11 @@
           </clip>
         </camera>
         <plugin name="front_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+          <robotNamespace>siar</robotNamespace>
           <cameraName>front</cameraName>
 	        <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>
           <updateRate>0.0</updateRate> 
-          <!--robotNamespace>/siar_model</robotNamespace-->
           <imageTopicName>rgb/image_raw</imageTopicName>
           <cameraInfoTopicName>/depth/camera_info</cameraInfoTopicName>
           <cameraInfoTopicName>/rgb/camera_info</cameraInfoTopicName>
@@ -4881,6 +4882,7 @@
           </clip>
         </camera>
         <plugin name="back_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
+          <robotNamespace>siar</robotNamespace>
 	        <cameraName>back</cameraName>	  
           <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>	
@@ -5227,8 +5229,9 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <topicName>/os1_cloud_node/points</topicName>
-          <frameName>/os1_sensor</frameName>
+          <robotNamespace>siar</robotNamespace>
+          <topicName>os1_cloud_node/points</topicName>
+          <frameName>os1_sensor</frameName>
           <min_range>0.8</min_range>
           <max_range>120.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>  
@@ -5266,11 +5269,11 @@
       <initWheelSeparation>0.602</initWheelSeparation>
       <wheelDiameter>0.25</wheelDiameter>
       <torque>20</torque>
-      <interface:position name="position_iface_2"/>
-      <!--robotNamespace>siar_model</robotNamespace-->
+      <!-- <interface:position name="position_iface_2"/> -->
+      <robotNamespace>siar</robotNamespace>
       <robotBaseFrame>base_link</robotBaseFrame>
       <commandTopic>cmd_vel</commandTopic>  
-      <publishOdometryTf>1</publishOdometryTf>
+      <publishOdometryTf>0</publishOdometryTf>
       <publishOdometryMsg>1</publishOdometryMsg>
       <odometryFrame>odom</odometryFrame>
       <odometryTopic>odom</odometryTopic>
@@ -5286,22 +5289,6 @@
         </light>
       </link>
     </plugin>
-
-    <!-- <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/siar_robot</robotNamespace>
-      <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
-      <legacyModeNS>true</legacyModeNS>
-      <transmission name="tran1">
-        <type>SimpleTransmission</type>
-        <joint name="move_arm_1">
-          <hardwareInterface>EffortJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="motor1">
-          <hardwareInterface>EffortJointInterface</hardwareInterface>
-          <mechanicalReduction>1</mechanicalReduction>
-        </actuator>
-      </transmission>
-    </plugin> -->
 
 
     
