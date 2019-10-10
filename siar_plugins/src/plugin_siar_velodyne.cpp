@@ -603,7 +603,7 @@ namespace gazebo {
 
     tf::Transform t_bl;
     t_bl.setOrigin( tf::Vector3(tf_base_link_.pos.x, tf_base_link_.pos.y, 0) );
-    t_bl.setRotation(tf::Quaternion(0,0,0,1));  
+    t_bl.setRotation(tf::Quaternion(tf_base_link_.rot.x,tf_base_link_.rot.y,tf_base_link_.rot.z,tf_base_link_.rot.w));  
     tf::Transform t_0;
     t_0.setOrigin( tf::Vector3(0, 0, 0) );
     t_0.setRotation(tf::Quaternion(0,tf_arm_link_1_.rot.y,tf_arm_link_1_.rot.z,1));
@@ -612,16 +612,16 @@ namespace gazebo {
     t_1.setRotation(tf::Quaternion(0,0,0,1));
     tf::Transform t_2;
     t_2.setOrigin( tf::Vector3(  0, 0, 0 ));    //sen(20)*0.16 = 0.054723  
-    t_2.setRotation(tf::Quaternion(0,(tf_arm_link_2_.rot.y*1.1-tf_arm_link_1_.rot.y) ,0,1));
+    t_2.setRotation(tf::Quaternion(0,(tf_arm_link_2_.rot.y-tf_arm_link_1_.rot.y),0,tf_arm_link_2_.rot.w));
     tf::Transform t_3;
     t_3.setOrigin( tf::Vector3(-0.16,0,0) );
     t_3.setRotation(tf::Quaternion(0,0,0,1));
 
-    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(), "world", "base_link"));
-    br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar_arm", "tf_arm_link_1"));
-    br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "tf_arm_link_1", "tf_arm_link_2"));
-    br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "tf_arm_link_2", "tf_arm_link_aux"));
-    br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "tf_arm_link_aux", "tf_arm_link_3"));
+    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(),"world",            "siar/base_link"));
+    br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar/arm",         "siar/arm_link_1"));
+    br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "siar/arm_link_1",  "siar/arm_link_2"));
+    br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "siar/arm_link_2",  "siar/arm_link_aux"));
+    br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "siar/arm_link_aux","siar/arm_link_3"));
   }
   
   void GazeboRosWheelsPiston::publishOdometry(double step_time) {

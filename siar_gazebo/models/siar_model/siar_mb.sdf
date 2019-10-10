@@ -1191,8 +1191,6 @@
 
 <!-- 4. Box of battery and electronic and Handle to Cameras  -->
 
-
-
    <link name="box_battery">
       <inertial>
        <pose>.0 .0 .225 0 0 0</pose>
@@ -4563,13 +4561,13 @@
           </clip>
         </camera>
         <plugin name="thermal_camera_controller" filename="libgazebo_ros_thermal_camera.so">
-          <robotNamespace>siar</robotNamespace>
+          <!-- <robotNamespace>siar</robotNamespace> -->
           <alwaysOn>true</alwaysOn>
           <updateRate>10</updateRate>
           <cameraName>thermal_camera</cameraName>
           <imageTopicName>thermal_camera/image_raw</imageTopicName>
           <cameraInfoTopicName>thermal_camera/camera_info</cameraInfoTopicName>
-          <frameName>thermal_optical_frame</frameName>
+          <frameName>siar_thermal_optical_frame</frameName>
         </plugin>
       </sensor>
 
@@ -4627,7 +4625,7 @@
           </clip>
         </camera>
         <plugin name="front_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
-          <robotNamespace>siar</robotNamespace>
+          <!-- <robotNamespace>siar</robotNamespace> -->
           <cameraName>front</cameraName>
 	        <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>
@@ -4638,7 +4636,7 @@
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
           <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
           <pointCloudTopicName>depth/points</pointCloudTopicName>
-          <frameName>front_depth_optical_frame</frameName>	  
+          <frameName>siar_front_depth_optical_frame</frameName>	  
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
@@ -4882,7 +4880,7 @@
           </clip>
         </camera>
         <plugin name="back_camera_plugin" filename="libgazebo_ros_openni_kinect.so">
-          <robotNamespace>siar</robotNamespace>
+          <!-- <robotNamespace>siar</robotNamespace> -->
 	        <cameraName>back</cameraName>	  
           <alwaysOn>true</alwaysOn>
 	        <baseline>0.2</baseline>	
@@ -4893,7 +4891,7 @@
           <depthImageTopicName>depth/image_raw</depthImageTopicName>
 	        <depthImageCameraInfoTopicName>depth/camera_info</depthImageCameraInfoTopicName>
 	        <pointCloudTopicName>depth/points</pointCloudTopicName>	           
-          <frameName>back_depth_optical_frame</frameName>	   
+          <frameName>siar_back_depth_optical_frame</frameName>	   
           <pointCloudCutoff>0.05</pointCloudCutoff>	  
          <!--pointCloudCutoffMax>5.0</pointCloudCutoffMax-->
           <distortion_k1>0.00000001</distortion_k1>
@@ -5229,9 +5227,9 @@
           </noise>
         </ray>
         <plugin name="gazebo_ros_laser_controller" filename="libgazebo_ros_velodyne_laser.so">
-          <robotNamespace>siar</robotNamespace>
-          <topicName>os1_cloud_node/points</topicName>
-          <frameName>os1_sensor</frameName>
+          <!-- <robotNamespace>siar</robotNamespace>  -->
+          <topicName>os1_cloud_node_points</topicName>
+          <frameName>/siar_os1_sensor</frameName>
           <min_range>0.8</min_range>
           <max_range>120.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>  
@@ -5270,7 +5268,7 @@
       <wheelDiameter>0.25</wheelDiameter>
       <torque>20</torque>
       <!-- <interface:position name="position_iface_2"/> -->
-      <robotNamespace>siar</robotNamespace>
+      <!-- <robotNamespace>siar</robotNamespace> -->
       <robotBaseFrame>base_link</robotBaseFrame>
       <commandTopic>cmd_vel</commandTopic>  
       <publishOdometryTf>0</publishOdometryTf>
