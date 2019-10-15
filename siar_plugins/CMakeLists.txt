@@ -20,8 +20,8 @@ find_package(catkin REQUIRED COMPONENTS
 
 include_directories(include ${catkin_INCLUDE_DIRS})
 
+find_package(gazebo REQUIRED COMPONENTS roscpp std_msgs std_srvs geometry_msgs nav_msgs tf dynamic_reconfigure message_generation)
 
-find_package(gazebo REQUIRED)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${GAZEBO_CXX_FLAGS}")
 include_directories(${Boost_INCLUDE_DIR} ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 link_directories(${GAZEBO_LIBRARY_DIRS})
@@ -75,6 +75,7 @@ set (CMAKE_BUILD_TYPE Debug)
 #   Service2.srv
 # )
 
+
 ## Generate actions in the 'action' folder
 # add_action_files(
 #   FILES
@@ -88,6 +89,12 @@ set (CMAKE_BUILD_TYPE Debug)
    nav_msgs
    std_msgs  # Or other packages containing msgs
  )
+
+#add dynamic reconfigure api
+generate_dynamic_reconfigure_options(
+  cfg/SensorModel.cfg
+  cfg/GNSS.cfg
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -220,9 +227,13 @@ target_link_libraries(plugin_siar_wheels_piston ${Boost_LIBRARIES} ${GAZEBO_LIBR
 add_library(plugin_siar_velodyne src/plugin_siar_velodyne.cpp)
 target_link_libraries(plugin_siar_velodyne ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 
+add_library(gazebo_ros_gps src/gazebo_ros_gps.cpp)
+target_link_libraries(gazebo_ros_gps ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
+
 install(TARGETS
   plugin_siar_wheels_piston
   plugin_siar_velodyne
+  gazebo_ros_gps
   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
