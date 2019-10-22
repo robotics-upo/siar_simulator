@@ -140,6 +140,7 @@ void GazeboRosGps::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
   position_error_model_.Load(_sdf);
   velocity_error_model_.Load(_sdf, "velocity");
+  
 
   // calculate earth radii
   double temp = 1.0 / (1.0 - excentrity2 * sin(reference_latitude_ * M_PI/180.0) * sin(reference_latitude_ * M_PI/180.0));
@@ -174,6 +175,7 @@ void GazeboRosGps::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
   updateTimer.Load(world, _sdf);
   updateConnection = updateTimer.Connect(boost::bind(&GazeboRosGps::Update, this));
 }
+
 
 void GazeboRosGps::Reset()
 {

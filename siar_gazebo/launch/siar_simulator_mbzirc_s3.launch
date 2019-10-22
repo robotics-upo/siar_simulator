@@ -14,7 +14,7 @@
 
     <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find siar_gazebo)/models/tower_1/model.urdf'"/>
 
-    <!--<env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/> -->
+    <env name="GAZEBO_MODEL_PATH" value="$(find siar_gazebo)/models:$(optenv GAZEBO_MODEL_PATH)"/>
 
     <!--Spawn the Nodes to transform frames depth and image-->
   
