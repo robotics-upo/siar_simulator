@@ -617,7 +617,7 @@ namespace gazebo {
     t_3.setOrigin( tf::Vector3(-0.16,0,0) );
     t_3.setRotation(tf::Quaternion(0,0,0,1));
 
-    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(),"world",            "siar/base_link"));
+    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(),"odom",            "siar/base_link"));
     br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar/arm",         "siar/arm_link_1"));
     br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "siar/arm_link_1",  "siar/arm_link_2"));
     br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "siar/arm_link_2",  "siar/arm_link_aux"));
