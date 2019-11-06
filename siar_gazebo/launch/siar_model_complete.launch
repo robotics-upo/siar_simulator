@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <arg name="world"         default="mbzirc_record"/> 
+    <arg name="world"         default="empty"/> 
     <arg name="paused"        default="false"/>
     <arg name="use_sim_time"  default="true"/>
     <arg name="gui"           default="true"/>
@@ -64,7 +64,7 @@
       -R $(arg rollS) -P $(arg pitchS) -Y $(arg yawS)" output="screen" />
     </group>
     <!-- Spawn TOWER -->
-    <arg name="xT" default="0"/>
+    <!-- <arg name="xT" default="0"/>
     <arg name="yT" default="0"/>
     <arg name="zT" default="0"/>
     <arg name="rollT" default="0"/>
@@ -72,7 +72,7 @@
     <arg name="yawT" default="0"/>
     <node name="spawn_tower" pkg="gazebo_ros" type="spawn_model" args="-file $(find siar_gazebo)/models/tower_1/model.sdf -sdf -model tower
   	-x $(arg xT) -y $(arg yT) -z $(arg zT) 
-	  -R $(arg rollT) -P $(arg pitchT) -Y $(arg yawT)" output="screen" />
+	  -R $(arg rollT) -P $(arg pitchT) -Y $(arg yawT)" output="screen" /> -->
 
     <!-- joy node -->
     <group ns="$(arg namespace)">
