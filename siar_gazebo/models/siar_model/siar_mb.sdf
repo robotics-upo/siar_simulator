@@ -1273,20 +1273,20 @@
         </material>
       </visual>
       <sensor name="imu_sensor" type="imu">
-	<always_on>true</always_on>
-	<update_rate>100</update_rate>
-	<visualize>true</visualize>
-	<topic>imu_siar_topic</topic>
-	<plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
-	  <topicName>imu</topicName>
-	  <bodyName>imu_link</bodyName>
-	  <updateRateHZ>10.0</updateRateHZ>
-	  <gaussianNoise>0.0</gaussianNoise>
-	  <xyzOffset>0 0 0</xyzOffset>
-	  <rpyOffset>0 0 0</rpyOffset>
-	  <frameName>imu_link</frameName>
-	</plugin>
-	<pose>0 0 0 0 0 0</pose>
+        <always_on>true</always_on>
+        <update_rate>100</update_rate>
+        <visualize>true</visualize>
+        <topic>imu_siar_topic</topic>
+        <plugin filename="libgazebo_ros_imu_sensor.so" name="imu_plugin">
+          <topicName>imu</topicName>
+          <bodyName>imu_link</bodyName>
+          <updateRateHZ>10.0</updateRateHZ>
+          <gaussianNoise>0.0</gaussianNoise>
+          <xyzOffset>0 0 0</xyzOffset>
+          <rpyOffset>0 0 0</rpyOffset>
+          <frameName>imu_link</frameName>
+        </plugin>
+        <pose>0 0 0 0 0 0</pose>
       </sensor>
    </link>
 
@@ -1300,9 +1300,6 @@
       <child>chassis_6</child>
       <parent>box_battery</parent>
     </joint>
-
-
-
 
    <link name="handle_camera_front_1">
       <pose>.3465 .056 .213 0 0 0</pose>
@@ -5165,6 +5162,7 @@
           </mesh>
         </geometry>
       </visual>
+
     </link>
 
     <link name="os1_sensor_link">
@@ -5196,7 +5194,7 @@
           </mesh>
         </geometry>
       </visual>
-      <sensor type="ray" name="lase_scanr">
+      <sensor type="ray" name="lase_scan">
         <pose>0 0 -0.004645 0 0 0</pose>
         <visualize>false</visualize>
         <update_rate>10</update_rate>
@@ -5276,7 +5274,6 @@
       <odometryFrame>odom</odometryFrame>
       <odometryTopic>odom</odometryTopic>
     </plugin>
-    
 
     <plugin name="attach_light" filename="libAttachLightPlugin.so">
       <link>
@@ -5288,7 +5285,25 @@
       </link>
     </plugin>
 
+    <plugin name="gps_controller_siar" filename="libplugin_gazebo_ros_gps.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>5.0</updateRate>
+        <bodyName>box_battery</bodyName>
+        <robotBaseFrame>base_link</robotBaseFrame>
+        <!-- <frameId>siar/base_link</frameId> -->
+        <topicName>gps</topicName>
+        <velocityTopicName>gps_velocity</velocityTopicName>
+        <drift>5.0 5.0 5.0</drift>
+        <gaussianNoise>0.1 0.1 0.1</gaussianNoise>
+        <velocityDrift>0 0 0</velocityDrift>
+        <velocityGaussianNoise>0.1 0.1 0.1</velocityGaussianNoise>
+        <referenceLatitude>49.9</referenceLatitude>
+        <referenceLongitude>8.9</referenceLongitude>
+        <referenceHeading>0</referenceHeading>
+        <referenceAltitude>0</referenceAltitude>
+    </plugin>
 
+ 
     
   </model>
 </sdf> 
