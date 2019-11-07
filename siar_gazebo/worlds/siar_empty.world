@@ -35,8 +35,8 @@
               <ode>
                 <mu>500</mu>
                 <mu2>450</mu2>
-		<slip1>0</slip1>
-		<slip2>0</slip2>
+		            <slip1>0</slip1>
+		            <slip2>0</slip2>
               </ode>
               <torsional>
                 <ode/>
