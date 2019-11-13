@@ -13,7 +13,7 @@ sudo apt-get install libgazebo7-dev
 
 sudo apt-get install ros-$ROS_DISTRO-gazebo-ros-pkgs ros-$ROS_DISTRO-gazebo-ros-control
 
-sudo apt-get install ros-$ROS_DISTRO-velodyne-gazebo-plugins ros-$ROS_DISTRO-twist-mux ros-$ROS_DISTRO-joy
+sudo apt-get install ros-$ROS_DISTRO-velodyne-gazebo-plugins ros-$ROS_DISTRO-twist-mux ros-$ROS_DISTRO-joy libignition-math3-dev
 
 mkdir -p ~/siar_ws/src
 cd ~/siar_ws/src
