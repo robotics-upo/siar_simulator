@@ -142,7 +142,7 @@ namespace gazebo {
       double torque;
       double wheel_speed_[2];
 
-      double width_, elec_pos_, dis_box_centralaxis_, Force_piston_;
+      double width_, elec_pos_, dis_box_centralaxis_, Force_piston_, limit_angle_pan, limit_angle_tilt ;
 
       std::vector<physics::JointPtr> joints_[2];
 
@@ -203,7 +203,7 @@ namespace gazebo {
       double rot_;
       double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_,
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
-              move_pan_arm_aux_,move_tilt_arm_aux_, move_elevation_arm_aux_;
+              move_pan_arm_add_,move_tilt_arm_add_, move_elevation_arm_aux_;
       bool alive_, arm_central_cmd_,move_arm_cmd_, auxiliar_tilt;
       math::Vector3 rm, rb,frame_thermal; 
      

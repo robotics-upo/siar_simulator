@@ -153,15 +153,6 @@ namespace gazebo {
       this->publish_odometry_msg_ = _sdf->GetElement("publishOdometryMsg")->Get<bool>();
     }
 
-    // this->set_angle_elevation_arm_ = 0.62;
-    // if (!_sdf->HasElement("setAngleElevationArm")) {
-    //   ROS_WARN("GazeboRosWheelsPiston Plugin (ns = %s) missing <initWheelSeparation>, defaults to %f",
-    //       this->robot_namespace_.c_str(), this->init_wheel_separation_);
-    // } else {
-    //   this->init_wheel_separation_ = 
-    //     _sdf->GetElement("initWheelSeparation")->Get<double>();
-    // }
-
     
 
     // Initialize update rate stuff
@@ -190,11 +181,11 @@ namespace gazebo {
                    this->robot_namespace_.c_str(), joint_names_[side][i].c_str());
           gzthrow(error);
         }
-#if (GAZEBO_MAJOR_VERSION > 4)
-        joints_[side][i]->SetEffortLimit(0, torque);
-#else
-        joints_[side][i]->SetMaxForce(0, torque);
-#endif
+        #if (GAZEBO_MAJOR_VERSION > 4)
+                joints_[side][i]->SetEffortLimit(0, torque);
+        #else
+                joints_[side][i]->SetMaxForce(0, torque);
+        #endif
       }
     }
 
@@ -333,10 +324,12 @@ namespace gazebo {
     elec_pos_cmd_ = 0;
     arm_central_cmd_=false;
     vel_state_cmd_=0;
-    move_pan_arm_aux_ = 0;
-    move_tilt_arm_aux_ = 1.7;
+    move_pan_arm_add_ = 0;
+    move_tilt_arm_add_ = 1.7;
     move_elevation_arm_aux_ = 0;
     auxiliar_tilt = 0;
+    limit_angle_pan = 1.5707;
+    limit_angle_tilt = 1.8;
   }
 
   
@@ -396,38 +389,39 @@ namespace gazebo {
         
       // Update robot in case new velocities have been requested or to control arm 
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
-      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_aux_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_add_);
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
-      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_aux_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_add_);
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
-      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_aux_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_add_);
       if (move_arm_cmd_ == 0){
         move_pan_arm_cmd_ = 0.0;
         move_tilt_arm_cmd_ = 1.7;
+        
       }
       else{
-        // Turnning in pan
-        if ((move_pan_arm_aux_ < 1.5707 && move_pan_arm_aux_ > -1.5707) && (move_pan_arm_cmd_ != 0.0)){
-          move_pan_arm_aux_ = move_pan_arm_cmd_*1.549;
+        // Turnning in pan (limit_angle_pan = 1.5707)
+        if ((move_pan_arm_add_ < limit_angle_pan && move_pan_arm_add_ > -limit_angle_pan) && (move_pan_arm_cmd_ != 0.0)){
+          move_pan_arm_add_ = move_pan_arm_add_ + (move_pan_arm_cmd_ * 0.01);
         }
-        if (move_pan_arm_aux_ >= 1.55){
-          move_pan_arm_aux_ = 1.549;}
-        if (move_pan_arm_aux_ <= -1.55){
-          move_pan_arm_aux_ = -1.549;}  
-        // Turnning in tilt
-        if (move_tilt_arm_aux_ < 1.8 && move_tilt_arm_aux_ > -1.8){
-          if (auxiliar_tilt == 0) {
-            move_tilt_arm_aux_ = 1.7;
-          }
-          if (move_tilt_arm_cmd_ != 0.0) {
-            move_tilt_arm_aux_ = move_tilt_arm_cmd_ * 1.7;
-            auxiliar_tilt = 1;
-          }
+        if (move_pan_arm_add_ >= limit_angle_pan){
+          move_pan_arm_add_ = limit_angle_pan - 0.01;}
+        if (move_pan_arm_add_ <= -limit_angle_pan){
+          move_pan_arm_add_ = -limit_angle_pan + 0.01;}  
+        // Turnning in tilt (limit_angle_tilt = 1.8)
+        if (move_tilt_arm_add_ < limit_angle_tilt && move_tilt_arm_add_ > -limit_angle_tilt){
+            if (auxiliar_tilt == 0) {
+                move_tilt_arm_add_ = limit_angle_tilt - 0.1;  //Give a initial potition in (limit_angle_tilt - 0.1 = 1.7)
+            }
+            if (move_tilt_arm_cmd_ != 0.0) {
+                move_tilt_arm_add_ = move_tilt_arm_add_ + (move_tilt_arm_cmd_ * 0.01);
+                auxiliar_tilt = 1;
+            }
         }
-        if (move_tilt_arm_aux_ >= 1.8){
-          move_tilt_arm_aux_ = 1.79;}
-        if (move_tilt_arm_aux_ <= -1.8){
-          move_tilt_arm_aux_ = -1.79;}  
+        if (move_tilt_arm_add_ >= limit_angle_tilt){
+            move_tilt_arm_add_ = limit_angle_tilt - 0.01;}
+        if (move_tilt_arm_add_ <= -limit_angle_tilt){
+            move_tilt_arm_add_ = -limit_angle_tilt + 0.01;}  
       }
 
         getWheelVelocities();    
