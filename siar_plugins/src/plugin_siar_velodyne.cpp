@@ -457,8 +457,8 @@ namespace gazebo {
     double vr = x_ * (coef_vr);
     double va = rot_ * (coef_va);
    
-    wheel_speed_[LEFT] = 2.0*(2.0*vr - va * width_ / (2.0*0.125));
-    wheel_speed_[RIGHT] = 2.0*(2.0*vr + va * width_ / (2.0*0.125));
+    wheel_speed_[LEFT] = 1.5*(2.0*vr - va * width_ / (2.0*0.125));
+    wheel_speed_[RIGHT] = 1.5*(2.0*vr + va * width_ / (2.0*0.125));
   }
 
   void GazeboRosWheelsPiston::updateWidth(){
