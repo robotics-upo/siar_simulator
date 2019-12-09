@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch> 
 
-  <arg name="namespacejoy"         default="siar"/>
+  <arg name="namespacejoy"  default="siar"/>
 
   <group ns="$(arg namespacejoy)">
-  <node pkg="siar_driver" type="siar_teleop_joy_simulation" name="siar_joy_plugin" output="screen" >
-    <!-- <remap from="cmd_vel" to="user_cmd_vel"/> -->
-    <!--remap from="/width_pos" to="/siar_model/move_Piston"/-->
-  </node>
+
+    <node pkg="siar_driver" type="mbzirc_teleop_joy" name="siar_joy_plugin" output="screen" >
+      <remap from="cmd_vel" to="user_cmd_vel"/>
+    </node>
+    
   </group>  
 </launch>

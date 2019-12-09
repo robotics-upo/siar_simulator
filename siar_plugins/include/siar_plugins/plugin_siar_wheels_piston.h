@@ -139,6 +139,7 @@ namespace gazebo {
 
       double init_wheel_separation_;
       double wheel_diameter_;
+      double speed_factor_;
       double torque;
       double wheel_speed_[2];
 
@@ -165,7 +166,7 @@ namespace gazebo {
 		                  pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
 		                  tf_base_link_publisher_,test_velocity_publisher_;
       ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_, 
-                      move_arm_subscriber_, move_pan_arm_subscriber_, move_tilt_arm_subscriber_;
+                      move_arm_subscriber_,move_arm_as_subscriber_, move_pan_arm_subscriber_, move_tilt_arm_subscriber_;
       tf::TransformBroadcaster *transform_broadcaster_;
       nav_msgs::Odometry odom_;
       geometry_msgs::TransformStamped odom_trans;
@@ -195,6 +196,8 @@ namespace gazebo {
 
       void moveArmPosCallback(const std_msgs::Bool::ConstPtr& move_arm_msg);
 
+      void moveArmPosASCallback(const std_msgs::Bool::ConstPtr& move_arm_msg);
+
       void movePanArmCallback(const std_msgs::Float32::ConstPtr& move_pan_arm_msg);
       
       void moveTiltArmCallback(const std_msgs::Float32::ConstPtr& move_tilt_arm_msg);
@@ -204,7 +207,7 @@ namespace gazebo {
       double elec_pos_cmd_, move_Piston_cmd_,vel_state_cmd_,move_Piston_aux_,
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
               move_pan_arm_add_,move_tilt_arm_add_, move_elevation_arm_aux_;
-      bool alive_, arm_central_cmd_,move_arm_cmd_, auxiliar_tilt;
+      bool alive_, arm_central_cmd_,move_arm_cmd_, move_arm_as_cmd_, auxiliar_tilt;
       math::Vector3 rm, rb,frame_thermal; 
      
       // Update Rate

@@ -88,6 +88,14 @@ namespace gazebo {
       this->wheel_diameter_ = _sdf->GetElement("wheelDiameter")->Get<double>();
     }
 
+    this->speed_factor_ = 1.0;
+    if (!_sdf->HasElement("speedFactor")) {
+      ROS_WARN("GazeboRosWheelsPiston Plugin (ns = %s) missing <speedFactor>, defaults to %f",
+          this->robot_namespace_.c_str(), this->speed_factor_);
+    } else {
+      this->speed_factor_ = _sdf->GetElement("speedFactor")->Get<double>();
+    }
+
     this->torque = 15.0;
     if (!_sdf->HasElement("torque")) {
       ROS_WARN("GazeboRosWheelsPiston Plugin (ns = %s) missing <torque>, defaults to %f",
@@ -283,6 +291,12 @@ namespace gazebo {
           ros::VoidPtr(), &queue_);
     move_arm_subscriber_= rosnode_->subscribe(so);
 
+    // SIAR: create arm_mode to move the robotics Arm
+          so = ros::SubscribeOptions::create<std_msgs::Bool>("arm_as_mode", 1,
+          boost::bind(&GazeboRosWheelsPiston::moveArmPosASCallback, this, _1),
+          ros::VoidPtr(), &queue_);
+    move_arm_as_subscriber_= rosnode_->subscribe(so);
+
     // SIAR: create arm_mode to move pan from robotics Arm
           so = ros::SubscribeOptions::create<std_msgs::Float32>("arm_pan", 1,
           boost::bind(&GazeboRosWheelsPiston::movePanArmCallback, this, _1),
@@ -294,6 +308,7 @@ namespace gazebo {
           boost::bind(&GazeboRosWheelsPiston::moveTiltArmCallback, this, _1),
           ros::VoidPtr(), &queue_);
     move_tilt_arm_subscriber_= rosnode_->subscribe(so);
+       
        
 
     // INitialize publishers
@@ -318,7 +333,7 @@ namespace gazebo {
       event::Events::ConnectWorldUpdateBegin(
           boost::bind(&GazeboRosWheelsPiston::UpdateChild, this));
 
-    // Initial position 
+    // Initial values 
     move_Piston_cmd_=1;
     move_Piston_aux_=1;
     elec_pos_cmd_ = 0;
@@ -394,12 +409,15 @@ namespace gazebo {
       this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_add_);
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
       this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_add_);
-      if (move_arm_cmd_ == 0){
+      
+      if (move_arm_cmd_ == 0 && move_arm_as_cmd_ == 0){
         move_pan_arm_cmd_ = 0.0;
         move_tilt_arm_cmd_ = 1.7;
         
       }
-      else{
+      else if (move_arm_cmd_ || move_arm_as_cmd_ == 1)
+     
+      {
         // Turnning in pan (limit_angle_pan = 1.5707)
         if ((move_pan_arm_add_ < limit_angle_pan && move_pan_arm_add_ > -limit_angle_pan) && (move_pan_arm_cmd_ != 0.0)){
           move_pan_arm_add_ = move_pan_arm_add_ + (move_pan_arm_cmd_ * 0.01);
@@ -457,14 +475,15 @@ namespace gazebo {
     double vr = x_ * (coef_vr);
     double va = rot_ * (coef_va);
    
-    wheel_speed_[LEFT] = 2.0*(2.0*vr - va * width_ / (2.0*0.125));
-    wheel_speed_[RIGHT] = 2.0*(2.0*vr + va * width_ / (2.0*0.125));
+    wheel_speed_[LEFT] = speed_factor_*(2.0*vr - va * width_ / (2.0*0.125));
+    wheel_speed_[RIGHT] = speed_factor_*(2.0*vr + va * width_ / (2.0*0.125));
   }
 
   void GazeboRosWheelsPiston::updateWidth(){
       
      math::Vector3 dis = l_c_wheel_->GetWorldCoGPose().pos - r_c_wheel_->GetWorldCoGPose().pos;
-     width_ = sqrt(((l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x) * (l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x)) + ((l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y) * (l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y))) + 0.10001;
+     width_ = sqrt(((l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x) * (l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x)) + 
+                   ((l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y) * (l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y))) + 0.10001;
 
   }
 
@@ -569,6 +588,13 @@ namespace gazebo {
     move_arm_cmd_ = move_arm_msg->data;
    }
 
+   void GazeboRosWheelsPiston::moveArmPosASCallback(
+      const std_msgs::Bool::ConstPtr& move_arm_as_msg) {
+    
+    boost::mutex::scoped_lock scoped_lock(lock);
+    move_arm_as_cmd_ = move_arm_as_msg->data;
+   }
+
    void GazeboRosWheelsPiston::movePanArmCallback(
       const std_msgs::Float32::ConstPtr& move_pan_arm_msg) {
     
@@ -611,7 +637,7 @@ namespace gazebo {
     t_3.setOrigin( tf::Vector3(-0.16,0,0) );
     t_3.setRotation(tf::Quaternion(0,0,0,1));
 
-    br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(),"odom",            "siar/base_link"));
+    // br.sendTransform(tf::StampedTransform(t_bl, ros::Time::now(),"odom",            "siar/base_link"));
     br.sendTransform(tf::StampedTransform(t_0, ros::Time::now(), "siar/arm",         "siar/arm_link_1"));
     br.sendTransform(tf::StampedTransform(t_1, ros::Time::now(), "siar/arm_link_1",  "siar/arm_link_2"));
     br.sendTransform(tf::StampedTransform(t_2, ros::Time::now(), "siar/arm_link_2",  "siar/arm_link_aux"));
