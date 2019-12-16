@@ -30,6 +30,7 @@ namespace gazebo {
   };
   
   GazeboRosWheelsPiston::GazeboRosWheelsPiston() {
+    
   }
  
   // Destructor
@@ -42,7 +43,8 @@ namespace gazebo {
   }
 
   // Load the controller
-  void GazeboRosWheelsPiston::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf){
+  void GazeboRosWheelsPiston::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf)
+  {
 
     this->parent = _parent;
     this->world = _parent->GetWorld();
@@ -144,7 +146,6 @@ namespace gazebo {
       this->update_rate_ = _sdf->GetElement("updateRate")->Get<double>();
     }
 
-
     this->publish_odometry_tf_ = true;
     if (!_sdf->HasElement("publishOdometryTf")) {
       ROS_WARN("GazeboRosWheelsPiston Plugin (ns = %s) missing <publishOdometryTf>, defaults to %s",
@@ -164,9 +165,12 @@ namespace gazebo {
     
 
     // Initialize update rate stuff
-    if (this->update_rate_ > 0.0) {
+    if (this->update_rate_ > 0.0) 
+    {
       this->update_period_ = 1.0 / this->update_rate_;
-    } else {
+    } 
+    else 
+    {
       this->update_period_ = 0.0;
     }
     last_update_time_ = this->world->GetSimTime();
@@ -174,15 +178,16 @@ namespace gazebo {
     // Initialize velocity stuff
     wheel_speed_[RIGHT] = 0;
     wheel_speed_[LEFT] = 0;
-
     x_ = 0;
     rot_ = 0;
     alive_ = true;
-
-    for (size_t side = 0; side < 2; ++side){
-      for (size_t i = 0; i < joint_names_[side].size(); ++i){
+    for (size_t side = 0; side < 2; ++side)
+    {
+      for (size_t i = 0; i < joint_names_[side].size(); ++i)
+      {
         joints_[side].push_back(this->parent->GetJoint(joint_names_[side][i]));
-        if (!joints_[side][i]){
+        if (!joints_[side][i])
+        {
           char error[200];
           snprintf(error, 200,
                    "GazeboRosWheelsPiston Plugin (ns = %s) couldn't get hinge joint named \"%s\"",
@@ -208,6 +213,8 @@ namespace gazebo {
     arm_link_2_1_ = this->parent->GetLink("arm_siar_long_2_1");
     arm_link_2_2_ = this->parent->GetLink("arm_siar_long_2_2");
     arm_link_3_ = this->parent->GetLink("arm_siar_base_3");
+    arm_link_4_ = this->parent->GetLink("arm_siar_base_4");
+
     
     this -> piston_main_1_ = this->parent->GetJoint("move_piston_1_1");
     this -> piston_main_2_ = this->parent->GetJoint("move_piston_1_2");
@@ -221,9 +228,7 @@ namespace gazebo {
     this -> axis_wheel_left_1_ = this->parent->GetJoint("move_axis_wheel_left_1");
     this -> axis_wheel_left_2_ = this->parent->GetJoint("move_axis_wheel_left_2");
     this -> axis_wheel_left_3_ = this->parent->GetJoint("move_axis_wheel_left_3");
-    this -> axis_arm_1_ = this->parent->GetJoint("move_arm_1");
-    // this -> axis_arm_2_1_ = this->parent->GetJoint("move_arm_2_1");
-    // this -> axis_arm_2_2_ = this->parent->GetJoint("move_arm_2_2");
+    this -> axis_arm_1_ = this->parent->GetJoint("move_arm_4");
     this -> axis_arm_3_1_ = this->parent->GetJoint("move_arm_3_1");
     this -> axis_arm_3_2_ = this->parent->GetJoint("move_arm_3_2");
 
@@ -251,7 +256,6 @@ namespace gazebo {
    }
     inter_vr = new functions::LinearInterpolator(cmd_vel_file, vr_file);
     inter_va = new functions::LinearInterpolator(cmd_vel_file, va_file);
-    
     
 
     //ROS_INFO("Starting GazeboRosWheelsPiston Plugin (ns = %s). Cmd_file= %s. iNTERPOL: %d!", this->robot_namespace_.c_str(), cmd_vel_file.c_str(), (int)inter_va->size());
@@ -339,44 +343,44 @@ namespace gazebo {
     elec_pos_cmd_ = 0;
     arm_central_cmd_=false;
     vel_state_cmd_=0;
-    move_pan_arm_add_ = 0;
-    move_tilt_arm_add_ = 1.7;
+    move_pan_arm_add_ = 0.0;
+    move_tilt_arm_add_ = 0.0;
     move_elevation_arm_aux_ = 0;
     auxiliar_tilt = 0;
-    limit_angle_pan = 1.5707;
-    limit_angle_tilt = 1.8;
+    limit_angle_pan = 1.57;
+    limit_angle_tilt = 0.6;
+    // limit_angle_tilt = 1.8;
+    // Count for pub odom tf  
+    count_pub_odom = 0;
+
   }
 
   
   // Update the controller
-  void GazeboRosWheelsPiston::UpdateChild() {
+  void GazeboRosWheelsPiston::UpdateChild() 
+  {
     common::Time current_time = this->world->GetSimTime();
     double seconds_since_last_update = 
       (current_time - last_update_time_).Double();
-    if (seconds_since_last_update > update_period_) {
-
-      if (this->publish_odometry_tf_ || this->publish_odometry_msg_){
+    if (seconds_since_last_update > update_period_) 
+    {
+      if (this->publish_odometry_tf_ || this->publish_odometry_msg_)
+      {
         publishOdometry(seconds_since_last_update);
       }
-
       //Publish the SiarStatus
-      
       siar_driver::SiarStatus msg;
       msg.width = width_;
       msg.electronics_x = (-1*elec_pos_cmd_);
       siar_status_publisher_.publish(msg);
-      
       //Calculate Value of distance between Wheels
       updateWidth();
       std_msgs::Float32 width_msg;
       width_msg.data = width_;
       width_publisher_.publish(width_msg);
-
       //Obtain Value of the distance between Center Robot and Electronic Box
       updateElecPos();
-      
       tfBaseLink();
-     
       this->pid_hinge_arm_right_left = common::PID(100, 5.0, 5.0);
       this->pid_hinge_arm = common::PID(0.1, 0.0, 0.02);
       this->pid_hinge_arm_2 = common::PID(0.1, 0.0, 0.02);
@@ -389,73 +393,65 @@ namespace gazebo {
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_right_1_2_->GetScopedName(), -1.2* elec_pos_cmd_);
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_1_->GetScopedName(),  1.2* elec_pos_cmd_);
       this-> parent ->GetJointController()->SetPositionTarget(this->hinge_arm_left_1_2_->GetScopedName(),  1.2* elec_pos_cmd_); 
-   
       // Here to limit the first option move_Piston_cmd_ = 1 like value, because it is given problem like initial value
-      if ( (move_Piston_cmd_ == 0)  || move_Piston_aux_ == 0)  {
+      if ( (move_Piston_cmd_ == 0)  || move_Piston_aux_ == 0)  
+      {
 	      elec_pos_cmd_ = move_Piston_cmd_ ;
 	      move_Piston_aux_= 0;
 	    }
- 
       //Publish the position of electronics_center
       std_msgs::Float32 elec_pos_msg;
       elec_pos_msg.data = (-1*elec_pos_cmd_);
       elec_pos_publisher_.publish(elec_pos_msg);
-
-        
       // Update robot in case new velocities have been requested or to control arm 
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
       this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_add_);
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_1_->GetScopedName(), this->pid_hinge_arm);
-      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  move_tilt_arm_add_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_1_->GetScopedName(),  1*move_tilt_arm_add_);
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_3_2_->GetScopedName(), this->pid_hinge_arm);
-      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  move_tilt_arm_add_);
+      this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_3_2_->GetScopedName(),  1*move_tilt_arm_add_);
       
-      if (move_arm_cmd_ == 0 && move_arm_as_cmd_ == 0){
-        move_pan_arm_cmd_ = 0.0;
-        move_tilt_arm_cmd_ = 1.7;
-        
-      }
-      else if (move_arm_cmd_ || move_arm_as_cmd_ == 1)
-     
-      {
         // Turnning in pan (limit_angle_pan = 1.5707)
-        if ((move_pan_arm_add_ < limit_angle_pan && move_pan_arm_add_ > -limit_angle_pan) && (move_pan_arm_cmd_ != 0.0)){
+        if ((move_pan_arm_add_ < limit_angle_pan && move_pan_arm_add_ > -limit_angle_pan) && (move_pan_arm_cmd_ != 0.0))
+        {
           move_pan_arm_add_ = move_pan_arm_add_ + (move_pan_arm_cmd_ * 0.01);
         }
-        if (move_pan_arm_add_ >= limit_angle_pan){
-          move_pan_arm_add_ = limit_angle_pan - 0.01;}
-        if (move_pan_arm_add_ <= -limit_angle_pan){
-          move_pan_arm_add_ = -limit_angle_pan + 0.01;}  
+        if (move_pan_arm_add_ >= limit_angle_pan)
+        {
+          move_pan_arm_add_ = limit_angle_pan - 0.01;
+        }
+        if (move_pan_arm_add_ <= -limit_angle_pan)
+        {
+          move_pan_arm_add_ = -limit_angle_pan + 0.01;
+        }  
         // Turnning in tilt (limit_angle_tilt = 1.8)
-        if (move_tilt_arm_add_ < limit_angle_tilt && move_tilt_arm_add_ > -limit_angle_tilt){
-            if (auxiliar_tilt == 0) {
-                move_tilt_arm_add_ = limit_angle_tilt - 0.1;  //Give a initial potition in (limit_angle_tilt - 0.1 = 1.7)
-            }
-            if (move_tilt_arm_cmd_ != 0.0) {
-                move_tilt_arm_add_ = move_tilt_arm_add_ + (move_tilt_arm_cmd_ * 0.01);
-                auxiliar_tilt = 1;
-            }
+        if ((move_tilt_arm_add_ < limit_angle_tilt && move_tilt_arm_add_ > -limit_angle_tilt) && (move_tilt_arm_cmd_ != 0.0))
+        {
+          move_tilt_arm_add_ = move_tilt_arm_add_ + (move_tilt_arm_cmd_ * 0.01);  //Give a initial potition in (limit_angle_tilt - 0.1 = 1.7)
         }
-        if (move_tilt_arm_add_ >= limit_angle_tilt){
-            move_tilt_arm_add_ = limit_angle_tilt - 0.01;}
-        if (move_tilt_arm_add_ <= -limit_angle_tilt){
-            move_tilt_arm_add_ = -limit_angle_tilt + 0.01;}  
+        if (move_tilt_arm_add_ >= limit_angle_tilt)
+        {
+          move_tilt_arm_add_ = limit_angle_tilt - 0.01;
+        }
+        if (move_tilt_arm_add_ <= -limit_angle_tilt)
+        {
+          move_tilt_arm_add_ = -limit_angle_tilt + 0.01;
+        }  
+      
+      getWheelVelocities();    
+      for (size_t side = 0; side < 2; ++side){
+        for (size_t i = 0; i < joints_[side].size(); ++i)
+        {
+          joints_[side][i]->SetVelocity(0, wheel_speed_[side] / (0.5 * wheel_diameter_));
+        }
       }
-
-        getWheelVelocities();    
-
-        for (size_t side = 0; side < 2; ++side){
-            for (size_t i = 0; i < joints_[side].size(); ++i){
-              joints_[side][i]->SetVelocity(0, wheel_speed_[side] / (0.5 * wheel_diameter_));
-            }
-        }
-     
       last_update_time_+= common::Time(update_period_);
     }
   }
 
   // Finalize the controller
-  void GazeboRosWheelsPiston::FiniChild() {
+  void GazeboRosWheelsPiston::FiniChild() 
+  {
     alive_ = false;
     queue_.clear();
     queue_.disable();
@@ -463,158 +459,151 @@ namespace gazebo {
     callback_queue_thread_.join();
   }
 
-  void GazeboRosWheelsPiston::getWheelVelocities() {
+  void GazeboRosWheelsPiston::getWheelVelocities() 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
-  
     double coef_vr,coef_va;
-      
     //Values interpolation to have same proportion of odomTopic and cmd_vel   
     coef_vr = inter_vr->interpolate(fabs(x_));
     coef_va = inter_va->interpolate(fabs(rot_));
-    
     double vr = x_ * (coef_vr);
     double va = rot_ * (coef_va);
-   
     wheel_speed_[LEFT] = speed_factor_*(2.0*vr - va * width_ / (2.0*0.125));
     wheel_speed_[RIGHT] = speed_factor_*(2.0*vr + va * width_ / (2.0*0.125));
   }
 
-  void GazeboRosWheelsPiston::updateWidth(){
-      
+  void GazeboRosWheelsPiston::updateWidth()
+  {
      math::Vector3 dis = l_c_wheel_->GetWorldCoGPose().pos - r_c_wheel_->GetWorldCoGPose().pos;
      width_ = sqrt(((l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x) * (l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x)) + 
                    ((l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y) * (l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y))) + 0.10001;
-
   }
 
-  void GazeboRosWheelsPiston::updateElecPos(){
-     math::Vector3 rl, rr,u,pe;
-// convert velocity to child_frame_id (aka base_footprint)
+  void GazeboRosWheelsPiston::updateElecPos()
+  {
+    math::Vector3 rl, rr,u,pe;
+    // convert velocity to child_frame_id (aka base_footprint)
     math::Pose pose = this->parent->GetWorldPose();
     float yaw = pose.rot.GetYaw();
+    rb.x = electronics_center->GetWorldCoGPose().pos.x;
+    rb.y = electronics_center->GetWorldCoGPose().pos.y;
+    rb.z = electronics_center->GetWorldCoGPose().pos.z;
+    rl.x = l_c_wheel_->GetWorldCoGPose().pos.x;
+    rl.y = l_c_wheel_->GetWorldCoGPose().pos.y;
+    rl.z = l_c_wheel_->GetWorldCoGPose().pos.z - 0.125;
+    rr.x = r_c_wheel_->GetWorldCoGPose().pos.x;
+    rr.y = r_c_wheel_->GetWorldCoGPose().pos.y;
+    rr.z = r_c_wheel_->GetWorldCoGPose().pos.z - 0.125;  
+    rm = (rl + rr) * 0.5;
+    pe= rb - rm;
+    u.x= cos (yaw);
+    u.y= sin (yaw);
+    u.z= 0;
 
-     rb.x = electronics_center->GetWorldCoGPose().pos.x;
-     rb.y = electronics_center->GetWorldCoGPose().pos.y;
-     rb.z = electronics_center->GetWorldCoGPose().pos.z;
-     rl.x = l_c_wheel_->GetWorldCoGPose().pos.x;
-     rl.y = l_c_wheel_->GetWorldCoGPose().pos.y;
-     rl.z = l_c_wheel_->GetWorldCoGPose().pos.z - 0.125;
-     rr.x = r_c_wheel_->GetWorldCoGPose().pos.x;
-     rr.y = r_c_wheel_->GetWorldCoGPose().pos.y;
-     rr.z = r_c_wheel_->GetWorldCoGPose().pos.z - 0.125;  
-     rm = (rl + rr) * 0.5;
-     pe= rb - rm;
-     u.x= cos (yaw);
-     u.y= sin (yaw);
-     u.z= 0;
-
-// HERE IS NECESARY TO CHECK HOW TO PRESENT THE FUNCTION DOT PRODUCT TO APPLY
-     dis_box_centralaxis_ = (pe.x*u.x+pe.y*u.y+pe.z*u.z)*10;
-     
-     //Get the position of Electronic Box
-     geometry_msgs::Vector3 pos_electronicBox_msg;
-     pos_electronicBox_msg.x = electronics_center->GetWorldCoGPose().pos.x;
-     pos_electronicBox_msg.y = electronics_center->GetWorldCoGPose().pos.y;
-     pos_electronicBox_msg.z = 0;
-     pos_electronicBox_publisher_.publish(pos_electronicBox_msg);
-           
-     //Get the Vector Central  Between Middle Wheels
-     geometry_msgs::Vector3 pos_centerMidWheels_msg;
-     pos_centerMidWheels_msg.x = rm.x;
-     pos_centerMidWheels_msg.y = rm.y;
-     pos_centerMidWheels_msg.z = rm.z;
-     pos_centerMidWheels_publisher_.publish(pos_centerMidWheels_msg);
-            
-     //Get Vector Diference XY between center Electronic Box and Centor Central Middle Wheels
-     geometry_msgs::Vector3 pos_vecBoxWheel_msg;
-     pos_vecBoxWheel_msg.x = pe.x;
-     pos_vecBoxWheel_msg.y = pe.y;
-     pos_vecBoxWheel_msg.z = pe.z;
-     pos_vecBoxWheel_publisher_.publish(pos_vecBoxWheel_msg);
-          
-     //Get unit Vector parrallel with orientation of Robot
-     geometry_msgs::Vector3 pos_vecUnitOrient_msg;
-     pos_vecUnitOrient_msg.x = u.x;
-     pos_vecUnitOrient_msg.y = u.y;
-     pos_vecUnitOrient_msg.z = u.z;
-     pos_vecUnitOrient_publisher_.publish(pos_vecUnitOrient_msg);
-     
-     //Get Dot Product between Vector unit orientation and Vector Diference XY
-     std_msgs::Float32 dis_box_centralaxis_msg;  
-     dis_box_centralaxis_msg.data = (dis_box_centralaxis_);
-     dis_box_centralaxis_publisher_.publish(dis_box_centralaxis_msg);
-     
+    // HERE IS NECESARY TO CHECK HOW TO PRESENT THE FUNCTION DOT PRODUCT TO APPLY
+    dis_box_centralaxis_ = (pe.x*u.x+pe.y*u.y+pe.z*u.z)*10;
+    //Get the position of Electronic Box
+    geometry_msgs::Vector3 pos_electronicBox_msg;
+    pos_electronicBox_msg.x = electronics_center->GetWorldCoGPose().pos.x;
+    pos_electronicBox_msg.y = electronics_center->GetWorldCoGPose().pos.y;
+    pos_electronicBox_msg.z = 0;
+    pos_electronicBox_publisher_.publish(pos_electronicBox_msg);
+    //Get the Vector Central  Between Middle Wheels
+    geometry_msgs::Vector3 pos_centerMidWheels_msg;
+    pos_centerMidWheels_msg.x = rm.x;
+    pos_centerMidWheels_msg.y = rm.y;
+    pos_centerMidWheels_msg.z = rm.z;
+    pos_centerMidWheels_publisher_.publish(pos_centerMidWheels_msg);
+    //Get Vector Diference XY between center Electronic Box and Centor Central Middle Wheels
+    geometry_msgs::Vector3 pos_vecBoxWheel_msg;
+    pos_vecBoxWheel_msg.x = pe.x;
+    pos_vecBoxWheel_msg.y = pe.y;
+    pos_vecBoxWheel_msg.z = pe.z;
+    pos_vecBoxWheel_publisher_.publish(pos_vecBoxWheel_msg);
+    //Get unit Vector parrallel with orientation of Robot
+    geometry_msgs::Vector3 pos_vecUnitOrient_msg;
+    pos_vecUnitOrient_msg.x = u.x;
+    pos_vecUnitOrient_msg.y = u.y;
+    pos_vecUnitOrient_msg.z = u.z;
+    pos_vecUnitOrient_publisher_.publish(pos_vecUnitOrient_msg);
+    //Get Dot Product between Vector unit orientation and Vector Diference XY
+    std_msgs::Float32 dis_box_centralaxis_msg;  
+    dis_box_centralaxis_msg.data = (dis_box_centralaxis_);
+    dis_box_centralaxis_publisher_.publish(dis_box_centralaxis_msg);
   }
 
   void GazeboRosWheelsPiston::cmdVelCallback(
-      const geometry_msgs::Twist::ConstPtr& cmd_msg) {
-
+    const geometry_msgs::Twist::ConstPtr& cmd_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     x_ = cmd_msg->linear.x;
     rot_ = cmd_msg->angular.z;
   }
 
   void GazeboRosWheelsPiston::elecPosCallback (
-      const std_msgs::Float32::ConstPtr& move_Piston_msg) {
-    
+    const std_msgs::Float32::ConstPtr& move_Piston_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     move_Piston_cmd_ = move_Piston_msg->data;
-   }
+  }
  
   void GazeboRosWheelsPiston::armCentralPosCallback (
-      const std_msgs::Bool::ConstPtr& arm_central_msg) {
-    
+    const std_msgs::Bool::ConstPtr& arm_central_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     arm_central_cmd_ = arm_central_msg->data;
-   }        
+  }        
    
   void GazeboRosWheelsPiston::velStateCallback (
-      const std_msgs::Float32::ConstPtr& vel_state_msg) {
-    
+    const std_msgs::Float32::ConstPtr& vel_state_msg) 
+  {  
     boost::mutex::scoped_lock scoped_lock(lock);
     vel_state_cmd_ = vel_state_msg->data;
-   }  
-  void GazeboRosWheelsPiston::QueueThread() {
+  }  
+  
+  void GazeboRosWheelsPiston::QueueThread() 
+  {
     static const double timeout = 0.01;
 
-    while (alive_ && rosnode_->ok()) {
+    while (alive_ && rosnode_->ok()) 
+    {
       queue_.callAvailable(ros::WallDuration(timeout));
     }
   }
+
   void GazeboRosWheelsPiston::moveArmPosCallback(
-      const std_msgs::Bool::ConstPtr& move_arm_msg) {
-    
+    const std_msgs::Bool::ConstPtr& move_arm_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     move_arm_cmd_ = move_arm_msg->data;
-   }
+  }
 
-   void GazeboRosWheelsPiston::moveArmPosASCallback(
-      const std_msgs::Bool::ConstPtr& move_arm_as_msg) {
-    
+  void GazeboRosWheelsPiston::moveArmPosASCallback(
+    const std_msgs::Bool::ConstPtr& move_arm_as_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     move_arm_as_cmd_ = move_arm_as_msg->data;
-   }
+  }
 
-   void GazeboRosWheelsPiston::movePanArmCallback(
-      const std_msgs::Float32::ConstPtr& move_pan_arm_msg) {
-    
+  void GazeboRosWheelsPiston::movePanArmCallback(
+      const std_msgs::Float32::ConstPtr& move_pan_arm_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     move_pan_arm_cmd_ = move_pan_arm_msg->data;
-   } 
+  } 
 
-   void GazeboRosWheelsPiston::moveTiltArmCallback(
-      const std_msgs::Float32::ConstPtr& move_tilt_arm_msg) {
-    
+  void GazeboRosWheelsPiston::moveTiltArmCallback(
+    const std_msgs::Float32::ConstPtr& move_tilt_arm_msg) 
+  {
     boost::mutex::scoped_lock scoped_lock(lock);
     move_tilt_arm_cmd_ = move_tilt_arm_msg->data;
-   }    
-
+  }    
   
   void GazeboRosWheelsPiston::tfBaseLink(void)
   {
     static tf::TransformBroadcaster br;
     
-    math::Pose  tf_arm_link_1_,tf_arm_link_2_, tf_arm_link_3_,tf_base_link_;
+    math::Pose  tf_arm_link_1_,tf_arm_link_2_, tf_arm_link_3_;
 
     tf_base_link_ = electronics_center ->GetWorldCoGPose();
     tf_arm_link_1_ = arm_link_1_1_ ->GetRelativePose();
@@ -644,21 +633,26 @@ namespace gazebo {
     br.sendTransform(tf::StampedTransform(t_3, ros::Time::now(), "siar/arm_link_aux","siar/arm_link_3"));
   }
   
-  void GazeboRosWheelsPiston::publishOdometry(double step_time) {
+  void GazeboRosWheelsPiston::publishOdometry(double step_time) 
+  {
     ros::Time current_time = ros::Time::now();
-    std::string odom_frame = tf::resolve(tf_prefix_, odometry_frame_);
-    std::string base_footprint_frame = tf::resolve(tf_prefix_, robot_base_frame_);
+    std::string odom_frame = 
+      tf::resolve(tf_prefix_, odometry_frame_);
+    std::string base_footprint_frame = 
+      tf::resolve(tf_prefix_, robot_base_frame_);
 
     // getting data for base_footprint to odom transform
     math::Pose pose = this->parent->GetWorldPose();
 
     tf::Quaternion qt(pose.rot.x, pose.rot.y, pose.rot.z, pose.rot.w);
     tf::Vector3 vt(pose.pos.x, pose.pos.y, pose.pos.z);
+
     tf::Transform base_footprint_to_odom(qt, vt);
 
-    if (this->publish_odometry_tf_){
+    if (this->publish_odometry_tf_)
+    {
       transform_broadcaster_->sendTransform(tf::StampedTransform(base_footprint_to_odom, current_time,
-                                                                  odom_frame, base_footprint_frame));
+                                                                odom_frame, base_footprint_frame));
     }
 
     // publish odom topic
