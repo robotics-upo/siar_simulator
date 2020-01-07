@@ -326,6 +326,8 @@ namespace gazebo {
     elec_pos_publisher_= rosnode_->advertise<std_msgs::Float32>("elec_pos", 1);
     siar_status_publisher_= rosnode_->advertise<siar_driver::SiarStatus>("siar_status",1);
     tf_base_link_publisher_= rosnode_->advertise<geometry_msgs::Vector3>("tf_base_link",1);
+    arm_ang_rad_pan_publisher_= rosnode_->advertise<std_msgs::Float32>("arm_ang_rad_pan",1);
+
     
 
     // start custom queue for diff drive
@@ -403,6 +405,12 @@ namespace gazebo {
       std_msgs::Float32 elec_pos_msg;
       elec_pos_msg.data = (-1*elec_pos_cmd_);
       elec_pos_publisher_.publish(elec_pos_msg);
+
+      //Publish the position of electronics_center
+      std_msgs::Float32 arm_ang_rad_pan_msg;
+      arm_ang_rad_pan_msg.data = (move_pan_arm_add_);
+      arm_ang_rad_pan_publisher_.publish(arm_ang_rad_pan_msg);
+
       // Update robot in case new velocities have been requested or to control arm 
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
       this-> parent ->GetJointController()->SetPositionTarget(this->axis_arm_1_->GetScopedName(),  move_pan_arm_add_);
@@ -424,7 +432,7 @@ namespace gazebo {
         {
           move_pan_arm_add_ = -limit_angle_pan + 0.01;
         }  
-        // Turnning in tilt (limit_angle_tilt = 1.8)
+        // Turnning in tilt (limit_angle_tilt = 0.6)
         if ((move_tilt_arm_add_ < limit_angle_tilt && move_tilt_arm_add_ > -limit_angle_tilt) && (move_tilt_arm_cmd_ != 0.0))
         {
           move_tilt_arm_add_ = move_tilt_arm_add_ + (move_tilt_arm_cmd_ * 0.01);  //Give a initial potition in (limit_angle_tilt - 0.1 = 1.7)
