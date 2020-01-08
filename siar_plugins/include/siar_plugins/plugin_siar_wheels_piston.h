@@ -164,7 +164,7 @@ namespace gazebo {
 //       ros::NodeHandle& rosnode_p;
       ros::Publisher odometry_publisher_, width_publisher_, pos_electronicBox_publisher_,pos_centerMidWheels_publisher_,pos_vecBoxWheel_publisher_,
 		                  pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
-		                  tf_base_link_publisher_,test_velocity_publisher_, arm_ang_rad_pan_publisher_;
+		                  tf_base_link_publisher_,test_velocity_publisher_, arm_ang_rad_pan_publisher_, arm_ang_rad_tilt_publisher_;
       ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_, 
                       move_arm_subscriber_,move_arm_as_subscriber_, move_pan_arm_subscriber_, move_tilt_arm_subscriber_;
       tf::TransformBroadcaster *transform_broadcaster_;

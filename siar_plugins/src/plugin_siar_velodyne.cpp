@@ -327,6 +327,7 @@ namespace gazebo {
     siar_status_publisher_= rosnode_->advertise<siar_driver::SiarStatus>("siar_status",1);
     tf_base_link_publisher_= rosnode_->advertise<geometry_msgs::Vector3>("tf_base_link",1);
     arm_ang_rad_pan_publisher_= rosnode_->advertise<std_msgs::Float32>("arm_ang_rad_pan",1);
+    arm_ang_rad_tilt_publisher_= rosnode_->advertise<std_msgs::Float32>("arm_ang_rad_tilt",1);
 
     
 
@@ -410,6 +411,9 @@ namespace gazebo {
       std_msgs::Float32 arm_ang_rad_pan_msg;
       arm_ang_rad_pan_msg.data = (move_pan_arm_add_);
       arm_ang_rad_pan_publisher_.publish(arm_ang_rad_pan_msg);
+      std_msgs::Float32 arm_ang_rad_tilt_msg;
+      arm_ang_rad_tilt_msg.data = (move_tilt_arm_add_);
+      arm_ang_rad_tilt_publisher_.publish(arm_ang_rad_tilt_msg);
 
       // Update robot in case new velocities have been requested or to control arm 
       this-> parent ->GetJointController()->SetPositionPID(this->axis_arm_1_->GetScopedName(), this->pid_hinge_arm);
