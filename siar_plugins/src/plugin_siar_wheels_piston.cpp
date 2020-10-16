@@ -3,7 +3,8 @@
 
 #include <siar_plugins/plugin_siar_wheels_piston.h>
 
-#include <gazebo/math/gzmath.hh>
+#include <ignition/math/Vector3.hh>
+#include <ignition/math/Pose3.hh>
 #include <sdf/sdf.hh>
 
 #include <ros/ros.h>
@@ -162,7 +163,7 @@ namespace gazebo {
     } else {
       this->update_period_ = 0.0;
     }
-    last_update_time_ = this->world->GetSimTime();
+    last_update_time_ = this->world->SimTime();
 
     // Initialize velocity stuff
     wheel_speed_[RIGHT] = 0;
@@ -313,7 +314,7 @@ namespace gazebo {
   
   // Update the controller
   void GazeboRosWheelsPiston::UpdateChild() {
-    common::Time current_time = this->world->GetSimTime();
+    common::Time current_time = this->world->SimTime();
     double seconds_since_last_update = 
       (current_time - last_update_time_).Double();
     if (seconds_since_last_update > update_period_) {
@@ -404,64 +405,64 @@ namespace gazebo {
 
   void GazeboRosWheelsPiston::updateWidth(){
       
-     math::Vector3 dis = l_c_wheel_->GetWorldCoGPose().pos - r_c_wheel_->GetWorldCoGPose().pos;
-     width_ = sqrt(((l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x) * (l_c_wheel_->GetWorldCoGPose().pos.x - r_c_wheel_->GetWorldCoGPose().pos.x)) + ((l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y) * (l_c_wheel_->GetWorldCoGPose().pos.y - r_c_wheel_->GetWorldCoGPose().pos.y))) + 0.10001;
+     ignition::math::Vector3d dis = l_c_wheel_->WorldCoGPose().Pos() - r_c_wheel_->WorldCoGPose().Pos();
+     width_ = sqrt(((l_c_wheel_->WorldCoGPose().Pos().X() - r_c_wheel_->WorldCoGPose().Pos().X()) * (l_c_wheel_->WorldCoGPose().Pos().X() - r_c_wheel_->WorldCoGPose().Pos().X())) + ((l_c_wheel_->WorldCoGPose().Pos().Y() - r_c_wheel_->WorldCoGPose().Pos().Y()) * (l_c_wheel_->WorldCoGPose().Pos().Y() - r_c_wheel_->WorldCoGPose().Pos().Y()))) + 0.10001;
 
   }
 
   void GazeboRosWheelsPiston::updateElecPos(){
-     math::Vector3 rl, rr,u,pe;
+     ignition::math::Vector3d rl, rr,u,pe;
 // convert velocity to child_frame_id (aka base_footprint)
-    math::Pose pose = this->parent->GetWorldPose();
-    float yaw = pose.rot.GetYaw();
+    ignition::math::Pose3d pose = this->parent->WorldPose();
+    float yaw = pose.Rot().Yaw();
 
-     rb.x = electronic_box_->GetWorldCoGPose().pos.x;
-     rb.y = electronic_box_->GetWorldCoGPose().pos.y;
-     rb.z = electronic_box_->GetWorldCoGPose().pos.z;
-     rl.x = l_c_wheel_->GetWorldCoGPose().pos.x;
-     rl.y = l_c_wheel_->GetWorldCoGPose().pos.y;
-     rl.z = l_c_wheel_->GetWorldCoGPose().pos.z - 0.125;
-     rr.x = r_c_wheel_->GetWorldCoGPose().pos.x;
-     rr.y = r_c_wheel_->GetWorldCoGPose().pos.y;
-     rr.z = r_c_wheel_->GetWorldCoGPose().pos.z - 0.125;  
+     rb.X() = electronic_box_->WorldCoGPose().Pos().X();
+     rb.Y() = electronic_box_->WorldCoGPose().Pos().Y();
+     rb.Z() = electronic_box_->WorldCoGPose().Pos().Z();
+     rl.X() = l_c_wheel_->WorldCoGPose().Pos().X();
+     rl.Y() = l_c_wheel_->WorldCoGPose().Pos().Y();
+     rl.Z() = l_c_wheel_->WorldCoGPose().Pos().Z() - 0.125;
+     rr.X() = r_c_wheel_->WorldCoGPose().Pos().X();
+     rr.Y() = r_c_wheel_->WorldCoGPose().Pos().Y();
+     rr.Z() = r_c_wheel_->WorldCoGPose().Pos().Z() - 0.125;
      rm = (rl + rr) * 0.5;
      pe= rb - rm;
-     u.x= cos (yaw);
-     u.y= sin (yaw);
-     u.z= 0;
+     u.X()= cos (yaw);
+     u.Y()= sin (yaw);
+     u.Z()= 0;
 
 // HERE IS NECESARY TO CHECK HOW TO PRESENT THE FUNCTION DOT PRODUCT TO APPLY
-     dis_box_centralaxis_ = (pe.x*u.x+pe.y*u.y+pe.z*u.z)*10;
+     dis_box_centralaxis_ = (pe.X()*u.X()+pe.Y()*u.Y()+pe.Z()*u.Z())*10;
      
      //Get the position of Electronic Box
      geometry_msgs::Vector3 pos_electronicBox_msg;
-     pos_electronicBox_msg.x = electronic_box_->GetWorldCoGPose().pos.x;
-     pos_electronicBox_msg.y = electronic_box_->GetWorldCoGPose().pos.y;
+     pos_electronicBox_msg.x = electronic_box_->WorldCoGPose().Pos().X();
+     pos_electronicBox_msg.y = electronic_box_->WorldCoGPose().Pos().Y();
      pos_electronicBox_msg.z = 0;
      pos_electronicBox_publisher_.publish(pos_electronicBox_msg);
      
       
      //Get the Vector Central  Between Middle Wheels
      geometry_msgs::Vector3 pos_centerMidWheels_msg;
-     pos_centerMidWheels_msg.x = rm.x;
-     pos_centerMidWheels_msg.y = rm.y;
-     pos_centerMidWheels_msg.z = rm.z;
+     pos_centerMidWheels_msg.x = rm.X();
+     pos_centerMidWheels_msg.y = rm.Y();
+     pos_centerMidWheels_msg.z = rm.Z();
      pos_centerMidWheels_publisher_.publish(pos_centerMidWheels_msg);
       
       
      //Get Vector Diference XY between center Electronic Box and Centor Central Middle Wheels
      geometry_msgs::Vector3 pos_vecBoxWheel_msg;
-     pos_vecBoxWheel_msg.x = pe.x;
-     pos_vecBoxWheel_msg.y = pe.y;
-     pos_vecBoxWheel_msg.z = pe.z;
+     pos_vecBoxWheel_msg.x = pe.X();
+     pos_vecBoxWheel_msg.y = pe.Y();
+     pos_vecBoxWheel_msg.z = pe.Z();
      pos_vecBoxWheel_publisher_.publish(pos_vecBoxWheel_msg);
      
      
      //Get unit Vector parrallel with orientation of Robot
      geometry_msgs::Vector3 pos_vecUnitOrient_msg;
-     pos_vecUnitOrient_msg.x = u.x;
-     pos_vecUnitOrient_msg.y = u.y;
-     pos_vecUnitOrient_msg.z = u.z;
+     pos_vecUnitOrient_msg.x = u.X();
+     pos_vecUnitOrient_msg.y = u.Y();
+     pos_vecUnitOrient_msg.z = u.Z();
      pos_vecUnitOrient_publisher_.publish(pos_vecUnitOrient_msg);
 
      
@@ -516,8 +517,8 @@ namespace gazebo {
     static tf::TransformBroadcaster br;
     
 //     math::Vector3 cam_[frame_camera_.size()];
-    math::Pose cam_[frame_camera_.size()];
-    math::Pose tf_electronic_box;
+    ignition::math::Pose3d cam_[frame_camera_.size()];
+    ignition::math::Pose3d tf_electronic_box;
     
     std::string frame_name_8 = "base_link",
 		frame_name_9 = "box_electronics";
@@ -525,7 +526,7 @@ namespace gazebo {
     for (unsigned int i = 0; i < frame_camera_.size() ; i++)
     {
       
-      cam_[i] = frame_camera_[i] ->GetWorldCoGPose();
+      cam_[i] = frame_camera_[i] ->WorldCoGPose();
     }
 	
     tf::Transform t_[frame_camera_.size()];
@@ -533,25 +534,25 @@ namespace gazebo {
     
     for (int i = 0 ; i < tf_frame_name_.size() ; i++)
     {   
-      t_[i].setOrigin( tf::Vector3(cam_[i].pos.x, cam_[i].pos.y, cam_[i].pos.z) );
-      t_[i].setRotation(tf::Quaternion( cam_[i].rot.x, cam_[i].rot.y, cam_[i].rot.z,cam_[i].rot.w) );
+      t_[i].setOrigin( tf::Vector3(cam_[i].Pos().X(), cam_[i].Pos().Y(), cam_[i].Pos().Z()) );
+      t_[i].setRotation(tf::Quaternion( cam_[i].Rot().X(), cam_[i].Rot().Y(), cam_[i].Rot().Z(),cam_[i].Rot().W()) );
       //q_[i].setRPY(0, 0, 0);
       //t_[i].setRotation(q_[i]);
       br.sendTransform(tf::StampedTransform(t_[i], ros::Time::now(), "world", tf_frame_name_[i]) ); 
     }
     
-      tf_electronic_box = electronic_box_->GetWorldCoGPose();
+      tf_electronic_box = electronic_box_->WorldCoGPose();
      
     
       tf::Transform t_8,t_9;
       
-      t_8.setOrigin( tf::Vector3(rm.x, rm.y, rm.z) );
-      t_9.setOrigin( tf::Vector3(tf_electronic_box.pos.x, tf_electronic_box.pos.y, tf_electronic_box.pos.z) );
+      t_8.setOrigin( tf::Vector3(rm.X(), rm.Y(), rm.Z()) );
+      t_9.setOrigin( tf::Vector3(tf_electronic_box.Pos().X(), tf_electronic_box.Pos().Y(), tf_electronic_box.Pos().Z()) );
             
       tf::Quaternion q_8;
-      
-      t_8.setRotation(tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));
-      t_9.setRotation (tf::Quaternion(tf_electronic_box.rot.x, tf_electronic_box.rot.y,tf_electronic_box.rot.z,tf_electronic_box.rot.w ));   
+
+      t_8.setRotation(tf::Quaternion(tf_electronic_box.Rot().X(), tf_electronic_box.Rot().Y(),tf_electronic_box.Rot().Z(),tf_electronic_box.Rot().W() ));
+      t_9.setRotation (tf::Quaternion(tf_electronic_box.Rot().X(), tf_electronic_box.Rot().Y(),tf_electronic_box.Rot().Z(),tf_electronic_box.Rot().W() ));
       
       br.sendTransform(tf::StampedTransform(t_8, ros::Time::now(), "world", frame_name_8 ));
       br.sendTransform(tf::StampedTransform(t_9, ros::Time::now(), "world", frame_name_9 ));
@@ -567,10 +568,10 @@ namespace gazebo {
       tf::resolve(tf_prefix_, robot_base_frame_);
 
     // getting data for base_footprint to odom transform
-    math::Pose pose = this->parent->GetWorldPose();
+    ignition::math::Pose3d pose = this->parent->WorldPose();
 
-    tf::Quaternion qt(pose.rot.x, pose.rot.y, pose.rot.z, pose.rot.w);
-    tf::Vector3 vt(pose.pos.x, pose.pos.y, pose.pos.z);
+    tf::Quaternion qt(pose.Rot().X(), pose.Rot().Y(), pose.Rot().Z(), pose.Rot().W());
+    tf::Vector3 vt(pose.Pos().X(), pose.Pos().Y(), pose.Pos().Z());
 
     tf::Transform base_footprint_to_odom(qt, vt);
 
@@ -581,13 +582,13 @@ namespace gazebo {
     }
 
     // publish odom topic
-    odom_.pose.pose.position.x = pose.pos.x;
-    odom_.pose.pose.position.y = pose.pos.y;
+    odom_.pose.pose.position.x = pose.Pos().X();
+    odom_.pose.pose.position.y = pose.Pos().Y();
 
-    odom_.pose.pose.orientation.x = pose.rot.x;
-    odom_.pose.pose.orientation.y = pose.rot.y;
-    odom_.pose.pose.orientation.z = pose.rot.z;
-    odom_.pose.pose.orientation.w = pose.rot.w;
+    odom_.pose.pose.orientation.x = pose.Rot().X();
+    odom_.pose.pose.orientation.y = pose.Rot().Y();
+    odom_.pose.pose.orientation.z = pose.Rot().Z();
+    odom_.pose.pose.orientation.w = pose.Rot().W();
     odom_.pose.covariance[0] = 0.00001;
     odom_.pose.covariance[7] = 0.00001;
     odom_.pose.covariance[14] = 1000000000000.0;
@@ -596,14 +597,14 @@ namespace gazebo {
     odom_.pose.covariance[35] = 0.001;
 
     // get velocity in /odom frame
-    math::Vector3 linear;
-    linear = this->parent->GetWorldLinearVel();
-    odom_.twist.twist.angular.z = this->parent->GetWorldAngularVel().z;
+    ignition::math::Vector3d linear;
+    linear = this->parent->WorldLinearVel();;
+    odom_.twist.twist.angular.z = this->parent->WorldAngularVel().Z();;
 
     // convert velocity to child_frame_id (aka base_footprint)
-    float yaw = pose.rot.GetYaw();
-    odom_.twist.twist.linear.x = cosf(yaw) * linear.x + sinf(yaw) * linear.y;
-    odom_.twist.twist.linear.y = cosf(yaw) * linear.y - sinf(yaw) * linear.x;
+    float yaw = pose.Rot().Yaw();
+    odom_.twist.twist.linear.x = cosf(yaw) * linear.X() + sinf(yaw) * linear.Y();
+    odom_.twist.twist.linear.y = cosf(yaw) * linear.Y() - sinf(yaw) * linear.X();
 
     odom_.header.stamp = current_time;
     odom_.header.frame_id = odom_frame;

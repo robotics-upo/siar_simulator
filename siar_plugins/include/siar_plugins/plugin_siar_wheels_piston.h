@@ -208,8 +208,8 @@ namespace gazebo {
               arm_pos_cmd_, move_pan_arm_cmd_, move_tilt_arm_cmd_,
               move_pan_arm_add_,move_tilt_arm_add_, move_elevation_arm_aux_;
       bool alive_, arm_central_cmd_,move_arm_cmd_, move_arm_as_cmd_, auxiliar_tilt;
-      math::Vector3 rm, rb,frame_thermal; 
-      math::Pose tf_base_link_;
+      ignition::math::Vector3d rm, rb,frame_thermal; 
+      ignition::math::Pose3d tf_base_link_;
       bool count_pub_odom;
      
       // Update Rate
