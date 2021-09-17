@@ -116,6 +116,12 @@ add_library(plugin_gazebo_ros_gps src/gazebo_ros_gps.cpp)
 target_link_libraries(plugin_gazebo_ros_gps ${Boost_LIBRARIES} ${GAZEBO_LIBRARIES} ${catkin_LIBRARIES})
 
 
+# Add dependencies
+add_dependencies(plugin_siar_wheels_piston ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} siar_driver_generate_messages_cpp)
+add_dependencies(plugin_siar_velodyne ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} siar_driver_generate_messages_cpp)
+add_dependencies(plugin_gazebo_ros_gps ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} siar_driver_generate_messages_cpp)
+
+
 #############
 ## Install ##
 #############
