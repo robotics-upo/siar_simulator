@@ -160,14 +160,14 @@ namespace gazebo {
   
 
       // ROS STUFF
-      ros::NodeHandle* rosnode_;
+      std::unique_ptr<ros::NodeHandle> rosnode_;
 //       ros::NodeHandle& rosnode_p;
       ros::Publisher odometry_publisher_, width_publisher_, pos_electronicBox_publisher_,pos_centerMidWheels_publisher_,pos_vecBoxWheel_publisher_,
 		                  pos_vecUnitOrient_publisher_,  dis_box_centralaxis_publisher_,elec_pos_publisher_,pos_piston_publisher_,siar_status_publisher_,
 		                  tf_base_link_publisher_,test_velocity_publisher_, arm_ang_rad_pan_publisher_, arm_ang_rad_tilt_publisher_;
       ros::Subscriber cmd_vel_subscriber_, move_Piston_subscriber_, arm_central_subscriber_,vel_state_subscriber_, 
                       move_arm_subscriber_,move_arm_as_subscriber_, move_pan_arm_subscriber_, move_tilt_arm_subscriber_;
-      tf::TransformBroadcaster *transform_broadcaster_;
+      std::unique_ptr<tf::TransformBroadcaster> transform_broadcaster_;
       nav_msgs::Odometry odom_;
       geometry_msgs::TransformStamped odom_trans;
       std::string tf_prefix_;
@@ -222,8 +222,8 @@ namespace gazebo {
       std::vector <std::string> tf_frame_name_;
       
       // Find coefficients to multiply vr and va then to have the same proportion en cmd_vel and odomTopic
-      functions::LinearInterpolator *interp_cmd_vel, *inter_vr, *inter_va;
-      std::string cmd_vel_file, vr_file, va_file;
+      std::unique_ptr<functions::LinearInterpolator>  inter_vr, inter_va;
+      std::string cmd_vel_file,vr_file, va_file;
 
   };
 

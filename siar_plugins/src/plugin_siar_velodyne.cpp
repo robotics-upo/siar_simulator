@@ -36,10 +36,6 @@ namespace gazebo {
  
   // Destructor
   GazeboRosWheelsPiston::~GazeboRosWheelsPiston() {
-    delete rosnode_;
-    delete transform_broadcaster_;
-    delete inter_va;
-    delete inter_vr;
     
   }
 
@@ -242,7 +238,7 @@ namespace gazebo {
       return;
     }
 
-    rosnode_ = new ros::NodeHandle(this->robot_namespace_);
+    rosnode_.reset(new ros::NodeHandle(this->robot_namespace_));
     
     // Load parameter to calculate interpolation
     
@@ -255,14 +251,14 @@ namespace gazebo {
     if (!rosnode_->getParam("/va_file", va_file)) {
       va_file = "/va_file";
    }
-    inter_vr = new functions::LinearInterpolator(cmd_vel_file, vr_file);
-    inter_va = new functions::LinearInterpolator(cmd_vel_file, va_file);
+    inter_vr.reset(new functions::LinearInterpolator(cmd_vel_file, vr_file));
+    inter_va.reset(new functions::LinearInterpolator(cmd_vel_file, va_file));
     
 
     //ROS_INFO("Starting GazeboRosWheelsPiston Plugin (ns = %s). Cmd_file= %s. iNTERPOL: %d!", this->robot_namespace_.c_str(), cmd_vel_file.c_str(), (int)inter_va->size());
 
     tf_prefix_ = tf::getPrefixParam(*rosnode_);
-    transform_broadcaster_ = new tf::TransformBroadcaster();
+    transform_broadcaster_.reset( new tf::TransformBroadcaster());
 
     
     // ROS: Subscribe to the velocity command topic (usually "cmd_vel")
