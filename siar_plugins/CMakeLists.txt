@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   nav_msgs
   gazebo_plugins
+  functions
 )
 include_directories(include ${catkin_INCLUDE_DIRS})
 
