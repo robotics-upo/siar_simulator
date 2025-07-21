@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
   nav_msgs
-  siar_driver
   gazebo_plugins
 )
 include_directories(include ${catkin_INCLUDE_DIRS})
