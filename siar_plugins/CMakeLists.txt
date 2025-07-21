@@ -14,7 +14,6 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
   nav_msgs
-  functions
   siar_driver
   gazebo_plugins
 )
