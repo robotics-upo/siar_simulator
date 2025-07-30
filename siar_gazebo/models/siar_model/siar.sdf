@@ -4688,8 +4688,7 @@
       <initWheelSeparation>0.602</initWheelSeparation>
       <wheelDiameter>0.25</wheelDiameter>
       <torque>20</torque>
-      <interface:position name="position_iface_2"/>
-      <!--robotNamespace>siar_model</robotNamespace-->
+      <!-- <interface:position name="position_iface_2"> -->
       <robotBaseFrame>piston_1</robotBaseFrame>
       <commandTopic>cmd_vel</commandTopic>  
       <publishOdometryTf>0</publishOdometryTf>
